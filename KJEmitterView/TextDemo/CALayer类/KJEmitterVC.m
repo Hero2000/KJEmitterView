@@ -8,7 +8,7 @@
 
 #import "KJEmitterVC.h"
 #import "KJEmitterView.h"
-
+#import "UIBarButtonItem+KJExtension.h"
 @interface KJEmitterVC ()
 
 @end
@@ -24,10 +24,31 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    self.navigationController.navigationBar.kj_BackgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.3];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    imageView.image = [UIImage imageNamed:@"xuejing"];
+    [self.view addSubview:imageView];
+    
+    self.navigationController.navigationBar.kj_BackgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.1];
+    
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem kj_ItemWithImage:@"" HighImage:@"" Title:@"切换" TitleColor:UIColor.whiteColor Target:self Action:@selector(kj_qieHuan)];
+    
+    [KJEmitterView createEmitterViewWithType:(KJEmitterTypeSnowflake) Block:^(KJEmitterView *obj) {
+        obj.KJFrame(self.view.bounds).KJAddView(self.view).KJBackgroundColor([UIColor.whiteColor colorWithAlphaComponent:0.1]);
+    }];
+}
 
-    [KJEmitterView createEmitterViewWithType:(KJEmitterTypeStarrySky) Block:^(KJEmitterView *obj) {
-        obj.KJFrame(self.view.bounds).KJAddView(self.view).KJBackgroundColor(UIColor.blackColor);
+- (void)kj_qieHuan{
+    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    NSInteger i = (arc4random() % 4);
+    [KJEmitterView createEmitterViewWithType:i Block:^(KJEmitterView *obj) {
+        if (i==3) {
+            UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+            imageView.image = [UIImage imageNamed:@"xuejing"];
+            [self.view addSubview:imageView];
+            obj.KJFrame(self.view.bounds).KJAddView(self.view).KJBackgroundColor([UIColor.whiteColor colorWithAlphaComponent:0.1]);
+        }else{
+            obj.KJFrame(self.view.bounds).KJAddView(self.view).KJBackgroundColor([UIColor.blackColor colorWithAlphaComponent:0.9]);
+        }
     }];
 }
 

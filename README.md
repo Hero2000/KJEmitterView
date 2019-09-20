@@ -19,7 +19,7 @@
 
 <p align="left">
   <img width="200" src="Res/221566445331_.pic.jpg" hspace="30px" />
-  <img width="200" src="Res/161566445325_.pic.jpg" hspace="30px" />
+  <img width="200" src="Res/281568958148_.pic.jpg" hspace="30px" />
   <img width="200" src="Res/171566445326_.pic.jpg" hspace="30px" />
 </p>
 
@@ -158,6 +158,30 @@ pod 'KJEmitterView/Control' # 自定义控件
 <p align="left">
   <img width="200" src="Res/目录结构.png" hspace="30px" />
 </p>
+
+#### 温馨提示
+#####1、使用第三方库Xcode报错  
+Cannot synthesize weak property because the current deployment target does not support weak references  
+可在`Podfile`文件底下加入下面的代码，'8.0'是对应的部署目标（deployment target） 删除库重新Pod  
+不支持用weak修饰属性，而weak在使用ARC管理引用计数项目中才可使用  
+遍历每个develop target，将target支持版本统一设成一个支持ARC的版本
+
+```
+##################加入代码##################
+# 使用第三方库xcode报错Cannot synthesize weak property because the current deployment target does not support weak references
+post_install do |installer|
+installer.pods_project.targets.each do |target|
+target.build_configurations.each do |config|
+config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '8.0'
+end
+end
+end
+##################加入代码##################
+```
+#####2、若搜索不到库
+- 方案1：可执行 pod repo update
+- 方案2：使用 rm ~/Library/Caches/CocoaPods/search_index.json 移除本地索引然后再执行安装
+- 方案3：更新一下 CocoaPods 版本
 
 
 #### <a id="打赏作者"></a>打赏作者

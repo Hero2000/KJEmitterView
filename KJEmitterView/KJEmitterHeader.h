@@ -29,6 +29,10 @@
  博客地址：https://blog.csdn.net/qq_34534179
  
  ####版本更新日志:
+ 
+ #### Add 4.5.4
+ 1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者
+ 
  #### Add 4.5.3
  1、UIImage+KJProcessing 新增 kj_jointImageWithMasterImage 拼接图片
  2、UIImage+KJProcessing 新增 kj_imageCompoundWithLocalImage 图片多次合成处理

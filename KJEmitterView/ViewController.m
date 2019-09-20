@@ -85,6 +85,7 @@
         [temp1 addObject:@{@"VCName":@"KJFilterImageVC",@"describeName":@"滤镜相关和特效渲染"}];
         
         NSMutableArray *temp2 = [NSMutableArray array];
+        [temp2 addObject:@{@"VCName":@"KJEmiterLayerVC",@"describeName":@"图片粒子效果整理封装"}];
         [temp2 addObject:@{@"VCName":@"KJEmitterVC",@"describeName":@"粒子效果"}];
         [temp2 addObject:@{@"VCName":@"KJErrorVC",@"describeName":@"错误提示效果"}];
         

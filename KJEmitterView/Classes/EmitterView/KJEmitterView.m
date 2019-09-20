@@ -23,11 +23,8 @@
 
 + (instancetype)createEmitterViewWithType:(KJEmitterType)type Block:(void(^)(KJEmitterView *obj))block{
     KJEmitterView *obj = [[self alloc] init];
-    if (block) {
-        block(obj);
-    }
-    
     [obj config];
+    if (block) block(obj);
     
     switch (type) {
         case KJEmitterTypeStarrySky:{
@@ -59,14 +56,12 @@
 
 #pragma mark - 烟花粒子
 - (void)FireworksEmitter:(UIView*)view{
-//    view.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.5];
-    
     //创建发射器
     CAEmitterLayer *emitter = [CAEmitterLayer layer];
     //发射器中心点
     emitter.emitterPosition = CGPointMake(view.bounds.size.width/2, view.bounds.size.height);
     //发射器尺寸
-    emitter.emitterSize = CGSizeMake(view.bounds.size.width/2, 0);
+    emitter.emitterSize = CGSizeMake(1, 0);
     /* 发射器发射模式
      kCAEmitterLayerPoints;//从发射器中发出
      kCAEmitterLayerOutline;//从发射器边缘发出
@@ -94,20 +89,21 @@
     
     //创建烟花子弹
     CAEmitterCell *bullet = [CAEmitterCell emitterCell];
-    bullet.birthRate = 2; //子弹诞生速度,每秒诞生个数
-    bullet.lifetime = 1.3;//子弹的停留时间,即多少秒后消失
+    bullet.birthRate = 2.0; //子弹诞生速度,每秒诞生个数
+    bullet.lifetime = 2.02;//子弹的停留时间,即多少秒后消失
     //子弹的样式,可以给图片
     bullet.contents = KJEmitterGetImage(@"fire");
     //子弹的发射弧度
     bullet.emissionRange = 0.15 * M_PI;
     //子弹的速度
-    bullet.velocity = view.bounds.size.height - 100;
+    bullet.velocity = 400;
     //随机速度范围
-    bullet.velocityRange = 10;
+    bullet.velocityRange = 150;
     //y轴加速度
     bullet.yAcceleration = 0;
     //自转角速度
-    bullet.spin = M_PI_2;
+    bullet.spin = M_PI;
+    bullet.scale = 0.5;
     
     //三种随机色
     bullet.redRange = 1.0;
@@ -120,9 +116,9 @@
     burst.birthRate = 1.0;
     burst.velocity = 0;
     burst.scale = 2.5;
-    burst.redSpeed = -1.5;        // shifting
-    burst.blueSpeed = 1.5;        // shifting
-    burst.greenSpeed = 1.0;        // shifting
+    burst.redSpeed = -1.5;
+    burst.blueSpeed = 1.5;
+    burst.greenSpeed = 1.0;
     burst.lifetime = 0.35;
     
     //爆炸后的烟花
@@ -192,38 +188,41 @@
 
 #pragma mark - 雪花粒子
 - (void)SnowflakeEmitter:(UIView*)view{
-//    view.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.5];
     CAEmitterLayer *emitter = [CAEmitterLayer layer];
-    emitter.emitterPosition = CGPointMake(view.bounds.size.width/2, -20);//发射点
+    emitter.emitterPosition = CGPointMake(view.bounds.size.width*.5, -20);//发射点
     emitter.emitterSize = CGSizeMake(view.bounds.size.width, 0);
     emitter.emitterShape = kCAEmitterLayerLine;
     emitter.emitterMode = kCAEmitterLayerOutline;//发射模式
     emitter.preservesDepth = YES;
     emitter.emitterDepth = 10;
+    // 阴影的 不透明度
+    emitter.shadowOpacity = 1;
+    // 阴影化开的程度（就像墨水滴在宣纸上化开那样）
+    emitter.shadowRadius = 8;
+    // 阴影的偏移量
+    emitter.shadowOffset = CGSizeMake(3, 3);
+    // 阴影的颜色
+    emitter.shadowColor = [[UIColor whiteColor] CGColor];
 
-    CAEmitterCell *cell = [CAEmitterCell emitterCell];
-    cell.enabled = YES;
-    cell.birthRate = 1.f;
-    cell.lifetime = 180.f;
-    cell.lifetimeRange = 5;
-    cell.speed = 5.f;
-    cell.velocity = 5.f;//速度
-    cell.velocityRange = 5.f;//速度值的微调值
-    cell.yAcceleration = 5.f;
-    cell.zAcceleration = 2.f;
-    cell.emissionRange = 0.5 * M_PI; // 粒子发射角度范围
-    cell.spin = 2 * M_PI;         // 自旋转角度
-    cell.spinRange = 2 * M_PI;    // 自旋转角度范围
-    cell.contents =  KJEmitterGetImage(@"xuehua");
-    cell.scale = 0.6;
-    cell.scaleRange = 1;
+    CAEmitterCell *snowCell = [CAEmitterCell emitterCell];
+    snowCell.contents = KJEmitterGetImage(@"ball");
+    // 缩放比例
+    snowCell.scale = 0.4;
+    snowCell.scaleRange = 0.7;
+    // 每秒产生的数量
+    snowCell.birthRate = 20;
+    snowCell.lifetime = 80;
+    // 每秒变透明的速度
+    snowCell.alphaSpeed = -0.01;
+    // 秒速“五”厘米～～
+    snowCell.velocity = 40;
+    snowCell.velocityRange = 60;
+    // 掉落的角度范围
+    snowCell.emissionRange = M_PI;
+    // 旋转的速度
+    snowCell.spin = M_PI_4;
     
-    // 三种随机色
-    cell.redRange = 1.0;
-    cell.greenRange = 1.0;
-    cell.blueRange = 1.0;
-    
-    emitter.emitterCells = @[cell];
+    emitter.emitterCells = @[snowCell];
     [view.layer addSublayer:emitter];
 }
 
@@ -242,28 +241,28 @@
     CAEmitterCell * cell = [CAEmitterCell emitterCell];
     // 和CALayer一样，只是用来设置图片
     cell.contents = KJEmitterGetImage(@"blue");
-    //    19.enabled:粒子是否被渲染；
+    // enabled:粒子是否被渲染；
     cell.enabled = YES;
     
     cell.lifetime = 5;      // 粒子存活时间
     cell.lifetimeRange = 0; // 生命周期范围
     cell.alphaRange = 0.5f;
-    cell.alphaSpeed = -0.3f;      // 粒子消逝的速度
+    cell.alphaSpeed = -0.3f;// 粒子消逝的速度
     
     //发射器
-    cell.birthRate = 20;        // 每秒生成粒子的个数
+    cell.birthRate = 20;// 每秒生成粒子的个数
     cell.xAcceleration = 5;
-    cell.yAcceleration = 2;   // 粒子的初始加速度
+    cell.yAcceleration = 2; // 粒子的初始加速度
     cell.zAcceleration = 2;
-    cell.velocity = 20;           // 粒子运动的速度均值
-    cell.velocityRange = 30.f;    // 粒子运动的速度扰动范围
+    cell.velocity = 20; // 粒子运动的速度均值
+    cell.velocityRange = 30.f;// 粒子运动的速度扰动范围
     cell.emissionRange = 2*M_PI; // 粒子发射角度范围
     
-    cell.scale = 0.05;             // 缩放比例
-    cell.scaleRange = 0.1;        // 缩放比例范围
+    cell.scale = 0.05; // 缩放比例
+    cell.scaleRange = 0.1;// 缩放比例范围
     cell.scaleSpeed = 0.05;
-    cell.spin = M_PI;         // 自旋转角度
-    cell.spinRange = 2 * M_PI;    // 自旋转角度范围
+    cell.spin = M_PI;// 自旋转角度
+    cell.spinRange = 2 * M_PI;// 自旋转角度范围
     
     emitterLayer.emitterCells = @[cell];
     [view.layer addSublayer:emitterLayer];
