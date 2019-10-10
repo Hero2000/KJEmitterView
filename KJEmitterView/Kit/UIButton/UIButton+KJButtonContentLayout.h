@@ -22,15 +22,14 @@ typedef NS_ENUM(NSInteger, KJButtonContentLayoutStyle) {
     KJButtonContentLayoutStyleRightImageLeft,   // 内容居右-图左文右
     KJButtonContentLayoutStyleRightImageRight,  // 内容居右-图右文左
 };
-
+IB_DESIGNABLE  //xib 动态刷新
 @interface UIButton (KJContentLayout)
-
 /* Button 图文样式 */
-@property(nonatomic,assign) KJButtonContentLayoutStyle kj_ButtonContentLayoutType;
+@property(nonatomic,assign) IBInspectable KJButtonContentLayoutStyle kj_ButtonContentLayoutType;
 /* 图文间距, 默认为0 */
-@property(nonatomic,assign) CGFloat kj_Padding;
+@property(nonatomic,assign) IBInspectable CGFloat kj_Padding;
 /* 图文边界的间距, 默认为5 */
-@property(nonatomic,assign) CGFloat kj_PaddingInset;
+@property(nonatomic,assign) IBInspectable CGFloat kj_PaddingInset;
 
 @end
 

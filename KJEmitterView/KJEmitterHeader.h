@@ -32,10 +32,14 @@
  
  #### Add 4.5.4
  1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者
+ 2、UIImage+KJProcessing 新增 kj_cutImageWithImage 根据特定的区域对图片进行裁剪
+ 3、UIImage+KJProcessing 新增 kj_calulateImageFileSize 获取图片
+ 4、UIButton+KJBlock 新增 接受点击事件的时间间隔属性 kj_AcceptEventTime
+ 5、新增常用方法函数 _KJINLINE
  
  #### Add 4.5.3
  1、UIImage+KJProcessing 新增 kj_jointImageWithMasterImage 拼接图片
- 2、UIImage+KJProcessing 新增 kj_imageCompoundWithLocalImage 图片多次合成处理
+ 2、UIImage+KJProcessing 新增 kj_imageCompoundWithLocalImage  图片多次合成处理
  3、UIImage+KJProcessing 新增 kj_rotationImageWithOrientation 图片旋转
  
  #### Add 4.5.2
@@ -107,8 +111,8 @@
 #ifndef KJEmitterHeader_h
 #define KJEmitterHeader_h
 
-/// 宏
-#import "_KJMacros.h"
+#import "_KJMacros.h"  /// 宏
+#import "_KJINLINE.h"  /// 简单的常用函数
 
 /******************* Kit ******************************/
 #import "UIButton+KJBlock.h" // 点击事件ButtonBlock

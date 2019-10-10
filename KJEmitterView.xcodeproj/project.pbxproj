@@ -97,6 +97,7 @@
 		684BFEEF21BA11020015641A /* NSArray+KJLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+KJLog.m"; sourceTree = "<group>"; };
 		684BFEF221BA11870015641A /* NSDictionary+KJLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+KJLog.h"; sourceTree = "<group>"; };
 		684BFEF321BA11870015641A /* NSDictionary+KJLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+KJLog.m"; sourceTree = "<group>"; };
+		684EDB56234EC41700DE1728 /* _KJINLINE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _KJINLINE.h; sourceTree = "<group>"; };
 		685CE15722560193004E3AF4 /* UIButton+KJBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+KJBlock.h"; sourceTree = "<group>"; };
 		685CE15822560193004E3AF4 /* UIButton+KJBlock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+KJBlock.m"; sourceTree = "<group>"; };
 		685CE15B22562085004E3AF4 /* UILabel+KJAttributedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+KJAttributedString.h"; sourceTree = "<group>"; };
@@ -429,6 +430,7 @@
 			isa = PBXGroup;
 			children = (
 				6889503422A7521E0060C21E /* _KJMacros.h */,
+				684EDB56234EC41700DE1728 /* _KJINLINE.h */,
 			);
 			path = KJMacros;
 			sourceTree = "<group>";

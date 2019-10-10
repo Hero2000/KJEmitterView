@@ -16,6 +16,8 @@
 #define kKeyWindow          [UIApplication sharedApplication].keyWindow // KeyWindow
 #define kAppDelegate        [UIApplication sharedApplication].delegate  // AppDelegate
 #define kNotificationCenter [NSNotificationCenter defaultCenter] // 通知中心
+#define KPostNotification(name,obj,info) [[NSNotificationCenter defaultCenter]postNotificationName:name object:obj userInfo:info] // 发送通知
+
 
 #pragma mark ********** 2.自定义高效率的 NSLog ************
 #ifdef DEBUG // 输出日志 (格式: [时间] [哪个方法] [哪行] [输出内容])
@@ -23,18 +25,19 @@
 #else
 #define NSLog(format, ...)
 #endif
-/// 字符串拼接-其他类型转字符串
-#define FORMAT(f, ...)      [NSString stringWithFormat:f, ## __VA_ARGS__]
+
+// 字符串拼接
+#define kStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
+// block相关宏
+#define kBlockSafeRun(block, ...) block ? block(__VA_ARGS__) : nil
+/** 版本判定 大于等于某个版本 */
+#define KJ_JUDGE_CURRENT_VERSION(version) ([[[UIDevice currentDevice] systemVersion] compare:@#version options:NSNumericSearch] != NSOrderedAscending)
+
 
 #pragma mark ********** 3.弱引用   *********
 #define WEAKSELF  __weak __typeof(&*self) weakSelf = self;
 #define _weakself __weak typeof(self) weakself = self
-
-// 推荐使用（摘自YYKit）
-/**
- Synthsize a weak or strong reference.
- 
- Example:
+/**推荐使用（摘自YYKit）
  @kWeakObject(self)
  [self doSomething^{
  @kStrongObject(self)
@@ -74,21 +77,6 @@
 #endif
 #endif
 
-#pragma mark ********** 4.判断字符串、数组、字典、对象为空   *********
-// 字符串是否为空
-#define kStringIsEmpty(str) ([str isKindOfClass:[NSNull class]] || str == nil || [str length] < 1 ? YES : NO )
-// 数组是否为空
-#define kArrayIsEmpty(array) (array == nil || [array isKindOfClass:[NSNull class]] || array.count == 0)
-// 字典是否为空
-#define kDictIsEmpty(dic) (dic == nil || [dic isKindOfClass:[NSNull class]] || dic.allKeys == 0)
-// 是否是空对象
-#define kObjectIsEmpty(_object) (_object == nil \
-|| [_object isKindOfClass:[NSNull class]] \
-|| ([_object respondsToSelector:@selector(length)] && [(NSData *)_object length] == 0) \
-|| ([_object respondsToSelector:@selector(count)] && [(NSArray *)_object count] == 0))
-// 字符串转换为非空
-#define kStringChangeNotNil(str) (str ? : @"")
-
 #pragma mark ********** 5.iPhoneX系列尺寸布局   *********
 // 判断是否为iPhone X 系列  这样写消除了在Xcode10上的警告。
 #define iPhoneX \
@@ -118,13 +106,12 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 #define kISiPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 #define kScreenMaxLength (MAX(kScreenW, kScreenH))
 #define kScreenMinLength (MIN(kScreenW, kScreenH))
-#define kISiPhone5 (kISiPhone && kScreenMaxLength == 568.0)
-#define kISiPhone6 (kISiPhone && kScreenMaxLength == 667.0)
+#define kISiPhone5  (kISiPhone && kScreenMaxLength == 568.0)
+#define kISiPhone6  (kISiPhone && kScreenMaxLength == 667.0)
 #define kISiPhone6P (kISiPhone && kScreenMaxLength == 736.0)
-#define kISiPhoneX (kISiPhone && kScreenMaxLength == 812.0)
+#define kISiPhoneX  (kISiPhone && kScreenMaxLength == 812.0)
 #define kISiPhoneXr (kISiPhone && kScreenMaxLength == 896.0)
 #define kISiPhoneXX (kISiPhone && kScreenMaxLength > 811.0)
-
 
 /// 支持横屏可以用下面的宏
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000 // 当前Xcode支持iOS8及以上
@@ -139,13 +126,26 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 
 #pragma mark ********** 6.颜色和图片相关   *********
 #define UIColorFromHEXA(hex,a)    [UIColor colorWithRed:((hex&0xFF0000)>>16)/255.0f green:((hex&0xFF00)>>8)/255.0f blue:(hex&0xFF)/255.0f alpha:a]
-#define UIColorFromRGBA(r,g,b,a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]  // rgb颜色+透明度
+#define UIColorFromRGBA(r,g,b,a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
 #define UIColorHexFromRGB(hex)    UIColorFromHEXA(hex,1.0)
-#define RandomColor [UIColor colorWithRed:((float)arc4random_uniform(256)/255.0) green:((float)arc4random_uniform(256)/255.0) blue:((float)arc4random_uniform(256)/255.0) alpha:1.0]  /// 随机颜色
 /** 设置图片 */
 #define kGetImage(imageName) ([UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]])
+//通过图片获取图片颜色
+#define kColorWithPatternImage(image) [UIColor colorWithPatternImage:image]
 
-#pragma mark ********** 7.方法    *********
+#pragma mark ********** 7.方法  *********
+// 字符串是否为空
+#define kStringIsEmpty(str) ([str isKindOfClass:[NSNull class]] || str == nil || [str length] < 1 ? YES : NO )
+// 数组是否为空
+#define kArrayIsEmpty(array) (array == nil || [array isKindOfClass:[NSNull class]] || array.count == 0)
+// 字典是否为空
+#define kDictIsEmpty(dic) (dic == nil || [dic isKindOfClass:[NSNull class]] || dic.allKeys == 0)
+// 是否是空对象
+#define kObjectIsEmpty(_object) (_object == nil \
+|| [_object isKindOfClass:[NSNull class]] \
+|| ([_object respondsToSelector:@selector(length)] && [(NSData *)_object length] == 0) \
+|| ([_object respondsToSelector:@selector(count)] && [(NSArray *)_object count] == 0))
+
 /// text size(文字尺寸)
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
 #define kTEXTSIZE(text, font, maxSize, mode) [text length] > 0 ? [text \
@@ -156,55 +156,33 @@ attributes:@{NSFontAttributeName:font} context:nil].size : CGSizeZero;
 sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 #endif
 // 属性快速声明（建议使用代码块）
-#define kPropertyString(name) @property(nonatomic,copy)NSString *name
-#define kPropertyAssign(name) @property(nonatomic,assign)NSInteger name
-#define kPropertyStrong(type,name) @property(nonatomic,strong)type *name
-// 发送通知
-#define KPostNotification(name,obj,info) [[NSNotificationCenter defaultCenter]postNotificationName:name object:obj userInfo:info]
-// NSString 类型 并不为空
-#define kIsStrNotEmpty(_ref) ([_ref isKindOfClass:[NSString class]] && ![_ref isEqualToString:@""])
-// block相关宏
-#define kBlockSafeRun(block, ...) block ? block(__VA_ARGS__) : nil
-// 数组获取index位置的元素
-#define kArrayObjectAtIndex(array,index) (array.count > index ? array[index] : nil)
-/** 去掉首尾空格和换行符 */
-#define kFirstAndLastSpace(str) [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-/** 去掉所有空格 */
-#define kRemoveAllSpaces(str) [str stringByReplacingOccurrencesOfString:@" " withString:@""]
-// 加载xib
-#define kLoadNib(nibName) [UINib nibWithNibName:nibName bundle:[NSBundle mainBundle]]
-// 字符串拼接
-#define kStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
-// alert
-#define kAlert(_S_, ...)  [[[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:(_S_), ##__VA_ARGS__] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show]
+#define KJ_PROPERTY_STRING(name) @property(nonatomic,copy)NSString *name
+#define KJ_PROPERTY_ASSIGN(name) @property(nonatomic,assign)NSInteger name
+#define KJ_PROPERTY_STRONG(type,name) @property(nonatomic,strong)type *name
+/** runtime 为对象类型属性快速生成get/set方法 */
+#define KJ_SYNTHESIZE_CATEGORY_OBJ_PROPERTY(propertyGetter, propertySetter)\
+- (id)propertyGetter{ return objc_getAssociatedObject(self, @selector(propertyGetter));}\
+- (void)propertySetter(id)obj{ objc_setAssociatedObject(self, @selector(propertyGetter), obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);}
+/** 为基本数据类型属性快速生成get/set方法 */
+#define KJ_SYNTHESIZE_CATEGORY_VALUE_PROPERTY(valueType, propertyGetter, propertySetter)\
+- (valueType)propertyGetter{\
+valueType ret = {0};\
+[objc_getAssociatedObject(self, @selector(propertyGetter)) getValue:&ret];\
+return ret;\
+}\
+- (void)propertySetter(valueType)value{\
+NSValue *valueObj = [NSValue valueWithBytes:&value objCType:@encode(valueType)];\
+objc_setAssociatedObject(self, @selector(propertyGetter), valueObj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);\
+}
+
 // 带自动提示的keypath宏(源自Reactive Cocoa) 要添加@符号，就是为了能预编译出TARGET中所有的KEYPATH属性
 #define kKeypath2(OBJ, PATH) (((void)(NO && ((void)OBJ.PATH, NO)), #PATH))
-/** 方法替换
- @param clazz class
- @param orig 原函数
- @param new 新函数
- */
-#define kSwizzle(clazz, orig, new) \
-{\
-Method origMethod = class_getInstanceMethod(clazz, orig);\
-Method newMethod = class_getInstanceMethod(clazz, new);\
-if (class_addMethod(clazz, orig,\
-method_getImplementation(newMethod),\
-method_getTypeEncoding(newMethod)))\
-{\
-class_replaceMethod(clazz, new,\
-method_getImplementation(origMethod),\
-method_getTypeEncoding(origMethod));\
-} else {\
-method_exchangeImplementations(origMethod, newMethod);\
-}\
-}
 
 /** 单例宏 单例的目的 : 希望对象只创建一个实例，并且提供一个全局的访问点
  使用方法:
  .h文件
  kSingletonImplementation_H(类名)
- 
+
  .m文件
  kSingletonImplementation_M(类名)
  
@@ -227,7 +205,6 @@ instance = [super allocWithZone:zone]; \
 }); \
 return instance; \
 } \
-\
 + (instancetype)shared##className { \
 static dispatch_once_t onceToken; \
 dispatch_once(&onceToken, ^{ \
@@ -235,7 +212,6 @@ instance = [[self alloc] init]; \
 }); \
 return instance; \
 } \
-\
 - (id)copyWithZone:(NSZone *)zone { \
 return instance; \
 }
@@ -264,52 +240,16 @@ return instance; \
 - (instancetype)retain {return instance;} \
 - (instancetype)autorelease {return instance;} \
 - (NSUInteger)retainCount {return ULONG_MAX;}
-
-#endif
-// 提示，最后一行不要使用
+#endif // 提示，最后一行不要使用
 
 
-/* 根据当前view 找所在tableview 里的 indexpath */
-#define kIndexpathSubviewTableview(subview,tableview)\
-({\
-CGRect subviewFrame = [subview convertRect:subview.bounds toView:tableview];\
-NSIndexPath *tabIndexPath = [tableview indexPathForRowAtPoint:subviewFrame.origin];\
-tabIndexPath;\
-})\
-
-/* 根据当前view 找所在collectionview 里的 indexpath */
-#define kIndexpathSubviewCollectionview(subview,collectionview)\
-({\
-CGRect subviewFrame = [subview convertRect:subview.bounds toView:collectionview];\
-NSIndexPath *tabIndexPath = [collectionview indexPathForItemAtPoint:subviewFrame.origin];\
-tabIndexPath;\
-})\
-
-/* 根据当前view 找所在tableview 里的 tableviewcell */
-#define kCellSubviewTableview(subview,tableview)\
-({\
-CGRect subviewFrame = [subview convertRect:subview.bounds toView:tableview];\
-NSIndexPath *indexPath = [tableview indexPathForRowAtPoint:subviewFrame.origin];\
-UITableViewCell *tabCell  = [tableview cellForRowAtIndexPath:indexPath];\
-tabCell;\
-})\
-
-#pragma mark ********** 8.获取一些沙盒路径    *********
-//获取沙盒Document路径
-#define kDocumentPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
-//获取沙盒temp路径
-#define kTempPath  NSTemporaryDirectory()
-//获取沙盒Cache路径
-#define kCachePath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
-//Library/Caches 文件路径
-#define kFilePath ([[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil])
-
-#pragma mark ********** 9.系统默认字体设置和自选字体设置    *********
+#pragma mark ********** 8.系统默认字体设置和自选字体设置    *********
 #define kSystemFontSize(fontsize)  [UIFont systemFontOfSize:(fontsize)]
 #define kSystemBlodFontSize(fontsize)   [UIFont boldSystemFontOfSize:(fontsize)] /// 粗体
 #define kSystemItalicFontSize(fontsize) [UIFont italicSystemFontOfSize:(fontsize)]
 
-#pragma mark ********** 10.NSUserDefaults相关    *********
+
+#pragma mark ********** 9.NSUserDefaults相关    *********
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 // 永久存储对象
 #define kSetUserDefaults(object, key) \
@@ -330,21 +270,22 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults]; \
 // 清除 NSUserDefaults 保存的所有数据
 #define kRemoveAllUserDefaults  [kUserDefaults removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]]
 
-#pragma mark ********** 11.获取时间    *********
+
+#pragma mark ********** 10.获取时间    *********
 //获得当前的年份
-#define kCurrentYear [[NSCalendar currentCalendar] component:NSCalendarUnitYear fromDate:[NSDate date]]
+#define kCurrentYear  [[NSCalendar currentCalendar] component:NSCalendarUnitYear fromDate:[NSDate date]]
 //获得当前的月份
 #define kCurrentMonth [[NSCalendar currentCalendar] component:NSCalendarUnitMonth fromDate:[NSDate date]]
 //获得当前的日期
-#define kCurrentDay  [[NSCalendar currentCalendar] component:NSCalendarUnitDay fromDate:[NSDate date]]
+#define kCurrentDay   [[NSCalendar currentCalendar] component:NSCalendarUnitDay fromDate:[NSDate date]]
 //获得当前的小时
-#define kCurrentHour [[NSCalendar currentCalendar] component:NSCalendarUnitHour fromDate:[NSDate date]]
+#define kCurrentHour  [[NSCalendar currentCalendar] component:NSCalendarUnitHour fromDate:[NSDate date]]
 //获得当前的分
-#define kCurrentMin [[NSCalendar currentCalendar] component:NSCalendarUnitMinute fromDate:[NSDate date]]
+#define kCurrentMin   [[NSCalendar currentCalendar] component:NSCalendarUnitMinute fromDate:[NSDate date]]
 //获得当前的秒
-#define kCurrentSec [[NSCalendar currentCalendar] component:NSCalendarUnitSecond fromDate:[NSDate date]]
+#define kCurrentSec   [[NSCalendar currentCalendar] component:NSCalendarUnitSecond fromDate:[NSDate date]]
 
-#pragma mark ********** 12.线程 GCD   *********
+#pragma mark ********** 11.线程 GCD   *********
 /* 使用方式  kGCD_MAIN_ASYNC(^{ NSLog(@"77"); }); */
 //GCD - 异步主线程
 #define kGCD_MAIN_ASYNC(main_queue_block) dispatch_async(dispatch_get_main_queue(), main_queue_block)

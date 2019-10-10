@@ -26,9 +26,11 @@
     // Do any additional setup after loading the view from its nib.
     
     _weakself;
+    self.Button.kj_AcceptEventTime = 5;
     [self.Button kj_addAction:^(UIButton * _Nonnull kButton) {
         UIImage *image = [weakself.Image1.image kj_waterMark:weakself.Image2.image InRect:CGRectMake(0, 0, weakself.Image1.image.size.width/4, weakself.Image1.image.size.height/4)];
         weakself.ImageView.image = image;
+        NSLog(@"--------------%ld",kCurrentSec);
     }];
     [self.Button2 kj_addAction:^(UIButton * _Nonnull kButton) {
         CGFloat wd = MAX(weakself.Image2.image.size.width, weakself.Image2.image.size.height);

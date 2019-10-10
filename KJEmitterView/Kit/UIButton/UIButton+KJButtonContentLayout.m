@@ -19,13 +19,10 @@ static NSString * const kPaddingInsetKey = @"kj_paddingInsetKey";
 
 - (void)setupButtonLayout{
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
     CGFloat image_w = self.imageView.frame.size.width;
     CGFloat image_h = self.imageView.frame.size.height;
-    
     CGFloat title_w = self.titleLabel.frame.size.width;
     CGFloat title_h = self.titleLabel.frame.size.height;
-    
     if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0){
         // 由于iOS8中titleLabel的size为0，用下面的这种设置
         title_w = self.titleLabel.intrinsicContentSize.width;
@@ -34,7 +31,6 @@ static NSString * const kPaddingInsetKey = @"kj_paddingInsetKey";
     
     UIEdgeInsets imageEdge = UIEdgeInsetsZero;
     UIEdgeInsets titleEdge = UIEdgeInsetsZero;
-    
     if (self.kj_PaddingInset == 0){
         self.kj_PaddingInset = 5;
     }
@@ -112,7 +108,6 @@ static NSString * const kPaddingInsetKey = @"kj_paddingInsetKey";
     [self willChangeValueForKey:kPaddingKey];
     objc_setAssociatedObject(self, &kPaddingKey, @(kj_padding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self didChangeValueForKey:kPaddingKey];
-
     [self setupButtonLayout];
 }
 

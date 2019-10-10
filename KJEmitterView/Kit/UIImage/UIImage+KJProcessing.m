@@ -279,5 +279,31 @@
     UIGraphicsEndImageContext();
     return resultingImage;
 }
-
+/// 获取图片大小
++ (NSArray*)kj_calulateImageFileSize:(UIImage *)image {
+    NSData *data = UIImagePNGRepresentation(image);
+    if (!data) {
+        /// 实际上, `UIImageJPEGRepresentation` 这个函数获取到的图片文件大小并不准确, 后面的参数改为 `0.7` 才大概是原图片的文件大小
+        data = UIImageJPEGRepresentation(image, 0.7);//需要改成0.5才接近原图片大小，原因请看下文
+    }
+    double dataLength = [data length] * 1.0;
+    double num = dataLength;
+    NSArray *typeArray = @[@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB",@"ZB",@"YB"];
+    NSInteger index = 0;
+    while (dataLength > 1024) {
+        dataLength /= 1024.0;
+        index ++;
+    }
+    return @[@(num),[NSString stringWithFormat:@"image = %.3f %@",dataLength,typeArray[index]]];
+}
+/// 根据特定的区域对图片进行裁剪
++ (UIImage*)kj_cutImageWithImage:(UIImage*)image Frame:(CGRect)frame{
+    return ({
+        /// 方法说明：核心裁剪方法CGImageCreateWithImageInRect(CGImageRef image,CGRect rect)
+        CGImageRef tmp = CGImageCreateWithImageInRect([image CGImage], frame);
+        UIImage *newImage = [UIImage imageWithCGImage:tmp scale:image.scale orientation:image.imageOrientation];
+        CGImageRelease(tmp);
+        newImage ;
+    });
+}
 @end

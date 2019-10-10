@@ -16,9 +16,12 @@ typedef void(^KJButtonBlock)(UIButton *kButton);
 /** button 添加点击事件，默认UIControlEventTouchUpInside方式 */
 - (void)kj_addAction:(KJButtonBlock)block;
 
-/** button 添加事件
- *  @param controlEvents 点击的方式 */
+/** button 添加事件 controlEvents 点击的方式 */
 - (void)kj_addAction:(KJButtonBlock)block forControlEvents:(UIControlEvents)controlEvents;
+
+/** 接受点击事件的时间间隔 */
+@property (nonatomic, assign) NSTimeInterval kj_AcceptEventTime;
+
 @end
 
 NS_ASSUME_NONNULL_END
