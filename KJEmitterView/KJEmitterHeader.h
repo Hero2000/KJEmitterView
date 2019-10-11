@@ -30,6 +30,9 @@
  
  ####版本更新日志:
  
+ #### Add 4.5.5
+ 1、UIViewController+KJFullScreen 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
+ 
  #### Add 4.5.4
  1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者
  2、UIImage+KJProcessing 新增 kj_cutImageWithImage 根据特定的区域对图片进行裁剪
@@ -136,6 +139,8 @@
 #import "UIImage+KJProcessing.h"  /// 图片加工处理相关
 //#import "UIImage+KJFloodFill.h" /// 图片泛洪算法
 //#import "UIImage+KJFilter.h"    /// 处理图片滤镜，渲染相关
+
+#import "UIViewController+KJFullScreen.h" // 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
 
 /******************* Foundation ******************************/
 //#import "NSArray+ElementDeal.h"  /// 对数组元素的处理 包括排序、查找、去重等等

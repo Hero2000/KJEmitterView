@@ -67,6 +67,7 @@
 		68BA6C3321B303D40013C4AD /* UITextView+KJPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BA6C2221B303D40013C4AD /* UITextView+KJPlaceHolder.m */; };
 		68BA6C3421B303D40013C4AD /* UIBarButtonItem+KJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BA6C2521B303D40013C4AD /* UIBarButtonItem+KJExtension.m */; };
 		68BA6C3521B303D40013C4AD /* UINavigationBar+KJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BA6C2821B303D40013C4AD /* UINavigationBar+KJExtension.m */; };
+		68E166D0234F4D5B008E8A80 /* UIViewController+KJFullScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 68E166CF234F4D5A008E8A80 /* UIViewController+KJFullScreen.m */; };
 		68E283B821B38DCC009B708F /* KJAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68E283B621B38DCC009B708F /* KJAlertVC.m */; };
 		68E283B921B38DCC009B708F /* KJAlertVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68E283B721B38DCC009B708F /* KJAlertVC.xib */; };
 /* End PBXBuildFile section */
@@ -184,6 +185,8 @@
 		68BA6C2521B303D40013C4AD /* UIBarButtonItem+KJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+KJExtension.m"; sourceTree = "<group>"; };
 		68BA6C2721B303D40013C4AD /* UINavigationBar+KJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+KJExtension.h"; sourceTree = "<group>"; };
 		68BA6C2821B303D40013C4AD /* UINavigationBar+KJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+KJExtension.m"; sourceTree = "<group>"; };
+		68E166CE234F4D5A008E8A80 /* UIViewController+KJFullScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KJFullScreen.h"; sourceTree = "<group>"; };
+		68E166CF234F4D5A008E8A80 /* UIViewController+KJFullScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KJFullScreen.m"; sourceTree = "<group>"; };
 		68E283B521B38DCC009B708F /* KJAlertVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJAlertVC.h; sourceTree = "<group>"; };
 		68E283B621B38DCC009B708F /* KJAlertVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJAlertVC.m; sourceTree = "<group>"; };
 		68E283B721B38DCC009B708F /* KJAlertVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KJAlertVC.xib; sourceTree = "<group>"; };
@@ -485,6 +488,7 @@
 				68BA6C2621B303D40013C4AD /* UINavigationBar */,
 				68BA6C1E21B303D40013C4AD /* UITextView */,
 				68BA6C1721B303D40013C4AD /* UIView */,
+				68E166CD234F4D5A008E8A80 /* UIViewController */,
 			);
 			path = Kit;
 			sourceTree = "<group>";
@@ -559,6 +563,15 @@
 				68BA6C2821B303D40013C4AD /* UINavigationBar+KJExtension.m */,
 			);
 			path = UINavigationBar;
+			sourceTree = "<group>";
+		};
+		68E166CD234F4D5A008E8A80 /* UIViewController */ = {
+			isa = PBXGroup;
+			children = (
+				68E166CE234F4D5A008E8A80 /* UIViewController+KJFullScreen.h */,
+				68E166CF234F4D5A008E8A80 /* UIViewController+KJFullScreen.m */,
+			);
+			path = UIViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -647,6 +660,7 @@
 				68AEE23F22A6169600167F83 /* UIView+KJGestureBlock.m in Sources */,
 				6813E4A022B8B12E00D4772D /* NSArray+KJOverstep.m in Sources */,
 				68BA6C3321B303D40013C4AD /* UITextView+KJPlaceHolder.m in Sources */,
+				68E166D0234F4D5B008E8A80 /* UIViewController+KJFullScreen.m in Sources */,
 				68BA6C3021B303D40013C4AD /* UIView+KJRectCorner.m in Sources */,
 				680A61A1230E308500BCE302 /* KJIMageVC.m in Sources */,
 				68BA6C3521B303D40013C4AD /* UINavigationBar+KJExtension.m in Sources */,
