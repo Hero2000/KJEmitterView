@@ -7,6 +7,7 @@
 //
 
 #import "UIViewController+KJFullScreen.h"
+#import <objc/runtime.h>
 
 @implementation UIViewController (KJFullScreen)
 

@@ -1,7 +1,7 @@
 # 上传至CocoaPods和Bug总结
 ---
 
-### 一、先将代码传到github上
+### 一、将代码传到GitHub
 ###### 1．创建本地仓库                 ```git init```
 ###### 2．添加名称为origin的远程连接    ```git remote add origin 'Github项目地址'```
 ###### 3．将本地代码加入到本地仓库       ```git add .```
@@ -9,8 +9,8 @@
 ###### 5．推送master分支的代码到名称为orgigin的远程仓库   ```git push origin master```
 
 ---
-### 二、给你git打上tag
-#### 打tag的目的就相当于给你的开源框架制定版本号，每个版本一个tag
+### 二、打上标签
+#### 打标签的目的就相当于给你的开源框架制定版本号
 ###### 1．cd仓库目录
 ###### 2．查看本地tag           ```git tag```
 ###### 3．添加本地tag 1.0.0     ```git tag -a 1.0.0 -m 'release 1.0.0'```
@@ -63,27 +63,50 @@ Pod::Spec.new do |s|
   s.author       = { "77" => "393103982@qq.com" }
   s.platform     = :ios
   s.source       = { :git => "https://github.com/yangKJ/KJEmitterView.git", :tag => "#{s.version}" }
-  s.framework    = "UIKit"
-  # s.dependency "JSONKit", "~> 1.4"
+  s.social_media_url = 'https://www.jianshu.com/u/c84c00476ab6'
   s.requires_arc = true
+
+  s.default_subspec = 'Kit' # 默认引入的文件
+  s.ios.source_files = 'KJEmitterView/KJEmitterHeader.h' # 添加头文件
+
+  s.subspec 'Kit' do |y|
+    y.source_files = "KJEmitterView/Kit/**/*.{h,m}" # 添加文件
+    y.public_header_files = 'KJEmitterView/Kit/*.h',"KJEmitterView/Kit/**/*.h"   # 添加头文件
+    y.frameworks = 'Foundation','UIKit','Accelerate'
+  end
+
+  s.subspec 'Control' do |a|
+    a.source_files = "KJEmitterView/Control/**/*.{h,m}" # 添加文件
+    a.public_header_files = "KJEmitterView/Control/**/*.h",'KJEmitterView/Control/*.h'# 添加头文件
+    a.dependency 'KJEmitterView/Kit'
+    a.frameworks = 'QuartzCore'
+  end
 
   s.subspec 'Classes' do |ss|
     ss.source_files = "KJEmitterView/Classes/**/*.{h,m}" # 添加文件
-    ss.public_header_files = 'KJEmitterView/Classes/*.h',"KJEmitterView/Classes/**/*.h"   # 添加头文件
-    ss.resources    = "KJEmitterView/Classes/**/*.{bundle}" # 添加数据资料
+    ss.public_header_files = "KJEmitterView/Classes/**/*.h",'KJEmitterView/Classes/*.h'# 添加头文件
+    ss.resources = "KJEmitterView/Classes/**/*.{bundle}" # 添加数据资料
+    ss.dependency 'KJEmitterView/Kit'
+  end
+
+  s.subspec 'Function' do |fun|
+    fun.source_files = "KJEmitterView/Foundation/**/*.{h,m}" # 添加文件
+    fun.public_header_files = 'KJEmitterView/Foundation/*.h',"KJEmitterView/Foundation/**/*.h"   # 添加头文件
+    fun.dependency 'KJEmitterView/Kit'
   end
   
 end
 ```
 ###### 3．验证你本地的podspec文件     ```pod spec lint KJEmitterView.podspec```
 ###### 4．忽略警告     ```pod spec lint KJEmitterView.podspec --allow-warnings```
-验证成功，
+验证成功
 ![图片 7.png](https://upload-images.jianshu.io/upload_images/1933747-a0561698c89fcacf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ---
 ### 六、传到CocoaPods上
 ###### 1．首先验证你本地的podspec文件，之后会上传spec文件到trunk
 ###### 2．将podspec文件传到trunk上    ```pod trunk push KJEmitterView.podspec```
+###### 3．忽略警告上传   ```pod trunk push KJEmitterView.podspec --allow-warnings```
 成功如下：
 ![图片 8.png](https://upload-images.jianshu.io/upload_images/1933747-f534f0b699fd2e63.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -99,8 +122,7 @@ end
 
 ###### 2、- WARN | [iOS] license: Unable to find a license file
 - 原因：没有找到License文件，根据规则也可以直接把文本写在podspec文件里
-- 解决方案：podspec文件里面添加
-- s.license = "Copyright (c) 2018 yangkejun"
+- 解决方案：podspec文件里面添加 ``` s.license = "Copyright (c) 2018 yangkejun" ```
 
 ###### 3、- WARN | source: The version should be included in the Git tag.
 - 原因：podspec里的version要跟git上的tag相匹配
