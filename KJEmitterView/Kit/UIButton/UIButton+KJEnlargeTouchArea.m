@@ -22,10 +22,10 @@ static char leftNameKey;
 }
 
 - (CGRect)enlargedRect{
-    NSNumber *topEdge = objc_getAssociatedObject(self, &topNameKey);
+    NSNumber *topEdge   = objc_getAssociatedObject(self, &topNameKey);
     NSNumber *rightEdge = objc_getAssociatedObject(self, &rightNameKey);
-    NSNumber *bottomEdge = objc_getAssociatedObject(self, &bottomNameKey);
-    NSNumber *leftEdge = objc_getAssociatedObject(self, &leftNameKey);
+    NSNumber *bottomEdge= objc_getAssociatedObject(self, &bottomNameKey);
+    NSNumber *leftEdge  = objc_getAssociatedObject(self, &leftNameKey);
     if (topEdge && rightEdge && bottomEdge && leftEdge){
         return CGRectMake(self.bounds.origin.x - leftEdge.floatValue,
                           self.bounds.origin.y - topEdge.floatValue,

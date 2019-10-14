@@ -27,8 +27,9 @@
 }
 
 - (void)kj_presentViewController:(UIViewController *)vc animated:(BOOL)animated completion:(void (^)(void))completion{
-    /// presented vc充满全屏
-    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    if (@available(iOS 13.0, *)) {
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;/// 充满全屏
+    }
     [self kj_presentViewController:vc animated:animated completion:completion];
 }
 

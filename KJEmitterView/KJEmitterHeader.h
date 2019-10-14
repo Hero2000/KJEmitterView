@@ -142,6 +142,8 @@
 
 #import "UIViewController+KJFullScreen.h" // 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
 
+#import "UISegmentedControl+KJCustom.h" // 解决ios13以后 修改不了 backgroundColor 和 tintColor问题
+
 /******************* Foundation ******************************/
 //#import "NSArray+ElementDeal.h"  /// 对数组元素的处理 包括排序、查找、去重等等
 

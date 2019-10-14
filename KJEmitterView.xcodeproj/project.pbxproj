@@ -48,6 +48,7 @@
 		6880171D22A89B86000CC362 /* UIView+KJAppointView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6880171C22A89B86000CC362 /* UIView+KJAppointView.m */; };
 		6887C13823039F4E00CD063D /* NSArray+ElementDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 6887C13723039F4E00CD063D /* NSArray+ElementDeal.m */; };
 		6889503222A74ED60060C21E /* UIButton+KJEnlargeTouchArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 6889503122A74ED60060C21E /* UIButton+KJEnlargeTouchArea.m */; };
+		6889C33A2354668E00D01F70 /* UISegmentedControl+KJCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 6889C3392354668E00D01F70 /* UISegmentedControl+KJCustom.m */; };
 		68959C0021B3998A004F794F /* KJAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68959BFE21B3998A004F794F /* KJAlertView.m */; };
 		68A5ECCF2305091700A3069D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 68A5ECCD2305091700A3069D /* README.md */; };
 		68A5ECD02305091700A3069D /* KJEmitterView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 68A5ECCE2305091700A3069D /* KJEmitterView.podspec */; };
@@ -150,6 +151,8 @@
 		6889503022A74ED60060C21E /* UIButton+KJEnlargeTouchArea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+KJEnlargeTouchArea.h"; sourceTree = "<group>"; };
 		6889503122A74ED60060C21E /* UIButton+KJEnlargeTouchArea.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+KJEnlargeTouchArea.m"; sourceTree = "<group>"; };
 		6889503422A7521E0060C21E /* _KJMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _KJMacros.h; sourceTree = "<group>"; };
+		6889C3382354668E00D01F70 /* UISegmentedControl+KJCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISegmentedControl+KJCustom.h"; sourceTree = "<group>"; };
+		6889C3392354668E00D01F70 /* UISegmentedControl+KJCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISegmentedControl+KJCustom.m"; sourceTree = "<group>"; };
 		68959BFE21B3998A004F794F /* KJAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJAlertView.m; sourceTree = "<group>"; };
 		68959BFF21B3998A004F794F /* KJAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KJAlertView.h; sourceTree = "<group>"; };
 		68A5ECCD2305091700A3069D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
@@ -438,6 +441,15 @@
 			path = KJMacros;
 			sourceTree = "<group>";
 		};
+		6889C3372354668E00D01F70 /* UISegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				6889C3382354668E00D01F70 /* UISegmentedControl+KJCustom.h */,
+				6889C3392354668E00D01F70 /* UISegmentedControl+KJCustom.m */,
+			);
+			path = UISegmentedControl;
+			sourceTree = "<group>";
+		};
 		68959BFD21B3998A004F794F /* AlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,6 +501,7 @@
 				68BA6C1E21B303D40013C4AD /* UITextView */,
 				68BA6C1721B303D40013C4AD /* UIView */,
 				68E166CD234F4D5A008E8A80 /* UIViewController */,
+				6889C3372354668E00D01F70 /* UISegmentedControl */,
 			);
 			path = Kit;
 			sourceTree = "<group>";
@@ -663,6 +676,7 @@
 				68E166D0234F4D5B008E8A80 /* UIViewController+KJFullScreen.m in Sources */,
 				68BA6C3021B303D40013C4AD /* UIView+KJRectCorner.m in Sources */,
 				680A61A1230E308500BCE302 /* KJIMageVC.m in Sources */,
+				6889C33A2354668E00D01F70 /* UISegmentedControl+KJCustom.m in Sources */,
 				68BA6C3521B303D40013C4AD /* UINavigationBar+KJExtension.m in Sources */,
 				684BFEF021BA11020015641A /* NSArray+KJLog.m in Sources */,
 				6869043021B25BC700ED072F /* BaseViewController.m in Sources */,
