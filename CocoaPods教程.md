@@ -223,3 +223,8 @@ end
 
 - 原因：此警告就是某属性说好的不能为空，你又在某地方写了XX = nil 所以冲突  
 - 解决方案：声明一个属性的时候加上 __nullable（？可以为空）与__nonnull（！不能为空）或者用宏 NS_ASSUME_NONNULL_BEGIN 和 NS_ASSUME_NONNULL_END 包住多个属性全部具备nonnull，然后仅对需要nullable的改下就行
+
+###### 17、- NOTE  | [iOS] [KJEmitterView/Classes] xcodebuild:  :19:9: error: declaration of 'Method' must be imported from module 'ObjectiveC.runtime' before it is required
+
+- 原因：未引入runtime
+- 解决方案：在缺少的文件当中引入``` #import <objc/runtime.h> ```

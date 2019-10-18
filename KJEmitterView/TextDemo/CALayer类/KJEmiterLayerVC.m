@@ -35,7 +35,6 @@
         NSLog(@"end");
         button.alpha = 1;
     };
-    
     [button addTarget:layer action:@selector(restart) forControlEvents:UIControlEventTouchUpInside];
 }
 

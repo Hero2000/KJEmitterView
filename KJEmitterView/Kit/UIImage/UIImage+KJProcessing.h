@@ -10,6 +10,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (KJProcessing)
 
+/** 指定位置屏幕截图 */
++ (UIImage*)kj_captureScreen:(UIView *)view Rect:(CGRect)rect;
+
 /** 屏幕截图 返回一张截图 */
 + (UIImage*)kj_captureScreen:(UIView*)view;
 

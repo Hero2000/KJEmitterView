@@ -11,6 +11,18 @@
 #import <QuartzCore/QuartzCore.h>
 
 @implementation UIImage (KJProcessing)
+
+/** 指定位置屏幕截图 */
++ (UIImage*)kj_captureScreen:(UIView *)view Rect:(CGRect)rect{
+    return ({
+        UIGraphicsBeginImageContext(view.frame.size);
+        [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        UIImage *newImage = [UIImage imageWithCGImage:CGImageCreateWithImageInRect([viewImage CGImage], rect)];
+        newImage;
+    });
+}
 /** 屏幕截图 */
 + (UIImage*)kj_captureScreen:(UIView *)view{
     // 手动开启图片上下文
@@ -29,13 +41,11 @@
 /** 返回圆形图片 直接操作layer.masksToBounds = YES 会比较卡顿 */
 - (UIImage *)kj_circleImage{
     UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0);/// 图片是否显示通道
-    // 获得上下文
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextRef ctx = UIGraphicsGetCurrentContext(); // 获得上下文
     // 添加一个圆
     CGRect rect = CGRectMake(0, 0, self.size.width, self.size.height);
     CGContextAddEllipseInRect(ctx, rect);
-    // 裁剪
-    CGContextClip(ctx);
+    CGContextClip(ctx);// 裁剪
     // 将图片画上去
     [self drawInRect:rect];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -46,7 +56,7 @@
 /** 图片旋转 */
 - (UIImage *)kj_rotateInRadians:(CGFloat)radians{
     if (!(&vImageRotate_ARGB8888)) return nil;
-    const size_t width = self.size.width;
+    const size_t width  = self.size.width;
     const size_t height = self.size.height;
     const size_t bytesPerRow = width * 4;
     CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
@@ -111,17 +121,13 @@
     if (CGSizeEqualToSize(imageSize, targetSize)== NO){
         CGFloat widthFactor = targetWidth / width;
         CGFloat heightFactor = targetHeight / height;
-        if (widthFactor > heightFactor)
-        scaleFactor = widthFactor; // scale to fit height
-        else
-        scaleFactor = heightFactor; // scale to fit width
+        scaleFactor = widthFactor > heightFactor ? widthFactor : heightFactor;
         scaledWidth= width * scaleFactor;
         scaledHeight = height * scaleFactor;
         // center the image
         if (widthFactor > heightFactor){
             thumbnailPoint.y = (targetHeight - scaledHeight)* 0.5;
-        }
-        else if (widthFactor < heightFactor){
+        }else if (widthFactor < heightFactor){
             thumbnailPoint.x = (targetWidth - scaledWidth)* 0.5;
         }
     }
@@ -133,9 +139,6 @@
     thumbnailRect.size.height = scaledHeight;
     [sourceImage drawInRect:thumbnailRect];
     newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    if(newImage == nil) NSLog(@"=========could not scale image===========");
-    
     //pop the context to get back to the default
     UIGraphicsEndImageContext();
     return newImage;
@@ -155,7 +158,7 @@
     UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0);
     CGRect imgRect = CGRectMake(0, 0, self.size.width, self.size.height);
     [self drawInRect:imgRect];// 原图
-    [mark drawInRect:rect];   // 水印图
+    [mark drawInRect:rect];// 水印图
     UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newPic;
@@ -303,7 +306,9 @@
         CGImageRef tmp = CGImageCreateWithImageInRect([image CGImage], frame);
         UIImage *newImage = [UIImage imageWithCGImage:tmp scale:image.scale orientation:image.imageOrientation];
         CGImageRelease(tmp);
-        newImage ;
+        newImage;
     });
 }
+
+
 @end

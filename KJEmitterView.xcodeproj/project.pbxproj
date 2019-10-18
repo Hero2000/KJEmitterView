@@ -50,6 +50,8 @@
 		6889503222A74ED60060C21E /* UIButton+KJEnlargeTouchArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 6889503122A74ED60060C21E /* UIButton+KJEnlargeTouchArea.m */; };
 		6889C33A2354668E00D01F70 /* UISegmentedControl+KJCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 6889C3392354668E00D01F70 /* UISegmentedControl+KJCustom.m */; };
 		68959C0021B3998A004F794F /* KJAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68959BFE21B3998A004F794F /* KJAlertView.m */; };
+		689914972355C4C1008EE9C7 /* UIButton+KJEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 689914962355C4C1008EE9C7 /* UIButton+KJEmitter.m */; };
+		6899149A2355C586008EE9C7 /* KJKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 689914992355C586008EE9C7 /* KJKit.bundle */; };
 		68A5ECCF2305091700A3069D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 68A5ECCD2305091700A3069D /* README.md */; };
 		68A5ECD02305091700A3069D /* KJEmitterView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 68A5ECCE2305091700A3069D /* KJEmitterView.podspec */; };
 		68AEE23F22A6169600167F83 /* UIView+KJGestureBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AEE23E22A6169600167F83 /* UIView+KJGestureBlock.m */; };
@@ -155,6 +157,9 @@
 		6889C3392354668E00D01F70 /* UISegmentedControl+KJCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISegmentedControl+KJCustom.m"; sourceTree = "<group>"; };
 		68959BFE21B3998A004F794F /* KJAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJAlertView.m; sourceTree = "<group>"; };
 		68959BFF21B3998A004F794F /* KJAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KJAlertView.h; sourceTree = "<group>"; };
+		689914952355C4C1008EE9C7 /* UIButton+KJEmitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+KJEmitter.h"; sourceTree = "<group>"; };
+		689914962355C4C1008EE9C7 /* UIButton+KJEmitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+KJEmitter.m"; sourceTree = "<group>"; };
+		689914992355C586008EE9C7 /* KJKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KJKit.bundle; sourceTree = "<group>"; };
 		68A5ECCD2305091700A3069D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		68A5ECCE2305091700A3069D /* KJEmitterView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KJEmitterView.podspec; sourceTree = SOURCE_ROOT; };
 		68AB4F8521AF834E003A2A60 /* KJEmitterHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJEmitterHeader.h; sourceTree = "<group>"; };
@@ -459,6 +464,14 @@
 			path = AlertView;
 			sourceTree = "<group>";
 		};
+		689914982355C564008EE9C7 /* Res */ = {
+			isa = PBXGroup;
+			children = (
+				689914992355C586008EE9C7 /* KJKit.bundle */,
+			);
+			path = Res;
+			sourceTree = "<group>";
+		};
 		68B02FF021B2FBC400349510 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +505,7 @@
 		68BA6C0821B303D40013C4AD /* Kit */ = {
 			isa = PBXGroup;
 			children = (
+				689914982355C564008EE9C7 /* Res */,
 				6889503322A752090060C21E /* KJMacros */,
 				68BA6C2321B303D40013C4AD /* UIBarButtonItem */,
 				68BA6C1021B303D40013C4AD /* UIButton */,
@@ -522,6 +536,8 @@
 		68BA6C1021B303D40013C4AD /* UIButton */ = {
 			isa = PBXGroup;
 			children = (
+				689914952355C4C1008EE9C7 /* UIButton+KJEmitter.h */,
+				689914962355C4C1008EE9C7 /* UIButton+KJEmitter.m */,
 				68BA6C1621B303D40013C4AD /* UIButton+KJButtonContentLayout.h */,
 				68BA6C1221B303D40013C4AD /* UIButton+KJButtonContentLayout.m */,
 				685CE15722560193004E3AF4 /* UIButton+KJBlock.h */,
@@ -646,6 +662,7 @@
 			files = (
 				6869046D21B2D36B00ED072F /* KJFloodImageVC.xib in Resources */,
 				68776CF521AC34A0000A1435 /* LaunchScreen.storyboard in Resources */,
+				6899149A2355C586008EE9C7 /* KJKit.bundle in Resources */,
 				68A5ECCF2305091700A3069D /* README.md in Resources */,
 				680A61A2230E308500BCE302 /* KJIMageVC.xib in Resources */,
 				680A61AC230E461000BCE302 /* KJViewGradientVC.xib in Resources */,
@@ -676,6 +693,7 @@
 				68E166D0234F4D5B008E8A80 /* UIViewController+KJFullScreen.m in Sources */,
 				68BA6C3021B303D40013C4AD /* UIView+KJRectCorner.m in Sources */,
 				680A61A1230E308500BCE302 /* KJIMageVC.m in Sources */,
+				689914972355C4C1008EE9C7 /* UIButton+KJEmitter.m in Sources */,
 				6889C33A2354668E00D01F70 /* UISegmentedControl+KJCustom.m in Sources */,
 				68BA6C3521B303D40013C4AD /* UINavigationBar+KJExtension.m in Sources */,
 				684BFEF021BA11020015641A /* NSArray+KJLog.m in Sources */,

@@ -7,13 +7,14 @@
 //
 
 #import "KJButtonVC.h"
+#import "UIButton+KJEmitter.h" // 按钮粒子效果
 
 @interface KJButtonVC ()
 @property(nonatomic,strong)UIButton *button;
 @property(nonatomic,strong)NSArray *segmentedTitleArray;
 @property(nonatomic,strong)NSArray *NameArray;
 @property(nonatomic,strong)NSMutableArray <UILabel *>*labelArray;
-
+@property(nonatomic,strong)UIButton *emitterButton;
 @end
 
 @implementation KJButtonVC
@@ -21,8 +22,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.view addSubview:self.button];
+    self.NameArray = @[@"",@"",@"图文间距",@"图文边界间距"];
+    self.segmentedTitleArray = @[@[@"居中-图左文右",@"居中-图右文左",@"居中-图上文下",@"居中-图下文上"],
+    @[@"居左-图左文右",@"居左-图右文左",@"居右-图左文右",@"居右-图右文左"]];
+    self.labelArray = [NSMutableArray array];
     
+    [self.view addSubview:self.button];
+    [self.view addSubview:self.emitterButton];
     [self createSegmented];
 }
 // 重写SET传值，需要在图文元素确定后才能设置布局，之后参数即可动态调整
@@ -56,22 +62,18 @@
     }
 }
 
-
-
 #pragma mark - 懒加载区
 - (UIButton *)button{
     if (!_button) {
-        UIColor *iosSystemBlue = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
         _button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kScreenW-150, 80)];
         _button.center = CGPointMake(kScreenW/2, 180);
         _button.backgroundColor = UIColor.whiteColor;
         _button.layer.borderWidth = 1;
-        _button.layer.borderColor = [iosSystemBlue CGColor];
+        _button.layer.borderColor = UIColor.blueColor.CGColor;
         _button.layer.masksToBounds = YES;
         _button.layer.cornerRadius = 5;
         _button.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_button setTitleColor:iosSystemBlue forState:UIControlStateNormal];
-        [_button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+        [_button setTitleColor:UIColor.blueColor forState:UIControlStateNormal];
         [_button setImage:[UIImage imageNamed:@"wode_nor"] forState:UIControlStateNormal];
         // 设置初始参数
         _button.kj_ButtonContentLayoutType = KJButtonContentLayoutStyleNormal;
@@ -79,10 +81,31 @@
     }
     return _button;
 }
+- (UIButton*)emitterButton{
+    if (!_emitterButton) {
+        CGFloat Y = 5 * 40 + self.button.frame.origin.y + CGRectGetHeight(self.button.frame) + 50;
+        UILabel *label = [UILabel new];
+        label.text = @"按钮点赞粒子效果展示";
+        label.textColor = UIColor.blueColor;
+        label.font = [UIFont systemFontOfSize:14];
+        label.frame = CGRectMake(10, Y, 150, 20);
+        [self.view addSubview:label];
+        _emitterButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _emitterButton.frame = CGRectMake(180, Y, 30, 30);
+        _emitterButton.centerY = label.centerY;
+        [_emitterButton setImage:kGetImage(@"button_like_norm") forState:(UIControlStateNormal)];
+        [_emitterButton setImage:kGetImage(@"button_like_sele") forState:(UIControlStateSelected)];
+        /// 开启点赞粒子效果
+        _emitterButton.kj_openButtonEmitter = YES;
+        [_emitterButton kj_addAction:^(UIButton * _Nonnull kButton) {
+            kButton.selected = !kButton.selected;
+        }];
+    }
+    return _emitterButton;
+}
 
 - (void)createSegmented{
     NSArray *defaultParameters = @[@"",@"",@"0",@"5"];
-    
     for (int i = 0; i < 4; i ++) {
         CGFloat width = 150;
         CGFloat Y = i * 40 + self.button.frame.origin.y + CGRectGetHeight(self.button.frame) + 50;
@@ -118,35 +141,6 @@
         }
     }
 }
-- (NSArray *)NameArray{
-    if (!_NameArray) {
-        _NameArray = @[@"",@"",@"图文间距",@"图文边界间距"];
-    }
-    return _NameArray;
-}
-- (NSMutableArray *)labelArray{
-    if (!_labelArray) {
-        _labelArray = [NSMutableArray array];
-    }
-    return _labelArray;
-}
-- (NSArray *)segmentedTitleArray{
-    if (!_segmentedTitleArray) {
-        _segmentedTitleArray = @[@[@"居中-图左文右",@"居中-图右文左",@"居中-图上文下",@"居中-图下文上"],
-                                 @[@"居左-图左文右",@"居左-图右文左",@"居右-图左文右",@"居右-图右文左"]];
-    }
-    return _segmentedTitleArray;
-}
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
 

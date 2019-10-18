@@ -32,6 +32,7 @@
  
  #### Add 4.5.5
  1、UIViewController+KJFullScreen 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
+ 2、UIImage+KJProcessing 新增 kj_captureScreen 指定位置屏幕截图
  
  #### Add 4.5.4
  1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者
@@ -121,6 +122,7 @@
 #import "UIButton+KJBlock.h" // 点击事件ButtonBlock
 #import "UIButton+KJEnlargeTouchArea.h" // 改变UIButton的响应区域
 #import "UIButton+KJButtonContentLayout.h"  // 图文混排
+//#import "UIButton+KJEmitter.h" // 按钮粒子效果
 
 #import "UILabel+KJAttributedString.h" // 富文本
 
