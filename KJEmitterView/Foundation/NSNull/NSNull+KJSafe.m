@@ -8,7 +8,6 @@
 
 #import "NSNull+KJSafe.h"
 #import <objc/runtime.h>
-#import <Foundation/Foundation.h>
 
 //若未定义NULLSAFE_ENABLED宏，则定义为1；若定义过NULLSAFE_ENABLED为0，下列代码则不执行，学习此种宏控制的代码执行方式
 #ifndef NULLSAFE_ENABLED

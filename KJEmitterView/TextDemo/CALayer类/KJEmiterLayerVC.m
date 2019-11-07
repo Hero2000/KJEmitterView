@@ -25,16 +25,16 @@
     button.alpha = 0;
     [self.view addSubview:button];
     
-    KJEmitterLayer *layer = [KJEmitterLayer createEmitterLayerWithImage:[UIImage imageNamed:@"pikaqiu"] WaitTime:1.0 Block:^(KJEmitterLayer * _Nonnull obj) {
+    KJEmitterLayer *layer = [KJEmitterLayer createEmitterLayerWaitTime:.1 ImageBlock:^UIImage * _Nonnull(KJEmitterLayer * _Nonnull obj) {
         obj.KJIgnored(NO, YES).KJPixel(UIColor.clearColor, 0, CGPointMake(self.view.center.x, 0), 0);
+        return [UIImage imageNamed:@"pikaqiu"];
+    } CompleteBlock:^{
+        NSLog(@"end");
+        button.alpha = 1;
     }];
     layer.bounds = CGRectMake(0, 0, self.view.width, self.view.width);
     layer.position = self.view.center;
     [self.view.layer addSublayer:layer];
-    layer.KJEmitterLayerDrawCompleteBlock = ^{
-        NSLog(@"end");
-        button.alpha = 1;
-    };
     [button addTarget:layer action:@selector(restart) forControlEvents:UIControlEventTouchUpInside];
 }
 

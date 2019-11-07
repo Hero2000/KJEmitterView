@@ -29,15 +29,18 @@
  博客地址：https://blog.csdn.net/qq_34534179
  
  ####版本更新日志:
- 
- #### Add 4.5.5
+ #### Add 4.5.7
  1、UIViewController+KJFullScreen 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
- 2、UIImage+KJProcessing 新增 kj_captureScreen 指定位置屏幕截图
- 
+ 2、UISegmentedControl+KJCustom 解决ios13以后 修改不了 backgroundColor 和 tintColor 问题
+ 3、UIImage+KJProcessing 新增 kj_captureScreen 指定位置屏幕截图
+ 4、UIImage+KJProcessing 新增图片压缩方法 kj_compressImage:TargetByte:
+ 5、UIButton+KJEmitter 新增一款粒子点赞效果 kj_openButtonEmitter是否开启点赞粒子
+ 6、NSObject+KJMath 新增数学方程式扩展
+
  #### Add 4.5.4
  1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者
  2、UIImage+KJProcessing 新增 kj_cutImageWithImage 根据特定的区域对图片进行裁剪
- 3、UIImage+KJProcessing 新增 kj_calulateImageFileSize 获取图片
+ 3、UIImage+KJProcessing 新增 kj_calulateImageFileSize 获取图片大小
  4、UIButton+KJBlock 新增 接受点击事件的时间间隔属性 kj_AcceptEventTime
  5、新增常用方法函数 _KJINLINE
  
@@ -108,7 +111,6 @@
  4、UIView+KJFrame   新增一些轻量级布局链式属性
  5、UIView+KJRectCorner  新增方法  虚线边框  kj_DashedLineColor
  
- 
  备注：部分资料来源于网络～  就不一一指出道谢，整理起来方便自己和大家使用
  */
 
@@ -148,5 +150,6 @@
 
 /******************* Foundation ******************************/
 //#import "NSArray+ElementDeal.h"  /// 对数组元素的处理 包括排序、查找、去重等等
+//#import "NSObject+KJMath.h"  /// 数学方程式
 
 #endif /* KJEmitterHeader_h */

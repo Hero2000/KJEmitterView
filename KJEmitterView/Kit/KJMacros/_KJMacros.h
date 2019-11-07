@@ -25,7 +25,6 @@
 #else
 #define NSLog(format, ...)
 #endif
-
 // 字符串拼接
 #define kStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
 // block相关宏
@@ -78,7 +77,7 @@
 #endif
 
 #pragma mark ********** 5.iPhoneX系列尺寸布局   *********
-// 判断是否为iPhone X 系列  这样写消除了在Xcode10上的警告。
+// 判断是否为iPhone X 系列  这样写消除了在Xcode10上的警告
 #define iPhoneX \
 ({BOOL isPhoneX = NO;\
 if (@available(iOS 11.0, *)) {\
@@ -87,11 +86,11 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 (isPhoneX);})
 // tabBar height
 #define kTABBAR_HEIGHT (iPhoneX ? (49.f+34.f):49.f)
-// statusBar height.
+// statusBar height
 #define kSTATUSBAR_HEIGHT (iPhoneX ? 44.0f : 20.f)
-// navigationBar height.
+// navigationBar height
 #define kNAVIGATION_HEIGHT (44.f)
-// (navigationBar + statusBar) height.
+// (navigationBar + statusBar) height
 #define kSTATUSBAR_NAVIGATION_HEIGHT (iPhoneX ? 88.0f : 64.f)
 // 没有tabar 距 底边高度
 #define kBOTTOM_SPACE_HEIGHT (iPhoneX ? 34.0f : 0.0f)
@@ -111,7 +110,7 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 #define kISiPhone6P (kISiPhone && kScreenMaxLength == 736.0)
 #define kISiPhoneX  (kISiPhone && kScreenMaxLength == 812.0)
 #define kISiPhoneXr (kISiPhone && kScreenMaxLength == 896.0)
-#define kISiPhoneXX (kISiPhone && kScreenMaxLength > 811.0)
+#define kISiPhoneXX (kISiPhone && kScreenMaxLength >  811.0)
 
 /// 支持横屏可以用下面的宏
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000 // 当前Xcode支持iOS8及以上

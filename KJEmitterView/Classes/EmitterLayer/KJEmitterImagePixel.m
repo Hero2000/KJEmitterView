@@ -18,10 +18,7 @@
 }
 
 - (UIColor*)color {
-    if (_pixelColor) {
-        return _pixelColor;
-    }
-    return _color;
+    return _pixelColor?:_color;
 }
 
 - (void)setRandomPointRange:(CGFloat)randomPointRange {

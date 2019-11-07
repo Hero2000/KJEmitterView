@@ -44,10 +44,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage*)kj_imageCompoundWithLocalImage:(UIImage*)useImage MsakImage:(UIImage*)maskImage LoopNums:(NSInteger)loopTimes Orientation:(UIImageOrientation)orientation;
 
 /// 获取图片大小
-+ (NSArray*)kj_calulateImageFileSize:(UIImage*)image;
++ (double)kj_calulateImageFileSize:(UIImage *)image ;
 
 /// 根据特定的区域对图片进行裁剪
 + (UIImage*)kj_cutImageWithImage:(UIImage*)image Frame:(CGRect)frame;
+
+/** 压缩图片精确至指定Data大小, 只需循环3次, 并且保持图片不失真 */
++ (UIImage *)kj_compressImage:(UIImage *)image TargetByte:(NSUInteger)maxLength;
 
 @end
 

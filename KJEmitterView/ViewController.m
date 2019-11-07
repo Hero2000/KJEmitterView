@@ -7,11 +7,9 @@
 //
 
 #import "ViewController.h"
-
 #import "NSArray+KJOverstep.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
-
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) NSArray *sectionTemps;
 @property(nonatomic, strong) NSMutableArray *temps;
@@ -43,12 +41,12 @@
     }
     NSDictionary *dic = self.temps[indexPath.section][indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%zi. %@",indexPath.row + 1,dic[@"VCName"]];
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.textLabel.textColor = UIColor.redColor;
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+    cell.textLabel.textColor = UIColor.greenColor;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.detailTextLabel.text = dic[@"describeName"];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-    cell.detailTextLabel.textColor = UIColor.purpleColor;
+    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:13];
+    cell.detailTextLabel.textColor = UIColor.redColor;
     
     return cell;
 }
@@ -58,10 +56,9 @@
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     header.textLabel.textAlignment = NSTextAlignmentCenter;
-    header.textLabel.textColor = UIColor.blackColor;
+    header.textLabel.textColor = UIColor.yellowColor;
     header.textLabel.font = [UIFont systemFontOfSize:14];
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *dic = self.temps[indexPath.section][indexPath.row];
@@ -76,13 +73,14 @@
     if (!_temps) {
         _temps = [NSMutableArray array];
         NSMutableArray *temp1 = [NSMutableArray array];
-        [temp1 addObject:@{@"VCName":@"KJButtonVC",@"describeName":@"Button图文布局"}];
+        [temp1 addObject:@{@"VCName":@"KJButtonVC",@"describeName":@"Button图文布局点赞粒子"}];
         [temp1 addObject:@{@"VCName":@"KJViewVC",@"describeName":@"View快速切圆角"}];
         [temp1 addObject:@{@"VCName":@"KJViewGradientVC",@"describeName":@"渐变色和指定边框"}];
         [temp1 addObject:@{@"VCName":@"KJTextViewVC",@"describeName":@"TextView设置限制字数"}];
         [temp1 addObject:@{@"VCName":@"KJFloodImageVC",@"describeName":@"填充同颜色区域图片"}];
         [temp1 addObject:@{@"VCName":@"KJIMageVC",@"describeName":@"加水印和拼接图片"}];
         [temp1 addObject:@{@"VCName":@"KJFilterImageVC",@"describeName":@"滤镜相关和特效渲染"}];
+        [temp1 addObject:@{@"VCName":@"KJMathVC",@"describeName":@"数学方程式"}];
         
         NSMutableArray *temp2 = [NSMutableArray array];
         [temp2 addObject:@{@"VCName":@"KJEmiterLayerVC",@"describeName":@"图片粒子效果整理封装"}];
@@ -91,9 +89,9 @@
         
         NSMutableArray *temp3 = [NSMutableArray array];
         [temp3 addObject:@{@"VCName":@"KJAlertVC",@"describeName":@"两种AlertView"}];
-        [temp3 addObject:@{@"VCName":@"KJSelectController",@"describeName":@"自定义一款动画选中控件"}];
-        [temp3 addObject:@{@"VCName":@"KJSwitchVC",@"describeName":@"自定义一款可爱的动画Switch控件"}];
-        [temp3 addObject:@{@"VCName":@"KJMarqueeLabelVC",@"describeName":@"一款跑马灯Label"}];
+        [temp3 addObject:@{@"VCName":@"KJSelectController",@"describeName":@"自定义动画选中控件"}];
+        [temp3 addObject:@{@"VCName":@"KJSwitchVC",@"describeName":@"自定义动画Switch控件"}];
+        [temp3 addObject:@{@"VCName":@"KJMarqueeLabelVC",@"describeName":@"跑马灯Label"}];
         [_temps addObject:temp1];
         [_temps addObject:temp2];
         [_temps addObject:temp3];

@@ -1,30 +1,30 @@
 # KJEmitterView
 ![coverImage](https://raw.githubusercontent.com/yangKJ/CommonDatas/master/CommonDatas/Res/coverImage.jpg)
 
-* 这个工程提供了一些iOS开发中用到的类目，方便开发
-* 这里有我经常用到的一些扩展，方便好用开发
-* 整理一些好用的自定义控件，部分数据来源于网络 
+* 这个工程提供开发中用到的类目，方便开发
+* 这里有我经常用到的扩展，方便好用开发
+* 整理好用的自定义控件，部分数据来源于网络 
 
 <p align="left">
-  <img width="200" src="Res/131566445322_.pic.jpg" hspace="30px" />
+  <img width="200" src="Res/131566445322_.pic.jpg" hspace="1px" />
   <img width="200" src="Res/191566445328_.pic.jpg" hspace="30px" />
   <img width="200" src="Res/181566445327_.pic.jpg" hspace="30px" />
 </p>
 
 <p align="left">
-  <img width="200" src="Res/231566445332_.pic.jpg" hspace="30px" />
+  <img width="200" src="Res/231566445332_.pic.jpg" hspace="1px" />
   <img width="200" src="Res/151566445324_.pic.jpg" hspace="30px" />
   <img width="200" src="Res/141566445323_.pic.jpg" hspace="30px" />
 </p>
 
 <p align="left">
-  <img width="200" src="Res/221566445331_.pic.jpg" hspace="30px" />
+  <img width="200" src="Res/221566445331_.pic.jpg" hspace="1px" />
   <img width="200" src="Res/281568958148_.pic.jpg" hspace="30px" />
   <img width="200" src="Res/171566445326_.pic.jpg" hspace="30px" />
 </p>
 
 <p align="left">
-  <img width="200" src="Res/211566445330_.pic.jpg" hspace="30px" />
+  <img width="200" src="Res/211566445330_.pic.jpg" hspace="1px" />
   <img width="200" src="Res/201566445329_.pic.jpg" hspace="30px" />
 </p>
 
@@ -83,6 +83,13 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
+#### Add 4.5.7
+1、UIViewController+KJFullScreen 解决iOS13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
+2、UISegmentedControl+KJCustom 解决iOS13以后 修改不了 backgroundColor 和 tintColor 问题
+3、UIImage+KJProcessing 新增 kj_captureScreen 指定位置屏幕截图
+4、UIImage+KJProcessing 新增图片压缩方法 kj_compressImage:TargetByte:
+5、UIButton+KJEmitter 新增一款粒子点赞效果 kj_openButtonEmitter是否开启点赞粒子
+
 #### Add 4.5.4
 1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者
 2、UIImage+KJProcessing 新增 kj_cutImageWithImage 根据特定的区域对图片进行裁剪
@@ -199,7 +206,7 @@ end
 
 [![LOGO](https://github.com/yangKJ/KJPlayerDemo/blob/master/KJPlayerDemo/Demo/Assets.xcassets/AppIcon.appiconset/WechatIMG57486iPhoneSpootlight7_40pt@3x.png?raw=true)](https://www.jianshu.com/u/c84c00476ab6)
 
-[![谢谢老板](https://raw.githubusercontent.com/yangKJ/CommonDatas/master/CommonDatas/Money/77%E3%80%82/All.png)](https://github.com/yangKJ/KJPlayerDemo)
+[![谢谢老板](https://upload-images.jianshu.io/upload_images/1933747-879572df848f758a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://github.com/yangKJ/KJPlayerDemo)
 
 
 #### 救救孩子吧，谢谢各位老板～～～～

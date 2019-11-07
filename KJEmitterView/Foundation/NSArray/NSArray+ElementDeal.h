@@ -25,15 +25,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)kj_binarySearchTarget:(NSInteger)target;
 
 /* 冒泡排序 */
-- (NSArray *)kj_bubbleSort;
+- (NSArray*)kj_bubbleSort;
 
 /* 插入排序 */
-- (NSArray *)kj_insertSort;
+- (NSArray*)kj_insertSort;
 
 /* 选择排序 */
-- (NSArray *)kj_selectionSort;
+- (NSArray*)kj_selectionSort;
 
-/** 生成一组不重复的随机数 （随机数的个数为 最大数-最小数） */
+/** 生成一组不重复的随机数 */
 - (NSArray*)kj_noRepeatRandomArrayWithMinNum:(NSInteger)min maxNum:(NSInteger )max count:(NSInteger)count;
 
 @end

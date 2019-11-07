@@ -9,14 +9,12 @@
 #import <QuartzCore/QuartzCore.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+typedef void (^KJEmitterLayerDrawCompleteBlock)(void);
 @interface KJEmitterLayer : CALayer
 // 初始化
-+ (instancetype)createEmitterLayerWithImage:(UIImage*)image WaitTime:(CGFloat)waitTime Block:(void(^)(KJEmitterLayer *obj))block;
-/// 绘制完成之后的回调
-@property(nonatomic,strong) void(^KJEmitterLayerDrawCompleteBlock)(void);
++ (instancetype)createEmitterLayerWaitTime:(CGFloat)waitTime ImageBlock:(UIImage*(^)(KJEmitterLayer *obj))block CompleteBlock:(KJEmitterLayerDrawCompleteBlock)complete;
 /// 重置
-//- (void)restart;
+- (void)restart;
 
 /*****设置一些相关的数据*****/
 @property(nonatomic,strong,readonly) KJEmitterLayer *(^KJIgnored)(BOOL ignoredBlack,BOOL ignoredWhite);

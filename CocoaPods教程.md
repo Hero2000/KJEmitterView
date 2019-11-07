@@ -116,30 +116,31 @@ end
 
 
 ### 七、Bug总结
-###### 1、[!] There was an error registering with trunk: getaddrinfo: nodename nor servname provided, or not known
+###### 1、There was an error registering with trunk: getaddrinfo: nodename nor servname provided, or not known
 - 解决方案：开启了ShadowSocks，把ShadowSocks关闭再重试就好了，根本原因是DNS不对
 - 附上解决方案链接：https://link.jianshu.com/?t=https://github.com/CocoaPods/CocoaPods/issues/2174
 
-###### 2、- WARN | [iOS] license: Unable to find a license file
+###### 2、license: Unable to find a license file
 - 原因：没有找到License文件，根据规则也可以直接把文本写在podspec文件里
-- 解决方案：podspec文件里面添加 ``` s.license = "Copyright (c) 2018 yangkejun" ```
+- 解决方案：podspec文件里面添加 
+- ` s.license = "Copyright (c) 2018 yangkejun" `
 
-###### 3、- WARN | source: The version should be included in the Git tag.
+###### 3、source: The version should be included in the Git tag.
 - 原因：podspec里的version要跟git上的tag相匹配
 - 解决方案：
-- 查看当前tag：    git tag 
-- 推到远端：       git push --tags
+- 查看当前tag：`git tag `
+- 推到远端：`git push --tags`
 
-###### 4、[!] Unable to accept duplicate entry for: KJEmitterDemo (1.0.0)
+###### 4、Unable to accept duplicate entry for: KJEmitterDemo (1.0.0)
 - 原因：重复
 - 解决方案：
-- 4.1．重新给git库添加tag     git tag -a 1.0.1 -m'release 1.0.1'
-- 4.2．上传到远端             git push origin --tags
-- 4.3．重新修改podspec文件   s.version      = "1.0.1"
-- 4.4．再次校验             pod spec lint KJEmitterDemo.podspec --allow-warnings
-- 4.5．最后上传到trunk        pod trunk push KJEmitterDemo.podspec
+- 4.1．重新给git库添加tag     `git tag -a 1.0.1 -m'release 1.0.1'`
+- 4.2．上传到远端             `git push origin --tags`
+- 4.3．重新修改podspec文件   `s.version  = "1.0.1"`
+- 4.4．再次校验             `pod spec lint KJEmitterDemo.podspec --allow-warnings`
+- 4.5．最后上传到trunk        `pod trunk push KJEmitterDemo.podspec`
 
-###### 5、[!] Unable to find a pod with name, author, summary, or description matching KJEmitterDemo
+###### 5、Unable to find a pod with name, author, summary, or description matching KJEmitterDemo
 - 原因：审核过程是要两三天
 - 解决方案：
 - 执行```pod setup```命令进行本地依赖库更新，然后再搜索
@@ -176,11 +177,11 @@ end
 - 原因：推送过期
 - 解决方案：重新将podspec文件传到trunk上 ```pod trunk push KJEmitterView.podspec```
 
-###### 8、- ERROR | [iOS] public_header_files: The pattern includes header files that are not listed in source_files 
+###### 8、public_header_files: The pattern includes header files that are not listed in source_files 
 
 - 原因：文件夹层次结构过浅，导致无法找到对应的文件
 - 解决方案：默认的头文件目录设置为：
-- s.public_header_files = 'KJEmitterView/Classes/** / *.h'
+- `s.public_header_files = 'KJEmitterView/Classes/** / *.h'`
 - 但是如果Classes目录中，你的代码文件夹层次结构超过两级，就会出现该错误。修改文件层级
 
 ###### 9、搜索不到最新版本pod库
@@ -200,31 +201,59 @@ end
 - 原因：有`dispatch_source_t`相关的库函数，也一直验证不通过
 - 解决方案：s.frameworks当中加入可以用`dispatch_source_t`的库
 
-###### 12、- ERROR | [KJEmitterView/Classes] xcodebuild:  KJEmitterView/KJEmitterView/Classes/AlertView/KJAlertView.m:163:116: error: property 'height' not found on object of type 'UILabel *'
+###### 12、[KJEmitterView/Classes] xcodebuild:  KJEmitterView/KJEmitterView/Classes/AlertView/KJAlertView.m:163:116: error: property 'height' not found on object of type 'UILabel *'
 ![2.png](https://upload-images.jianshu.io/upload_images/1933747-7de6a4b6abcac480.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-- 原因：未引入头文件UIView+KJFrame在KJAlertView当中
+- 原因：未引入头文件`UIView+KJFrame`在KJAlertView当中
 - 解决方案：引入头文件
 
-###### 13、- NOTE  | [iOS] [KJEmitterView/Classes] xcodebuild:  KJEmitterView/KJEmitterView/Classes/AlertView/KJAlertView.m:10:9: fatal error: 'UIView+KJFrame.h' file not found
+###### 13、[KJEmitterView/Classes] xcodebuild:  KJEmitterView/KJEmitterView/Classes/AlertView/KJAlertView.m:10:9: fatal error: 'UIView+KJFrame.h' file not found
 ![3.png](https://upload-images.jianshu.io/upload_images/1933747-fab29564332b8919.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 - 原因：不在同一个文件夹下面
 - 解决方案：修改不引入该头文件的错误，或者将需要引入的头文件和KJAlertView放在同一个文件夹之下。
 
-###### 14、ERROR | name: The name of the spec should match the name of the file.
+###### 14、name: The name of the spec should match the name of the file.
 - 原因：文件名字不一样
 - 解决方案：xxx.podspec 文件名必须和文件里面的 s.name 文件名 "xxx" 保持一致
 
-###### 15、ERROR | [iOS] unknown: Encountered an unknown error (Could not find a `ios` simulator (valid values: com.apple.coresimulator.simruntime.ios-12-2, com.apple.coresimulator.simruntime.tvos-12-2, com.apple.coresimulator.simruntime.watchos-5-2). Ensure that Xcode -> Window -> Devices has at least one `ios` simulator listed or otherwise add one.) during validation.
-- 解决方案：升级CocoaPods，终端执行 sudo gem install cocoapods 代码即可
+###### 15、
+```
+unknown: Encountered an unknown error 
+(Could not find a `ios` simulator 
+(valid values: com.apple.coresimulator.simruntime.ios-12-2,
+com.apple.coresimulator.simruntime.tvos-12-2, 
+com.apple.coresimulator.simruntime.watchos-5-2). 
+Ensure that Xcode -> Window -> Devices has at least one `ios` simulator listed or otherwise add one.) during validation.
+```
+- 解决方案：升级CocoaPods，终端执行 `sudo gem install cocoapods` 代码即可
 
-###### 16、- WARN  | [KJEmitterView/Control] xcodebuild:  KJEmitterView/KJEmitterView/Control/MarqueeLabel/KJMarqueeLabel.m:23:14: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
+###### 16、[KJEmitterView/Control] xcodebuild:  KJEmitterView/KJEmitterView/Control/MarqueeLabel/KJMarqueeLabel.m:23:14: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
 
 - 原因：此警告就是某属性说好的不能为空，你又在某地方写了XX = nil 所以冲突  
 - 解决方案：声明一个属性的时候加上 __nullable（？可以为空）与__nonnull（！不能为空）或者用宏 NS_ASSUME_NONNULL_BEGIN 和 NS_ASSUME_NONNULL_END 包住多个属性全部具备nonnull，然后仅对需要nullable的改下就行
 
-###### 17、- NOTE  | [iOS] [KJEmitterView/Classes] xcodebuild:  :19:9: error: declaration of 'Method' must be imported from module 'ObjectiveC.runtime' before it is required
+###### 17、[KJEmitterView/Classes] xcodebuild:  :19:9: error: declaration of 'Method' must be imported from module 'ObjectiveC.runtime' before it is required
 
 - 原因：未引入runtime
 - 解决方案：在缺少的文件当中引入``` #import <objc/runtime.h> ```
+
+######18、RPC failed; curl 56 LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno 54
+```
+- ERROR | [iOS] unknown: Encountered an unknown error ([!] /usr/bin/git clone https://github.com/yangKJ/KJPlayerDemo.git /var/folders/fd/yxh686d17s3bfcz11t3_s9ch0000gn/T/d20191022-3327-1a1sjwn --template= --single-branch --depth 1 --branch 1.0.6
+
+Cloning into '/var/folders/fd/yxh686d17s3bfcz11t3_s9ch0000gn/T/d20191022-3327-1a1sjwn'...
+error: RPC failed; curl 56 LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno 54
+fatal: the remote end hung up unexpectedly
+fatal: early EOF
+fatal: index-pack failed
+) during validation.
+
+Analyzed 1 podspec.
+
+[!] The spec did not pass validation, due to 1 error.
+Yang:KJPlayerDemo yangkejun$ pod tru
+```
+
+- 原因：网络问题  
+- 解决方案： 

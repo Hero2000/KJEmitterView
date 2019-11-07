@@ -17,7 +17,8 @@
     Class class = [self class];
     Method originalMethod = class_getInstanceMethod(class, originalSelector);
     Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-    if (class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))) {
+    BOOL boo = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
+    if (boo) {
         class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
     } else {
         method_exchangeImplementations(originalMethod, swizzledMethod);
@@ -53,7 +54,7 @@
 }
 
 - (void)setupLayer{
-    //CAEmitterCell: CAEmitterCell是粒子发射系统里的粒子，用CAEmitterCell来定义你所需要的粒子的样式，图片，颜色，方向，运动，缩放比例和生命周期等等。
+    //CAEmitterCell是粒子发射系统里的粒子,可设置粒子的样式，图片，颜色，方向，运动，缩放比例和生命周期等等。
     CAEmitterCell *explosionCell = [CAEmitterCell emitterCell];
     explosionCell.name = @"explosion";
     explosionCell.alphaRange = 0.10;//一个粒子的颜色alpha能改变的范围
@@ -67,7 +68,8 @@
     explosionCell.scaleRange = 0.02;//缩放比例范围
     explosionCell.contents = (id)[UIImage imageNamed:@"KJKit.bundle/button_sparkle"].CGImage;//是个CGImageRef的对象,既粒子要展现的图片
     
-    //CAEmitterLayer ：CAEmitterLayer类提供了一个粒子发射器系统为核心的动画。这些粒子是由CAEmitterCell组成的实例，它相当于一个管理者，来管理 CAEmitterCell的发射的一些细节，比如发射的位置，发射形状等等。
+    /// CAEmitterLayer类提供了一个粒子发射器系统为核心的动画
+    /// 这些粒子是由CAEmitterCell组成的实例，它相当于一个管理者，来管理 CAEmitterCell的发射的一些细节，比如发射的位置，发射形状等等。
     self.explosionLayer = [CAEmitterLayer layer];
     self.explosionLayer.name = @"emitterLayer";
     self.explosionLayer.emitterShape = kCAEmitterLayerCircle;//发射源的形状
@@ -133,7 +135,10 @@
     
     /*
      CAKeyframeAnimation : http://blog.csdn.net/u011700462/article/details/37540709
-     cacluationMode:在关键帧动画中还有一个非常重要的参数,那便是calculationMode,计算模式.其主要针对的是每一帧的内容为一个座标点的情况,也就是对anchorPoint 和 position 进行的动画.当在平面座标系中有多个离散的点的时候,可以是离散的,也可以直线相连后进行插值计算,也可以使用圆滑的曲线将他们相连后进行插值计算. calculationMode目前提供如下几种模式 kCAAnimationLinear
+     cacluationMode:在关键帧动画中还有一个非常重要的参数,那便是calculationMode,计算模式
+     其主要针对的是每一帧的内容为一个座标点的情况,也就是对anchorPoint 和 position进行的动画
+     当在平面座标系中有多个离散的点的时候,可以是离散的,也可以直线相连后进行插值计算,也可以使用圆滑的曲线将他们相连后进行插值计算
+     calculationMode目前提供如下几种模式 kCAAnimationLinear
      */
 }
 
@@ -145,7 +150,10 @@
     [self.chargeLayer setValue:@80 forKeyPath:@"emitterCells.charge.birthRate"];
     //进入下一个动作
     [self performSelector:@selector(explode) withObject:nil afterDelay:0.2];
-    //NSDate 或 CFAbsoluteTimeGetCurrent() 返回的时钟时间将会会网络时间同步，从时钟 偏移量的角度，mach_absolute_time() 和 CACurrentMediaTime() 是基于内建时钟的，能够更精确更原子化地测量，并且不会因为外部时间变化而变化（例如时区变化、夏时制、秒突变等）,但它和系统的uptime有关,系统重启后CACurrentMediaTime()会被重置。
+    /// NSDate 或 CFAbsoluteTimeGetCurrent() 返回的时钟时间将会会网络时间同步,从时钟偏移量的角度
+    /// mach_absolute_time() 和 CACurrentMediaTime() 是基于内建时钟的,能够更精确更原子化地测量
+    /// 并且不会因为外部时间变化而变化（例如时区变化、夏时制、秒突变等）
+    /// 但它和系统的uptime有关,系统重启后CACurrentMediaTime()会被重置
 }
 /** 大量喷射 */
 - (void)explode {

@@ -283,21 +283,22 @@
     return resultingImage;
 }
 /// 获取图片大小
-+ (NSArray*)kj_calulateImageFileSize:(UIImage *)image {
++ (double)kj_calulateImageFileSize:(UIImage *)image {
     NSData *data = UIImagePNGRepresentation(image);
     if (!data) {
-        /// 实际上, `UIImageJPEGRepresentation` 这个函数获取到的图片文件大小并不准确, 后面的参数改为 `0.7` 才大概是原图片的文件大小
-        data = UIImageJPEGRepresentation(image, 0.7);//需要改成0.5才接近原图片大小，原因请看下文
+        /// 实际上, UIImageJPEGRepresentation这个函数获取到的图片文件大小并不准确
+        /// 后面的参数改为 0.7才大概是原图片的文件大小
+        data = UIImageJPEGRepresentation(image, 0.7);
     }
-    double dataLength = [data length] * 1.0;
-    double num = dataLength;
-    NSArray *typeArray = @[@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB",@"ZB",@"YB"];
-    NSInteger index = 0;
-    while (dataLength > 1024) {
-        dataLength /= 1024.0;
-        index ++;
-    }
-    return @[@(num),[NSString stringWithFormat:@"image = %.3f %@",dataLength,typeArray[index]]];
+    return [data length] * 1.0;
+//    double num = dataLength;
+//    NSArray *typeArray = @[@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB",@"ZB",@"YB"];
+//    NSInteger index = 0;
+//    while (dataLength > 1024) {
+//        dataLength /= 1024.0;
+//        index ++;
+//    }
+//    return @[@(num),[NSString stringWithFormat:@"image = %.3f %@",dataLength,typeArray[index]]];
 }
 /// 根据特定的区域对图片进行裁剪
 + (UIImage*)kj_cutImageWithImage:(UIImage*)image Frame:(CGRect)frame{
@@ -308,6 +309,44 @@
         CGImageRelease(tmp);
         newImage;
     });
+}
+/** 压缩图片精确至指定Data大小, 只需循环3次, 并且保持图片不失真 */
++ (UIImage *)kj_compressImage:(UIImage *)image TargetByte:(NSUInteger)maxLength {
+    // Compress by quality
+    CGFloat compression = 1.;
+    NSData *data = UIImageJPEGRepresentation(image, compression);
+    if (data.length < maxLength) return image;
+    
+    CGFloat max = 1;
+    CGFloat min = 0;
+    for (int i = 0; i < 6; ++i) {
+        compression = (max + min) / 2;
+        data = UIImageJPEGRepresentation(image, compression);
+        if (data.length < maxLength * 0.9) {
+            min = compression;
+        } else if (data.length > maxLength) {
+            max = compression;
+        } else {
+            break;
+        }
+    }
+    UIImage *resultImage = [UIImage imageWithData:data];
+    if (data.length < maxLength) return resultImage;
+    
+    // Compress by size
+    NSUInteger lastDataLength = 0;
+    while (data.length > maxLength && data.length != lastDataLength) {
+        lastDataLength = data.length;
+        CGFloat ratio = (CGFloat)maxLength / data.length;
+        CGSize size = CGSizeMake((NSUInteger)(resultImage.size.width * sqrtf(ratio)),
+                                 (NSUInteger)(resultImage.size.height * sqrtf(ratio)));
+        UIGraphicsBeginImageContext(size);
+        [resultImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        resultImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        data = UIImageJPEGRepresentation(resultImage, compression);
+    }
+    return resultImage;
 }
 
 

@@ -22,11 +22,35 @@
 @property(nonatomic,strong) UIColor *pixelColor; //改变粒子的颜色
 @property(nonatomic,assign) BOOL ignoredBlack; //忽略黑色，黑色当做透明处理，默认为NO
 @property(nonatomic,assign) BOOL ignoredWhite; //忽略白色，白色当做透明处理，默认为NO
+/// 绘制完成之后的回调
+@property(nonatomic,copy,class) KJEmitterLayerDrawCompleteBlock xxblock;
 
 @end
 
 @implementation KJEmitterLayer
-
+static KJEmitterLayerDrawCompleteBlock _xxblock = nil;
++ (KJEmitterLayerDrawCompleteBlock)xxblock{
+    if (_xxblock == nil) {
+        _xxblock = ^void(void){ };
+    }
+    return _xxblock;
+}
++ (void)setXxblock:(KJEmitterLayerDrawCompleteBlock)xxblock{
+    if (xxblock != _xxblock) {
+        _xxblock = [xxblock copy];
+    }
+}
+// 初始化
++ (instancetype)createEmitterLayerWaitTime:(CGFloat)waitTime ImageBlock:(UIImage*(^)(KJEmitterLayer *obj))block CompleteBlock:(KJEmitterLayerDrawCompleteBlock)complete{
+    KJEmitterLayer *layer = [[self alloc] init];
+    [layer config];
+    if (block) layer.image = block(layer);
+    layer.image = layer.image?:[UIImage imageNamed:@"KJEmitterLayer.bundle/EmitterLayerImage"];
+    layer.lastPixelWaitTime = waitTime ? waitTime : 1.0;
+    [layer setDatas];
+    self.xxblock = complete;
+    return layer;
+}
 - (void)config{
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(emitteraAnimation:)];
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
@@ -36,17 +60,6 @@
     _pixelBeginPoint = CGPointMake(0, 0);
     _pixelMaximum = 0;
 }
-
-// 初始化
-+ (instancetype)createEmitterLayerWithImage:(UIImage*)image WaitTime:(CGFloat)waitTime Block:(void(^)(KJEmitterLayer *obj))block{
-    KJEmitterLayer *layer = [[self alloc] init];
-    [layer config];
-    if (block) block(layer);
-    layer.image = image;
-    layer.lastPixelWaitTime = waitTime ? waitTime : 1.0;
-    [layer setDatas];
-    return layer;
-}
 - (void)setDatas{
     self.temps = [self kj_resolutionImageToPixelWithImage:self.image];
 }
@@ -54,9 +67,7 @@
 - (void)drawInContext:(CGContextRef)ctx {
     NSInteger count = 0;
     for (KJEmitterImagePixel *pixel in self.temps) {
-        if (pixel.delayTime > _animationTime) {
-            continue;
-        }
+        if (pixel.delayTime > _animationTime) continue;
         CGFloat curTime = _animationTime - pixel.delayTime;
         if (curTime >= _lastPixelWaitTime + pixel.delayDuration) { //到达了目的地的粒子原地等待下没到达的粒子
             curTime  = _lastPixelWaitTime + pixel.delayDuration;
@@ -72,7 +83,7 @@
     }
     if (count == self.temps.count) {
         [self reset];
-        !self.KJEmitterLayerDrawCompleteBlock?:self.KJEmitterLayerDrawCompleteBlock();
+        _xxblock();
     }
 }
 
@@ -131,7 +142,9 @@
             CGFloat blue  = ((CGFloat) rawData[byteIndex + 2] ) / 255.0f;
             CGFloat alpha = ((CGFloat) rawData[byteIndex + 3] ) / 255.0f;
             
-            if (alpha == 0 || (_ignoredWhite && (red+green+blue == 3)) || (_ignoredBlack && (red+green+blue == 0))) {
+            if (alpha == 0 ||
+               (_ignoredWhite && (red+green+blue == 3)) ||
+               (_ignoredBlack && (red+green+blue == 0))) {
                 //要忽略的粒子
                 continue;
             }
@@ -139,12 +152,8 @@
             KJEmitterImagePixel *pixel = [KJEmitterImagePixel new];
             pixel.color = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
             pixel.point = CGPointMake(x, y);
-            if (_pixelColor) {
-                pixel.pixelColor = _pixelColor;
-            }
-            if (_pixelRandomPointRange > 0) {
-                pixel.randomPointRange = _pixelRandomPointRange;
-            }
+            if (_pixelColor) pixel.pixelColor = _pixelColor;
+            if (_pixelRandomPointRange > 0) pixel.randomPointRange = _pixelRandomPointRange;
             [result addObject:pixel];
         }
     }

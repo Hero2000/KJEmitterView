@@ -41,23 +41,22 @@
 //MARK: - ---  二分查找
 /* 当数据量很大适宜采用该方法。
  采用二分法查找时，数据需是排好序的。
- 基本思想：假设数据是按升序排序的，对于给定值x，从序列的中间位置开始比较，如果当前位置值等于x，则查找成功；若x小于当前位置值，则在数列的前半段 中查找；若x大于当前位置值则在数列的后半段中继续查找，直到找到为止。
+ 基本思想：假设数据是按升序排序的，对于给定值x，从序列的中间位置开始比较，如果当前位置值等于x，则查找成功；
+ 若x小于当前位置值，则在数列的前半段 中查找；若x大于当前位置值则在数列的后半段中继续查找，直到找到为止。
  */
 - (NSInteger)kj_binarySearchTarget:(NSInteger)target{
-    if (self.count < 1){
-        //数组无元素,返回-1;
-        return -1;
-    }
+    if (self == nil) return -1;//数组无元素,返回-1;
     // 定义三个变量 第一个值下标、中间值下标、最后一个值下标
     NSInteger start = 0;
     NSInteger end = self.count - 1;
     NSInteger mind = 0;
     // 进行循环 // 数组中第一个对象和最后一个对象之前还有其他对象则进行循环
     while (start < end - 1){
-        //会有一些朋友看到有些人是( start + end )/ 2这样写的,但是这样写有一点不好,就是start+end会出现整数溢出的情况,如果存在溢出,你再除以2也是没有用的,所以不能这么写
-        mind = start + (end - start)/ 2;
+        ///会有一些朋友看到有些人是(start + end)/2这样写的,
+        ///但是这样写有一点不好,就是start+end会出现整数溢出的情况,如果存在溢出,你再除以2也是没有用的,所以不能这么写
+        mind = start + (end - start)/2;
         // 如果中间值大于目标值
-        if ([self[mind] integerValue]> target){
+        if ([self[mind] integerValue] > target){
             end = mind; // 中间值做为最后一个值，在前半段再进行相同的搜索
         }else{
             start = mind;
@@ -151,7 +150,7 @@
     return arr;
 }
 
-/** 生成一组不重复的随机数 （随机数的个数为 最大数-最小数） */
+/** 生成一组不重复的随机数 */
 - (NSArray*)kj_noRepeatRandomArrayWithMinNum:(NSInteger)min maxNum:(NSInteger )max count:(NSInteger)count{
     NSMutableSet *set = [NSMutableSet setWithCapacity:count];
     while (set.count < count) {
@@ -160,7 +159,5 @@
     }
     return set.allObjects;
 }
-
-
 
 @end
