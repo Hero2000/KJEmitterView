@@ -1,5 +1,5 @@
 # KJEmitterView
-![coverImage](https://raw.githubusercontent.com/yangKJ/CommonDatas/master/CommonDatas/Res/coverImage.jpg)
+![coverImage](https://upload-images.jianshu.io/upload_images/1933747-b7e843a01999b9a9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 * 这个工程提供开发中用到的类目，方便开发
 * 这里有我经常用到的扩展，方便好用开发
@@ -160,17 +160,16 @@ pod 'KJEmitterView/Control' # 自定义控件
 4、UIView+KJFrame   新增一些轻量级布局链式属性
 5、UIView+KJRectCorner  新增方法  虚线边框  kj_DashedLineColor
 
-
 备注：部分资料来源于网络～  就不一一指出道谢，整理起来方便自己和大家使用
 ```
 #### <a id="效果图"></a>效果图
 <p align="left">
-  <img width="200" src="Res/131566445322_.pic.jpg" hspace="30px" />
+  <img width="200" src="Res/131566445322_.pic.jpg" hspace="1px" />
 </p>
 
 #### <a id="目录结构"></a>目录结构
 <p align="left">
-  <img width="200" src="Res/目录结构.png" hspace="30px" />
+  <img width="200" src="Res/目录结构.png" hspace="1px" />
 </p>
 
 #### 温馨提示
@@ -204,10 +203,7 @@ end
 * 大家有什么需要添加的功能，也可以给我留言，有空我将补充完善
 * 谢谢大家的支持 - -！
 
-[![LOGO](https://github.com/yangKJ/KJPlayerDemo/blob/master/KJPlayerDemo/Demo/Assets.xcassets/AppIcon.appiconset/WechatIMG57486iPhoneSpootlight7_40pt@3x.png?raw=true)](https://www.jianshu.com/u/c84c00476ab6)
-
 [![谢谢老板](https://upload-images.jianshu.io/upload_images/1933747-879572df848f758a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://github.com/yangKJ/KJPlayerDemo)
-
 
 #### 救救孩子吧，谢谢各位老板～～～～
 
