@@ -27,6 +27,7 @@
 		684BFEF421BA11870015641A /* NSDictionary+KJLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 684BFEF321BA11870015641A /* NSDictionary+KJLog.m */; };
 		685CE15922560193004E3AF4 /* UIButton+KJBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 685CE15822560193004E3AF4 /* UIButton+KJBlock.m */; };
 		685CE15D22562085004E3AF4 /* UILabel+KJAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 685CE15C22562085004E3AF4 /* UILabel+KJAttributedString.m */; };
+		6866171823975BFC000F6F79 /* UITextView+KJHyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 6866171723975BFC000F6F79 /* UITextView+KJHyperlink.m */; };
 		6869043021B25BC700ED072F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6869042F21B25BC700ED072F /* BaseViewController.m */; };
 		6869043321B25C5C00ED072F /* KJEmitterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6869043221B25C5C00ED072F /* KJEmitterVC.m */; };
 		6869043921B265E400ED072F /* KJButtonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6869043821B265E400ED072F /* KJButtonVC.m */; };
@@ -116,6 +117,8 @@
 		685CE15822560193004E3AF4 /* UIButton+KJBlock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+KJBlock.m"; sourceTree = "<group>"; };
 		685CE15B22562085004E3AF4 /* UILabel+KJAttributedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+KJAttributedString.h"; sourceTree = "<group>"; };
 		685CE15C22562085004E3AF4 /* UILabel+KJAttributedString.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+KJAttributedString.m"; sourceTree = "<group>"; };
+		6866171623975BFC000F6F79 /* UITextView+KJHyperlink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+KJHyperlink.h"; sourceTree = "<group>"; };
+		6866171723975BFC000F6F79 /* UITextView+KJHyperlink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+KJHyperlink.m"; sourceTree = "<group>"; };
 		6869042D21B25B1000ED072F /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		6869042E21B25BC700ED072F /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		6869042F21B25BC700ED072F /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
@@ -588,6 +591,8 @@
 				68BA6C1F21B303D40013C4AD /* UITextView+KJLimitCounter.m */,
 				68BA6C2021B303D40013C4AD /* UITextView+KJPlaceHolder.h */,
 				68BA6C2221B303D40013C4AD /* UITextView+KJPlaceHolder.m */,
+				6866171623975BFC000F6F79 /* UITextView+KJHyperlink.h */,
+				6866171723975BFC000F6F79 /* UITextView+KJHyperlink.m */,
 			);
 			path = UITextView;
 			sourceTree = "<group>";
@@ -706,6 +711,7 @@
 				687115CE226312F5009EC3E0 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				68959C0021B3998A004F794F /* KJAlertView.m in Sources */,
 				680C95D5236A72C000304BAE /* NSObject+KJMath.m in Sources */,
+				6866171823975BFC000F6F79 /* UITextView+KJHyperlink.m in Sources */,
 				68AEE23F22A6169600167F83 /* UIView+KJGestureBlock.m in Sources */,
 				6813E4A022B8B12E00D4772D /* NSArray+KJOverstep.m in Sources */,
 				68BA6C3321B303D40013C4AD /* UITextView+KJPlaceHolder.m in Sources */,

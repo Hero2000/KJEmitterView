@@ -84,11 +84,13 @@ pod 'KJEmitterView/Control' # 自定义控件
 ```
 ####版本更新日志:
 #### Add 4.5.7
-1、UIViewController+KJFullScreen 解决iOS13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
-2、UISegmentedControl+KJCustom 解决iOS13以后 修改不了 backgroundColor 和 tintColor 问题
+1、UIViewController+KJFullScreen 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
+2、UISegmentedControl+KJCustom 解决ios13以后 修改不了 backgroundColor 和 tintColor 问题
 3、UIImage+KJProcessing 新增 kj_captureScreen 指定位置屏幕截图
 4、UIImage+KJProcessing 新增图片压缩方法 kj_compressImage:TargetByte:
 5、UIButton+KJEmitter 新增一款粒子点赞效果 kj_openButtonEmitter是否开启点赞粒子
+6、NSObject+KJMath 新增数学方程式扩展
+7、UITextView+KJHyperlink 新增超链接处理
 
 #### Add 4.5.4
 1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者

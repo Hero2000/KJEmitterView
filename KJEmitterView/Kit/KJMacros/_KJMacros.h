@@ -20,11 +20,12 @@
 
 
 #pragma mark ********** 2.自定义高效率的 NSLog ************
-#ifdef DEBUG // 输出日志 (格式: [时间] [哪个方法] [哪行] [输出内容])
-#define NSLog(format, ...) printf("\n[%s] %s [第%d行] 😎😎 %s\n", __TIME__, __FUNCTION__, __LINE__, [[NSString stringWithFormat:format, ##__VA_ARGS__] UTF8String]);
+#ifdef DEBUG // 输出日志 (格式: [编译时间] [文件名] [方法名] [行号] [输出内容])
+#define NSLog(FORMAT, ...) fprintf(stderr,"------- 😎 给我点赞 😎 -------\n编译时间:%s\n文件名:%s\n方法名:%s\n行号:%d\n打印信息:%s\n\n", __TIME__,[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],__func__,__LINE__,[[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String])
 #else
-#define NSLog(format, ...)
+#define NSLog(FORMAT, ...) nil
 #endif
+
 // 字符串拼接
 #define kStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
 // block相关宏
