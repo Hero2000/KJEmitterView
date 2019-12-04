@@ -7,6 +7,7 @@
 //
 
 #import "UITextView+KJHyperlink.h"
+#import <objc/runtime.h>
 
 @interface UITextView ()<UITextViewDelegate>
 @property(nonatomic,copy,readwrite) KJTextViewURLHyperlinkBlock xxblock;

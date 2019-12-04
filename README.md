@@ -83,7 +83,7 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
-#### Add 4.5.7
+#### Add 4.6.0
 1、UIViewController+KJFullScreen 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
 2、UISegmentedControl+KJCustom 解决ios13以后 修改不了 backgroundColor 和 tintColor 问题
 3、UIImage+KJProcessing 新增 kj_captureScreen 指定位置屏幕截图
