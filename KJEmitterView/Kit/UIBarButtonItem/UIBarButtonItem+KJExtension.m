@@ -32,7 +32,7 @@
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
     // 让按钮根据图片和文字的宽自适应
-    //  [button sizeToFit];
+    // [button sizeToFit];
     button.size = CGSizeMake(50, 30);
     // 让按钮内部的所有内容左对齐
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;

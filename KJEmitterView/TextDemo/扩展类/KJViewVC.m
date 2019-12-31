@@ -26,7 +26,28 @@
     
     [self.view addSubview:self.testView];
     
+    [self.testView kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
+        NSLog(@"123");
+    }];
     [self createSwitch];
+    
+    UILabel *lab2 = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, 100, 100)];
+    lab2.backgroundColor = UIColor.blueColor;
+    [self.testView addSubview:lab2];
+    
+    __block
+    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    lab.backgroundColor = UIColor.blueColor;
+    [self.testView addSubview:lab];
+    [self.testView kj_FindSubviewRecursively:^BOOL(UIView * _Nonnull subview, BOOL * _Nonnull stop) {
+        if (subview == lab) {
+            subview.backgroundColor = UIColor.redColor;
+            NSLog(@"---%@",stop?@"YES":@"NO");
+            return YES;
+        }
+        NSLog(@"22---%@",stop?@"YES":@"NO");
+        return NO;
+    }];
 }
 
 - (void)clickInsSwitch:(UISwitch *)sender{
@@ -152,6 +173,5 @@
     }
     return _NameArray;
 }
-
 
 @end

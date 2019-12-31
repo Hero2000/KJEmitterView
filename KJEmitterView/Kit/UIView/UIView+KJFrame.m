@@ -99,7 +99,6 @@
     return self.frame.origin.y + self.frame.size.height;
 }
 
-
 - (CGFloat)maxX{
     return self.frame.origin.x + self.frame.size.width;
 }

@@ -145,12 +145,12 @@
 - (instancetype)kj_initWithObjects:(const id  _Nonnull __unsafe_unretained *)objects count:(NSUInteger)cnt {
     BOOL hasNilObject = NO;
     for (NSInteger i = 0; i < cnt; i++) {
-        if ([objects[i] isKindOfClass:[NSArray class]]) {
-            NSLog(@"%@", objects[i]);
-        }
+//        if ([objects[i] isKindOfClass:[NSArray class]]) {
+//            NSLog(@"%@", objects[i]);
+//        }
         if (objects[i] == nil) {
             hasNilObject = YES;
-            NSLog(@"%s 添加数据中 %ld 为 nil, 剔除掉 nil", __FUNCTION__, i);
+//            NSLog(@"%s 添加数据中 %ld 为 nil, 剔除掉 nil", __FUNCTION__, i);
         }
     }
     
@@ -163,7 +163,7 @@
                 newObjects[index++] = objects[i];
             }
         }
-        NSLog(@"%@", [NSThread callStackSymbols]);
+//        NSLog(@"%@", [NSThread callStackSymbols]);
         return [self kj_initWithObjects:newObjects count:index];
     }
     return [self kj_initWithObjects:objects count:cnt];

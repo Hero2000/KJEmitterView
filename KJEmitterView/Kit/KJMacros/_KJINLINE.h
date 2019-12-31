@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 /** 自定提醒窗口 */
-NS_INLINE UIAlertView* kAlertView(NSString *title, NSString *message, id delegate, NSString *cancelTitle, NSString *otherTitle){
+NS_INLINE UIAlertView * kAlertView(NSString *title, NSString *message, id delegate, NSString *cancelTitle, NSString *otherTitle){
     __block UIAlertView *alerView;
     dispatch_async(dispatch_get_main_queue(), ^{
         alerView = [[UIAlertView alloc] initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancelTitle otherButtonTitles:otherTitle, nil];
@@ -53,12 +53,12 @@ NS_INLINE void kAdjustsScrollViewInsetNever(UIViewController *viewController, __
 }
 
 // 字符串转换为非空
-NS_INLINE NSString* kStringChangeNotNil(NSString *string){
+NS_INLINE NSString * kStringChangeNotNil(NSString *string){
     return (string ?: @"");
 }
 
 /// 随机颜色
-NS_INLINE UIColor* kRandomColor(){
+NS_INLINE UIColor * kRandomColor(){
     return [UIColor colorWithRed:((float)arc4random_uniform(256)/255.0) green:((float)arc4random_uniform(256)/255.0) blue:((float)arc4random_uniform(256)/255.0) alpha:1.0];
 }
 
@@ -78,19 +78,19 @@ NS_INLINE id kLoadNib(NSString *nibName){
 }
 
 /* 根据当前view 找所在tableview 里的 indexpath */
-NS_INLINE NSIndexPath* kIndexpathSubviewTableview(UIView *subview, UITableView *tableview){
+NS_INLINE NSIndexPath * kIndexpathSubviewTableview(UIView *subview, UITableView *tableview){
     CGRect subviewFrame = [subview convertRect:subview.bounds toView:tableview];
     return [tableview indexPathForRowAtPoint:subviewFrame.origin];
 }
 
 /* 根据当前view 找所在collectionview 里的 indexpath */
-NS_INLINE NSIndexPath* kIndexpathSubviewCollectionview(UIView *subview, UICollectionView *collectionview){
+NS_INLINE NSIndexPath * kIndexpathSubviewCollectionview(UIView *subview, UICollectionView *collectionview){
     CGRect subviewFrame = [subview convertRect:subview.bounds toView:collectionview];
     return [collectionview indexPathForItemAtPoint:subviewFrame.origin];
 }
 
 /* 根据当前view 找所在tableview 里的 tableviewcell */
-NS_INLINE UITableViewCell* kCellSubviewTableview(UIView *subview, UITableView *tableview){
+NS_INLINE UITableViewCell * kCellSubviewTableview(UIView *subview, UITableView *tableview){
     CGRect subviewFrame = [subview convertRect:subview.bounds toView:tableview];
     NSIndexPath *indexPath = [tableview indexPathForRowAtPoint:subviewFrame.origin];
     return [tableview cellForRowAtIndexPath:indexPath];
@@ -105,11 +105,11 @@ NS_INLINE void KJ_GCD_main(dispatch_block_t block) {
     }
 }
 /** 交换方法的实现 */
-NS_INLINE void KJ_method_swizzling(Class class, SEL originalSelector, SEL swizzledSelector) {
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-    if (class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))) {
-        class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+NS_INLINE void KJ_method_swizzling(Class clazz, SEL originalSelector, SEL swizzledSelector) {
+    Method originalMethod = class_getInstanceMethod(clazz, originalSelector);
+    Method swizzledMethod = class_getInstanceMethod(clazz, swizzledSelector);
+    if (class_addMethod(clazz, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))) {
+        class_replaceMethod(clazz, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
     } else {
         method_exchangeImplementations(originalMethod, swizzledMethod);
     }

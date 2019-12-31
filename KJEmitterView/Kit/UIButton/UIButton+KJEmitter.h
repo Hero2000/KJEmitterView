@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIButton (KJEmitter)
+
+/// 粒子素材，默认自带粒子图片尺寸 60x60 - 此属性应再 kj_openButtonEmitter 之前设置
+@property(nonatomic,strong) UIImage *kj_buttonEmitterImage;
 /// 开启点赞粒子效果
 @property(nonatomic,assign) BOOL kj_openButtonEmitter;
 

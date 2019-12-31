@@ -5,7 +5,10 @@
 //  Created by 杨科军 on 2018/11/26.
 //  Copyright © 2018 杨科军. All rights reserved.
 /*------------- 本人其他库 -------------
- 实用又方便的Category和自定义控件(Switch、选择控件等等)
+ 工具集合
+ - 粒子效果、Button图文混排、点击事件封装、扩大点击域、点赞粒子效果，
+ - 手势封装、圆角渐变、Xib属性、TextView输入框扩展、限制字数、识别网址超链接，
+ - Image图片加工处理、滤镜渲染、泛洪算法等等
  pod 'KJEmitterView'
  pod 'KJEmitterView/Function'#
  pod 'KJEmitterView/Control' # 自定义控件
@@ -29,6 +32,12 @@
  博客地址：https://blog.csdn.net/qq_34534179
  
  ####版本更新日志:
+ #### Add 4.6.1
+ 1、UIButton+KJEmitter 新增设置粒子图片属性
+ 2、UIButton+KJCountDown 新增倒计时
+ 3、UIColor+KJExtension 新增颜色相关扩展 - 渐变色处理
+ 4、UIImage+KJRemoteSize 新增获取网络图片尺寸 - 来源作者shaojiankui
+ 
  #### Add 4.6.0
  1、UIViewController+KJFullScreen 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
  2、UISegmentedControl+KJCustom 解决ios13以后 修改不了 backgroundColor 和 tintColor 问题
@@ -39,7 +48,7 @@
  7、UITextView+KJHyperlink 新增超链接处理
 
  #### Add 4.5.4
- 1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者
+ 1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者xx
  2、UIImage+KJProcessing 新增 kj_cutImageWithImage 根据特定的区域对图片进行裁剪
  3、UIImage+KJProcessing 新增 kj_calulateImageFileSize 获取图片大小
  4、UIButton+KJBlock 新增 接受点击事件的时间间隔属性 kj_AcceptEventTime
@@ -100,8 +109,8 @@
  
  #### Add 4.1.0
  1、整理新增控件类 Control
- 2、KJSelectControl   自定义一款动画选中控件
- 3、KJSwitchControl   自定义一款可爱的动画Switch控件
+ 2、KJSelectControl   自定义一款动画选中控件 - 来源参考作者Creativedash's Dribbble
+ 3、KJSwitchControl   自定义一款可爱的动画Switch控件 - 来源作者FunnySwitch
  4、KJMarqueeLabel    自定义一款跑马灯Label
  5、UINavigationController+FDFullscreenPopGesture 侧滑返回扩展
 
@@ -125,7 +134,9 @@
 #import "UIButton+KJBlock.h" // 点击事件ButtonBlock
 #import "UIButton+KJEnlargeTouchArea.h" // 改变UIButton的响应区域
 #import "UIButton+KJButtonContentLayout.h"  // 图文混排
+#import "UIButton+KJIndicator.h" // 指示器
 //#import "UIButton+KJEmitter.h" // 按钮粒子效果
+//#import "UIButton+KJCountDown.h" // 倒计时
 
 #import "UILabel+KJAttributedString.h" // 富文本
 
@@ -145,10 +156,13 @@
 #import "UIImage+KJProcessing.h"  /// 图片加工处理相关
 //#import "UIImage+KJFloodFill.h" /// 图片泛洪算法
 //#import "UIImage+KJFilter.h"    /// 处理图片滤镜，渲染相关
+//#import "UIImage+KJRemoteSize.h" /// 获取网络图片尺寸
 
 #import "UIViewController+KJFullScreen.h" // 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
 
 #import "UISegmentedControl+KJCustom.h" // 解决ios13以后 修改不了 backgroundColor 和 tintColor问题
+
+#import "UIColor+KJExtension.h" /// 颜色相关扩展
 
 /******************* Foundation ******************************/
 //#import "NSArray+ElementDeal.h"  /// 对数组元素的处理 包括排序、查找、去重等等

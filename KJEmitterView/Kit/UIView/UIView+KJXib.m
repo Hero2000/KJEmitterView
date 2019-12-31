@@ -44,8 +44,7 @@
     for (UIView *view in self.subviews) {
         BOOL stop = NO;
         if(recurse(view, &stop)) {
-            /// 递归查找
-            return [view kj_FindSubviewRecursively:recurse];
+            return [view kj_FindSubviewRecursively:recurse];/// 递归查找
         }else if(stop) {
             return view;
         }

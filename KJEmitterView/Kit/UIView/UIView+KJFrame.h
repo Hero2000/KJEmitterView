@@ -10,9 +10,9 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface UIView (KJFrame)
 //右边距离
-@property(nonatomic,assign) CGFloat right;
+@property (nonatomic,assign)CGFloat right;
 //底部
-@property(nonatomic,assign) CGFloat bottom;
+@property (nonatomic,assign)CGFloat bottom;
 //x坐标属性
 @property (nonatomic,assign)CGFloat x;
 //y坐标

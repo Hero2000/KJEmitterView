@@ -35,12 +35,12 @@ static char ActionTag;
 + (void)load {
     SEL originalSelector = @selector(sendAction:to:forEvent:);
     SEL swizzledSelector = @selector(kj_sendAction:to:forEvent:);
-    Class class = [self class];
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-    BOOL boo = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
+    Class clazz = [self class];
+    Method originalMethod = class_getInstanceMethod(clazz, originalSelector);
+    Method swizzledMethod = class_getInstanceMethod(clazz, swizzledSelector);
+    BOOL boo = class_addMethod(clazz, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
     if (boo) {
-        class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+        class_replaceMethod(clazz, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
     } else {
         method_exchangeImplementations(originalMethod, swizzledMethod);
     }

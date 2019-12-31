@@ -49,7 +49,10 @@
 
 #### <a id="作者其他库"></a>作者其他Pod库
 ```
-实用又方便的Category和自定义控件(Switch、选择控件等等)
+工具集合
+- 粒子效果、Button图文混排、点击事件封装、扩大点击域、点赞粒子效果，
+- 手势封装、圆角渐变、Xib属性、TextView输入框扩展、限制字数、识别网址超链接，
+- Image图片加工处理、滤镜渲染、泛洪算法等等
 pod 'KJEmitterView'
 pod 'KJEmitterView/Function'#
 pod 'KJEmitterView/Control' # 自定义控件
@@ -83,6 +86,12 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
+#### Add 4.6.1
+1、UIButton+KJEmitter 新增设置粒子图片属性
+2、UIButton+KJCountDown 新增倒计时
+3、UIColor+KJExtension 新增颜色相关扩展 - 渐变色处理
+4、UIImage+KJRemoteSize 新增获取网络图片尺寸 - 来源作者shaojiankui
+
 #### Add 4.6.0
 1、UIViewController+KJFullScreen 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
 2、UISegmentedControl+KJCustom 解决ios13以后 修改不了 backgroundColor 和 tintColor 问题
@@ -93,7 +102,7 @@ pod 'KJEmitterView/Control' # 自定义控件
 7、UITextView+KJHyperlink 新增超链接处理
 
 #### Add 4.5.4
-1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者
+1、KJEmitterLayer 重新整理封装一款图片粒子动画 - 来源作者xx
 2、UIImage+KJProcessing 新增 kj_cutImageWithImage 根据特定的区域对图片进行裁剪
 3、UIImage+KJProcessing 新增 kj_calulateImageFileSize 获取图片
 4、UIButton+KJBlock 新增 接受点击事件的时间间隔属性 kj_AcceptEventTime
@@ -150,8 +159,8 @@ pod 'KJEmitterView/Control' # 自定义控件
 
 #### Add 4.1.0
 1、整理新增控件类 Control
-2、KJSelectControl   自定义一款动画选中控件
-3、KJSwitchControl   自定义一款可爱的动画Switch控件
+2、KJSelectControl   自定义一款动画选中控件 - 来源参考作者Creativedash's Dribbble
+3、KJSwitchControl   自定义一款可爱的动画Switch控件 - 来源作者FunnySwitch
 4、KJMarqueeLabel    自定义一款跑马灯Label
 5、UINavigationController+FDFullscreenPopGesture 侧滑返回扩展
 

@@ -16,7 +16,7 @@ typedef void (^KJEmitterLayerDrawCompleteBlock)(void);
 /// 重置
 - (void)restart;
 
-/*****设置一些相关的数据*****/
+/// 设置一些相关的数据
 @property(nonatomic,strong,readonly) KJEmitterLayer *(^KJIgnored)(BOOL ignoredBlack,BOOL ignoredWhite);
 /// pixelColor:粒子颜色 pixelMaximum:粒子最大数目 pixelBeginPoint:粒子出生位置 pixelRandomPointRange:像素粒子随机范围
 @property(nonatomic,strong,readonly) KJEmitterLayer *(^KJPixel)(UIColor *pixelColor,NSInteger pixelMaximum,CGPoint pixelBeginPoint,CGFloat pixelRandomPointRange);

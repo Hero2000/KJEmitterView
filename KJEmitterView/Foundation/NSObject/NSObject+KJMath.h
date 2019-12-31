@@ -25,7 +25,7 @@ static inline KJMathPoint KJMathPointMake(CGFloat x, CGFloat y) {
 + (CGFloat)kj_degreeFromRadian:(CGFloat)radian;
 /// 把度转换成弧度
 + (CGFloat)kj_radianFromDegree:(CGFloat)degree;
-/// 从数学'tan'函数的弧度值
+/// 从数学 tan 函数的弧度值
 + (CGFloat)kj_radianValueFromTanSideA:(CGFloat)sideA sideB:(CGFloat)sideB;
 /// 获取具有固定宽度的新size
 + (CGSize)kj_resetFromSize:(CGSize)size FixedWidth:(CGFloat)width;
@@ -35,11 +35,11 @@ static inline KJMathPoint KJMathPointMake(CGFloat x, CGFloat y) {
 #pragma mark - 一元一次线性方程 (Y = kX + b).
 @property (nonatomic,assign,class) CGFloat kj_k;
 @property (nonatomic,assign,class) CGFloat kj_b;
-/// 一元一次线性方程,求k，b
+/// 一元一次线性方程，求k，b
 + (void)kj_mathOnceLinearEquationWithPointA:(KJMathPoint)pointA PointB:(KJMathPoint)pointB;
-/// 已知y,k,b 求x
+/// 已知y，k，b 求 x
 + (CGFloat)kj_xValueWithY:(CGFloat)yValue;
-/// 已知x,k,b 求y
+/// 已知x，k，b 求 y
 + (CGFloat)kj_yValueWithX:(CGFloat)xValue;
 
 @end
