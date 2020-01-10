@@ -32,11 +32,10 @@
  博客地址：https://blog.csdn.net/qq_34534179
  
  ####版本更新日志:
- #### Add 4.6.1
+ #### Add 4.6.2
  1、UIButton+KJEmitter 新增设置粒子图片属性
- 2、UIButton+KJCountDown 新增倒计时
- 3、UIColor+KJExtension 新增颜色相关扩展 - 渐变色处理
- 4、UIImage+KJRemoteSize 新增获取网络图片尺寸 - 来源作者shaojiankui
+ 2、UIColor+KJExtension 新增颜色相关扩展 - 渐变色处理
+ 3、UIImage+KJRemoteSize 新增获取网络图片尺寸 - 来源作者shaojiankui
  
  #### Add 4.6.0
  1、UIViewController+KJFullScreen 解决ios13以后 presentViewController 过去的控制器可以滑动和顶部少一截问题
