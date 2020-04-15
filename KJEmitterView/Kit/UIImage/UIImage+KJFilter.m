@@ -12,9 +12,7 @@
 @implementation UIImage (KJFilter)
 
 #pragma mark - 特效渲染
-/**根据图片和颜色返回一张加深颜色以后的图片
- * 图片着色
- */
+/** 根据图片和颜色返回一张加深颜色以后的图片 */
 - (UIImage *)kj_drawingWithColorizeImageWithcolor:(UIColor *)color{
     UIGraphicsBeginImageContext(CGSizeMake(self.size.width*2, self.size.height*2));
     CGContextRef ctx = UIGraphicsGetCurrentContext();
@@ -33,7 +31,7 @@
     return destImage;
 }
 
-/**马赛克函数 */
+/** 马赛克函数 */
 - (UIImage *)kj_drawingWithMosaic{
     CIImage *ciImage = [[CIImage alloc]initWithImage:self];   // 这里特别注意的是  必须要用.png格式的图片  否则加载不出来。
     //创建filter 滤镜 马赛克效果
@@ -66,8 +64,7 @@
     inBuffer.height = CGImageGetHeight(img);
     inBuffer.rowBytes = CGImageGetBytesPerRow(img);
     inBuffer.data = (void*)CFDataGetBytePtr(inBitmapData);
-    pixelBuffer = malloc(CGImageGetBytesPerRow(img) *
-                         CGImageGetHeight(img));
+    pixelBuffer = malloc(CGImageGetBytesPerRow(img) * CGImageGetHeight(img));
     if(pixelBuffer == NULL)NSLog(@"No pixelbuffer");
     outBuffer.data = pixelBuffer;
     outBuffer.width = CGImageGetWidth(img);
@@ -83,7 +80,7 @@
                                              outBuffer.rowBytes,
                                              colorSpace,
                                              kCGImageAlphaNoneSkipLast);
-    CGImageRef imageRef = CGBitmapContextCreateImage (ctx);
+    CGImageRef imageRef = CGBitmapContextCreateImage(ctx);
     UIImage *returnImage = [UIImage imageWithCGImage:imageRef];
     //clean up
     CGContextRelease(ctx);
@@ -105,7 +102,8 @@
     CGColorSpaceRelease(space);
     if (!bmContext)
     return nil;
-    CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = width, .size.height = height}, self.CGImage);
+    CGRect rect = CGRectMake(0, 0, width, height);
+    CGContextDrawImage(bmContext, rect, self.CGImage);
     UInt8* data = (UInt8*)CGBitmapContextGetData(bmContext);
     if (!data){
         CGContextRelease(bmContext);
@@ -135,7 +133,8 @@
     CGColorSpaceRelease(space);
     if (!bmContext)
     return nil;
-    CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = width, .size.height = height}, self.CGImage);
+    CGRect rect = CGRectMake(0, 0, width, height);
+    CGContextDrawImage(bmContext, rect, self.CGImage);
     UInt8* data = (UInt8*)CGBitmapContextGetData(bmContext);
     if (!data){
         CGContextRelease(bmContext);
@@ -143,7 +142,7 @@
     }
     const size_t n = sizeof(UInt8) * width * height * 4;
     void* outt = malloc(n);
-    vImage_Buffer src = {data, height, width, bytesPerRow};
+    vImage_Buffer src  = {data, height, width, bytesPerRow};
     vImage_Buffer dest = {outt, height, width, bytesPerRow};
     vImageConvolve_ARGB8888(&src, &dest, NULL, 0, 0, emboss_kernel, 3, 3, 1, NULL, kvImageCopyInPlace);
     memcpy(data, outt, n);
@@ -165,7 +164,8 @@
     CGColorSpaceRelease(space);
     if (!bmContext)
     return nil;
-    CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = width, .size.height = height}, self.CGImage);
+    CGRect rect = CGRectMake(0, 0, width, height);
+    CGContextDrawImage(bmContext, rect, self.CGImage);
     UInt8* data = (UInt8*)CGBitmapContextGetData(bmContext);
     if (!data){
         CGContextRelease(bmContext);
@@ -195,7 +195,8 @@
     CGColorSpaceRelease(space);
     if (!bmContext)
     return nil;
-    CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = width, .size.height = height}, self.CGImage);
+    CGRect rect = CGRectMake(0, 0, width, height);
+    CGContextDrawImage(bmContext, rect, self.CGImage);
     UInt8* data = (UInt8*)CGBitmapContextGetData(bmContext);
     if (!data){
         CGContextRelease(bmContext);
@@ -221,14 +222,14 @@
     int height = self.size.height;
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
-    CGContextRef context = CGBitmapContextCreate (nil,width,height,8,0,colorSpace,kCGImageAlphaNone);
+    CGContextRef context = CGBitmapContextCreate(nil,width,height,8,0,colorSpace,kCGImageAlphaNone);
     CGColorSpaceRelease(colorSpace);
     
     if (context == NULL) {
         return nil;
     }
-    
-    CGContextDrawImage(context,CGRectMake(0, 0, width, height), self.CGImage);
+    CGRect rect = CGRectMake(0, 0, width, height);
+    CGContextDrawImage(context, rect, self.CGImage);
     CGImageRef contextRef = CGBitmapContextCreateImage(context);
     UIImage *grayImage = [UIImage imageWithCGImage:contextRef];
     CGContextRelease(context);
@@ -249,7 +250,8 @@
     CGColorSpaceRelease(space);
     if (!bmContext)
     return nil;
-    CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = width, .size.height = height}, self.CGImage);
+    CGRect rect = CGRectMake(0, 0, width, height);
+    CGContextDrawImage(bmContext, rect, self.CGImage);
     UInt8* data = (UInt8*)CGBitmapContextGetData(bmContext);
     if (!data){
         CGContextRelease(bmContext);
@@ -276,9 +278,7 @@
     return dstImage;
 }
 
-/**
- *  侵蚀
- */
+/** 侵蚀 */
 - (UIImage *)kj_drawingWithErode{
     const size_t width = self.size.width;
     const size_t height = self.size.height;
@@ -288,7 +288,8 @@
     CGColorSpaceRelease(space);
     if (!bmContext)
     return nil;
-    CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = width, .size.height = height}, self.CGImage);
+    CGRect rect = CGRectMake(0, 0, width, height);
+    CGContextDrawImage(bmContext, rect, self.CGImage);
     UInt8* data = (UInt8*)CGBitmapContextGetData(bmContext);
     if (!data){
         CGContextRelease(bmContext);
@@ -371,19 +372,13 @@
     return blendedImage;
 }
 
-//static int16_t gaussianblur_kernel[25] = {
-//    1, 4, 6, 4, 1,
-//    4, 16, 24, 16, 4,
-//    6, 24, 36, 24, 6,
-//    4, 16, 24, 16, 4,
-//    1, 4, 6, 4, 1
-//};
-
 static int16_t edgedetect_kernel[9] = {
     -1, -1, -1,
     -1, 8, -1,
     -1, -1, -1
 };
+
+static uint8_t backgroundColorBlack[4] = {0,0,0,0};
 
 static int16_t emboss_kernel[9] = {
     -2, 0, 0,
@@ -402,8 +397,6 @@ static int16_t unsharpen_kernel[9] = {
     -1, 17, -1,
     -1, -1, -1
 };
-
-static uint8_t backgroundColorBlack[4] = {0,0,0,0};
 
 static unsigned char morphological_kernel[9] = {
     1, 1, 1,

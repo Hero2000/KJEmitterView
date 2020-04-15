@@ -218,7 +218,7 @@
 }
 
 /* Image 拼接
- * masterImage  主图片
+ * masterImage 主图片
  * headImage   头图片
  * footImage   尾图片
  */
@@ -239,7 +239,7 @@
 /**把图片多次合成
  @param localImage 当前图片
  @param maskImage 要合成的图片
- @param loopNums 要合成的次数
+ @param loopNums   要合成的次数
  @param orientation 当前的方向
  @return 合成完成的图片
  */
@@ -349,5 +349,109 @@
     return resultImage;
 }
 
+//// 改变图片的透明度
+//+ (UIImage *)changeAlphaOfImageWith:(CGFloat)alpha withImage:(UIImage*)image{
+//    UIGraphicsBeginImageContextWithOptions(image.size, NO, 0.0f);
+//    CGContextRef ctx = UIGraphicsGetCurrentContext();
+//    CGRect area = CGRectMake(0, 0, image.size.width, image.size.height);
+//    CGContextScaleCTM(ctx, 1, -1);
+//    CGContextTranslateCTM(ctx, 0, -area.size.height);
+//    CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
+//    CGContextSetAlpha(ctx, alpha);
+//    CGContextDrawImage(ctx, area, image.CGImage);
+//    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    return newImage;
+//}
+//
+//// 更换图片的背景颜色
+//+ (UIImage*) imageToTransparent:(UIImage*) image{
+//    // 分配内存
+//    const int imageWidth = image.size.width;
+//    const int imageHeight = image.size.height;
+//    size_t bytesPerRow = imageWidth * 4;
+//    uint32_t* rgbImageBuf = (uint32_t*)malloc(bytesPerRow * imageHeight);
+//    // 创建context
+//    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+//    CGContextRef context = CGBitmapContextCreate(rgbImageBuf, imageWidth, imageHeight, 8, bytesPerRow, colorSpace,
+//    kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
+//    CGContextDrawImage(context, CGRectMake(0, 0, imageWidth, imageHeight), image.CGImage);
+//    // 遍历像素
+//    int pixelNum = imageWidth * imageHeight;
+//    uint32_t* pCurPtr = rgbImageBuf;
+//    for (int i = 0; i < pixelNum; i++, pCurPtr++){
+//        if ((*pCurPtr & 0xFFFFFF00) == 0xffffff00) {
+//            // 此处把白色背景颜色给变为透明
+//            uint8_t* ptr = (uint8_t*)pCurPtr;
+//            ptr[0] = 0;
+//        }else{
+//            // 改成下面的代码，会将图片转成想要的颜色
+//            uint8_t* ptr = (uint8_t*)pCurPtr;
+//            ptr[3] = 0; //0~255
+//            ptr[2] = 0;
+//            ptr[1] = 0;
+//        }
+//    }
+//
+//    // 将内存转成image
+//    CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, rgbImageBuf, bytesPerRow * imageHeight, ProviderReleaseData);
+//    CGImageRef imageRef = CGImageCreate(imageWidth,
+//                                        imageHeight,
+//                                        8,
+//                                        32,
+//                                        bytesPerRow,
+//                                        colorSpace,
+//                                        kCGImageAlphaLast | kCGBitmapByteOrder32Little,
+//                                        dataProvider,
+//                                        NULL,
+//                                        true,
+//                                        kCGRenderingIntentDefault);
+//    CGDataProviderRelease(dataProvider);
+//    UIImage* resultUIImage = [UIImage imageWithCGImage:imageRef];
+//    // 释放
+//    CGImageRelease(imageRef);
+//    CGContextRelease(context);
+//    CGColorSpaceRelease(colorSpace);
+//    return resultUIImage;
+//}
+//
+//void ProviderReleaseData (void *info, const void *data, size_t size){
+//    free((void*)data);
+//}
+//
+//- (UIImage*) imageToTransparent:(UIImage*) image{
+//    // 分配内存
+//    const int imageWidth = image.size.width;
+//    const int imageHeight = image.size.height;
+//    size_t bytesPerRow = imageWidth * 4;
+//    uint32_t* rgbImageBuf = (uint32_t*)malloc(bytesPerRow * imageHeight);
+//    // 创建context
+//    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+//    CGContextRef context = CGBitmapContextCreate(rgbImageBuf, imageWidth, imageHeight, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
+//    CGContextDrawImage(context, CGRectMake(0, 0, imageWidth, imageHeight), image.CGImage);
+//    // 遍历像素
+//    int pixelNum = imageWidth * imageHeight;
+//    uint32_t* pCurPtr = rgbImageBuf;
+//    for (int i = 0; i < pixelNum; i++, pCurPtr++){
+//        //接近粉色
+//        //将像素点转成子节数组来表示---第一个表示透明度即ARGB这种表示方式。ptr[0]:透明度,ptr[1]:R,ptr[2]:G,ptr[3]:B
+//        //分别取出RGB值后。进行判断需不需要设成透明。
+//        uint8_t* ptr = (uint8_t*)pCurPtr;
+//        // NSLog(@"1是%d,2是%d,3是%d",ptr[1],ptr[2],ptr[3]);
+//        if(ptr[1] >= 200 || ptr[2] >= 200 || ptr[3] >= 200){
+//             ptr[0] = 0;
+//        }
+//    }
+//    // 将内存转成image
+//    CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, rgbImageBuf, bytesPerRow * imageHeight, nil);
+//    CGImageRef imageRef = CGImageCreate(imageWidth, imageHeight,8, 32, bytesPerRow, colorSpace, kCGImageAlphaLast |kCGBitmapByteOrder32Little, dataProvider, NULL, true,kCGRenderingIntentDefault);
+//    CGDataProviderRelease(dataProvider);
+//    UIImage* resultUIImage = [UIImage imageWithCGImage:imageRef];
+//    // 释放
+//    CGImageRelease(imageRef);
+//    CGContextRelease(context);
+//    CGColorSpaceRelease(colorSpace);
+//    return resultUIImage;
+//}
 
 @end

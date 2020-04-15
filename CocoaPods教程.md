@@ -257,3 +257,17 @@ Yang:KJPlayerDemo yangkejun$ pod tru
 
 - 原因：网络问题  
 - 解决方案： 
+
+###### 19、国内CDN源用不了
+```
+Yang:KJWorkboxDemo yangkejun$ pod trunk push KJWorkbox.podspec
+Updating spec repo `trunk`
+[!] CDN: trunk Repo update failed - 3 error(s):
+no block given
+no block given
+no block given
+```
+- 原因：  
+- 解决方案：  
+1、移除trunk源`pod repo remove trunk`  
+2、升级你的cocoapods`sudo gem install cocoapods -n /usr/local/bin`

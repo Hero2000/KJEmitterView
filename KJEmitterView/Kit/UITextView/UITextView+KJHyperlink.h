@@ -14,7 +14,7 @@ typedef void (^KJTextViewURLHyperlinkBlock)(NSString *URLString);
 typedef struct kURLCustom {
     UIColor *color;/// 文字颜色
     UIFont  *font; /// 文字尺寸
-}URLCustom;// 定义网址结构体
+}URLCustom;//定义网址结构体
 @interface UITextView (KJHyperlink)
 
 /**识别点击TextView里面的超链接网址地址
@@ -24,7 +24,7 @@ typedef struct kURLCustom {
  3、关闭了text的编辑功能
  4、默认URL地址颜色为蓝色
  */
-- (void)kj_clickTextViewURLCustom:(URLCustom)custom URLHyperlink:(KJTextViewURLHyperlinkBlock)block;
+- (NSArray*)kj_clickTextViewURLCustom:(URLCustom)custom URLHyperlink:(KJTextViewURLHyperlinkBlock)block;
 
 @end
 

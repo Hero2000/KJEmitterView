@@ -86,6 +86,12 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
+#### Add 4.6.3
+1、UIButton+KJCountDown 新增倒计时按钮
+2、UITextView+KJHyperlink 返回超链接数据
+3、UIButton+KJEnlargeTouchArea 新增touchAreaInsets扩大点击域属性
+4、UIView+KJShadow 阴影相关操作
+
 #### Add 4.6.2
 1、UIButton+KJEmitter 新增设置粒子图片属性
 2、UIColor+KJExtension 新增颜色相关扩展 - 渐变色处理

@@ -36,7 +36,7 @@
  3、关闭了text的编辑功能
  4、默认URL地址颜色为蓝色
  */
-- (void)kj_clickTextViewURLCustom:(URLCustom)custom URLHyperlink:(KJTextViewURLHyperlinkBlock)block{
+- (NSArray*)kj_clickTextViewURLCustom:(URLCustom)custom URLHyperlink:(KJTextViewURLHyperlinkBlock)block{
     self.xxblock  = block;
     self.delegate = self;
     self.editable = NO; /// 关闭编辑
@@ -65,6 +65,7 @@
     self.URLTemps = temp.copy;
     array = temp = nil;
     self.attributedText = abs;
+    return self.URLTemps;
 }
 
 // 定义网址结构体类型

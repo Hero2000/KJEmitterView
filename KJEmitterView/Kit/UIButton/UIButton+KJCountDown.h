@@ -11,17 +11,17 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIButton (KJCountDown)
-///// 倒计时结束的回调
-//@property (nonatomic,copy) void(^kButtonCountDownStop)(void);
-//
-///* 设置倒计时的间隔和倒计时文案
-//@param timeout 倒计时时间
-//@param format  可选，传nil默认为 @"%zd秒"
-//*/
-//- (void)kj_startTime:(NSInteger)timeout CountDownFormat:(NSString*)format;
-//
-///// 取消倒计时
-//- (void)kj_cancelTimer;
+/// 倒计时结束的回调
+@property (nonatomic,copy) void(^kButtonCountDownStop)(void);
+
+/* 设置倒计时的间隔和倒计时文案
+ @param timeout 倒计时时间
+ @param format  可选，传nil默认为 @"%zd秒"
+*/
+- (void)kj_startTime:(NSInteger)timeout CountDownFormat:(NSString*)format;
+
+/// 取消倒计时
+- (void)kj_cancelTimer;
 
 @end
 

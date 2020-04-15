@@ -5,7 +5,6 @@
 //  Created by 杨科军 on 2018/11/26.
 //  Copyright © 2018 杨科军. All rights reserved.
 /*------------- 本人其他库 -------------
- 工具集合
  - 粒子效果、Button图文混排、点击事件封装、扩大点击域、点赞粒子效果，
  - 手势封装、圆角渐变、Xib属性、TextView输入框扩展、限制字数、识别网址超链接，
  - Image图片加工处理、滤镜渲染、泛洪算法等等
@@ -27,11 +26,21 @@
  菜单控件 - 下拉控件 选择控件
  pod 'KJMenuView' # 菜单控件
  
+ 工具库 - 推送工具、网络下载工具、识别网页图片工具等
+ pod 'KJWorkbox' # 系统工具
+ pod 'KJWorkbox/CommonBox'
+ 
  Github地址：https://github.com/yangKJ
  简书地址：https://www.jianshu.com/u/c84c00476ab6
  博客地址：https://blog.csdn.net/qq_34534179
  
  ####版本更新日志:
+ #### Add 4.6.3
+ 1、UIButton+KJCountDown 新增倒计时按钮
+ 2、UITextView+KJHyperlink 返回超链接数据
+ 3、UIButton+KJEnlargeTouchArea 新增touchAreaInsets扩大点击域属性
+ 4、UIView+KJShadow 阴影相关操作
+ 
  #### Add 4.6.2
  1、UIButton+KJEmitter 新增设置粒子图片属性
  2、UIColor+KJExtension 新增颜色相关扩展 - 渐变色处理
@@ -144,6 +153,7 @@
 #import "UIView+KJRectCorner.h" // 切圆角 - 渐变
 #import "UIView+KJGestureBlock.h" // 手势Block
 //#import "UIView+KJAppointView.h"  // 画一些指定图形（直线、虚线、五角星、六边形、八边形）
+#import "UIView+KJShadow.h" // 阴影相关
 
 //#import "UINavigationBar+KJExtension.h" // 设置NavigationBar背景
 #import "UIBarButtonItem+KJExtension.h" // 设置BarButtonItem

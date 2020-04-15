@@ -32,6 +32,9 @@
 #define kBlockSafeRun(block, ...) block ? block(__VA_ARGS__) : nil
 /** 版本判定 大于等于某个版本 */
 #define KJ_JUDGE_CURRENT_VERSION(version) ([[[UIDevice currentDevice] systemVersion] compare:@#version options:NSNumericSearch] != NSOrderedAscending)
+// 获取时间间隔宏
+#define KJTimeTick CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
+#define KJTimeTock NSLog(@"Time: %f", CFAbsoluteTimeGetCurrent() - start)
 
 
 #pragma mark ********** 3.弱引用   *********
@@ -241,7 +244,6 @@ return instance; \
 - (instancetype)autorelease {return instance;} \
 - (NSUInteger)retainCount {return ULONG_MAX;}
 #endif // 提示，最后一行不要使用
-
 
 #pragma mark ********** 8.系统默认字体设置和自选字体设置    *********
 #define kSystemFontSize(fontsize)  [UIFont systemFontOfSize:(fontsize)]
