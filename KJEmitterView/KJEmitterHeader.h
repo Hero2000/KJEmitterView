@@ -35,6 +35,10 @@
  博客地址：https://blog.csdn.net/qq_34534179
  
  ####版本更新日志:
+ #### Add 4.6.4
+ 1、UIView+KJShadow 新增一套计算阴影角度的算法
+ 2、UIView+KJShadow 修改内发光kj_aroundInnerShine
+ 
  #### Add 4.6.3
  1、UIButton+KJCountDown 新增倒计时按钮
  2、UITextView+KJHyperlink 返回超链接数据

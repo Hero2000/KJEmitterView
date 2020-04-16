@@ -21,13 +21,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat innerShadowRadius;
 /* 内阴影的透明度,0为完全透明 */
 @property (nonatomic, assign) CGFloat innerShadowOpacity;
-/* 内阴影的Layer */
-@property (nonatomic, strong) KJShadowLayer *innerShadowLayer;
 
 /* 支持多层内阴影,不执行就不会添加内阴影 */
-- (void)addInnerShadow;
+- (void)kj_addInnerShadow;
 /* 清除内阴影,为全部清除,慎用 */
-- (void)removeInnerShadow;
+- (void)kj_removeInnerShadow;
+
+// 四周环绕内发光处理
+- (void)kj_aroundInnerShine;
+
+// 提供一套阴影角度算法 angele:范围（0-360）distance:距离
+- (void)kj_innerShadowAngle:(CGFloat)angle Distance:(CGFloat)distance;
 
 @end
 
