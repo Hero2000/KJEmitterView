@@ -307,3 +307,18 @@ https://github.com/cocoapods/cocoapods/search?q=no%20block%20given&type=Issues&u
 ```
 原因：  
 解决方案：  
+
+###### 21、
+```
+error: RPC failed; curl 56 LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno 54
+fatal: the remote end hung up unexpectedly
+fatal: early EOF
+fatal: index-pack failed
+```
+原因：  
+解决方案:
+
+```
+git config http.postBuffer 524288000
+git config https.postBuffer 524288000
+```
