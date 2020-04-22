@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *Button;
 @property (weak, nonatomic) IBOutlet UIButton *Button2;
 @property (weak, nonatomic) IBOutlet UIImageView *ImageView2;
-
 @end
 
 @implementation KJIMageVC
@@ -39,8 +38,7 @@
         /// 旋转图片
         UIImage *image = [weakself.Image2.image kj_rotationImageWithOrientation:UIImageOrientationLeft];
         /// 拼接图片
-        weakself.ImageView2.image = [UIImage kj_jointImageWithMasterImage:weakself.Image1.image HeadImage:img FootImage:image];
-        NSLog(@"222--------------%ld",kCurrentSec);
+        weakself.ImageView2.image = [weakself.Image1.image kj_jointImageWithHeadImage:img FootImage:image];
     }];
 }
 

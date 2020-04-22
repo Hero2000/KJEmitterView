@@ -31,23 +31,11 @@
     }];
     [self createSwitch];
     
-    UILabel *lab2 = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, 100, 100)];
-    lab2.backgroundColor = UIColor.blueColor;
-    [self.testView addSubview:lab2];
-    
-    __block
-    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    lab.backgroundColor = UIColor.blueColor;
-    [self.testView addSubview:lab];
-    [self.testView kj_FindSubviewRecursively:^BOOL(UIView * _Nonnull subview, BOOL * _Nonnull stop) {
-        if (subview == lab) {
-            subview.backgroundColor = UIColor.redColor;
-            NSLog(@"---%@",stop?@"YES":@"NO");
-            return YES;
-        }
-        NSLog(@"22---%@",stop?@"YES":@"NO");
-        return NO;
-    }];
+    CALayer *topLayer = [[CALayer alloc]init];
+    [topLayer setBounds:self.testView.bounds];
+    [topLayer setPosition:CGPointMake(self.testView.bounds.size.width*.5, self.testView.bounds.size.height*.5)];
+    [topLayer setContents:(id)[[UIImage imageNamed:@"IMG_4931"] CGImage]];
+    [[self.testView layer] addSublayer:topLayer];
 }
 
 - (void)clickInsSwitch:(UISwitch *)sender{
@@ -120,7 +108,7 @@
 }
 - (void)slidingSlider:(UISlider *)sender{
     self.testView.kj_Radius = sender.value;
-    ((UILabel *)[self.view viewWithTag:5324 + sender.tag - 100]).text = [NSString stringWithFormat: @"%@：\t%.2f",self.NameArray[sender.tag - 100], sender.value];
+    ((UILabel *)[self.view viewWithTag:5324 + sender.tag - 100]).text = [NSString stringWithFormat: @"%@:\t%.2f",self.NameArray[sender.tag - 100], sender.value];
 }
 
 - (void)createSwitch{

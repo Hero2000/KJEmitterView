@@ -271,3 +271,39 @@ no block given
 - 解决方案：  
 1、移除trunk源`pod repo remove trunk`  
 2、升级你的cocoapods`sudo gem install cocoapods -n /usr/local/bin`
+
+###### 20、
+```
+――― TEMPLATE END ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+[!] Oh no, an error occurred.
+
+Search for existing GitHub issues similar to yours:
+https://github.com/CocoaPods/CocoaPods/search?q=no+block+given&type=Issues
+
+If none exists, create a ticket, with the template displayed above, on:
+https://github.com/CocoaPods/CocoaPods/issues/new
+
+Be sure to first read the contributing guide for details on how to properly submit a ticket:
+https://github.com/CocoaPods/CocoaPods/blob/master/CONTRIBUTING.md
+
+Don't forget to anonymize any private data!
+
+Looking for related issues on cocoapods/cocoapods...
+ -     - ERROR | [iOS] unknown: Encountered an unknown error (no block given) during validation.
+   https://github.com/CocoaPods/CocoaPods/issues/9460 [closed] [4 comments]
+   07 Jan 2020
+
+ - Trying to install cocoapod 'MaterialComponents/Dialogs', Error 416
+   https://github.com/CocoaPods/CocoaPods/issues/9611 [closed] [13 comments]
+   22 hours ago
+
+ - Pods Template end - oh no, an error occurred
+   https://github.com/CocoaPods/CocoaPods/issues/9367 [closed] [2 comments]
+   26 Nov 2019
+
+and 71 more at:
+https://github.com/cocoapods/cocoapods/search?q=no%20block%20given&type=Issues&utf8=✓
+```
+原因：  
+解决方案：  

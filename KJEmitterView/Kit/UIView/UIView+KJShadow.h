@@ -12,15 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 @class KJShadowLayer;
 @interface UIView (KJShadow)
 /* 内阴影的路径 */
-@property (nonatomic, strong) UIBezierPath *innerShadowPath;
+@property (nonatomic, strong) UIBezierPath *kj_innerShadowPath;
 /* 内阴影的颜色 */
-@property (nonatomic, strong) UIColor *innerShadowColor;
+@property (nonatomic, strong) UIColor *kj_innerShadowColor;
 /* 内阴影的偏移 */
-@property (nonatomic, assign) CGSize innerShadowOffset;
+@property (nonatomic, assign) CGSize kj_innerShadowOffset;
 /* 内阴影的阴影半径 */
-@property (nonatomic, assign) CGFloat innerShadowRadius;
+@property (nonatomic, assign) CGFloat kj_innerShadowRadius;
 /* 内阴影的透明度,0为完全透明 */
-@property (nonatomic, assign) CGFloat innerShadowOpacity;
+@property (nonatomic, assign) CGFloat kj_innerShadowOpacity;
 
 /* 支持多层内阴影,不执行就不会添加内阴影 */
 - (void)kj_addInnerShadow;

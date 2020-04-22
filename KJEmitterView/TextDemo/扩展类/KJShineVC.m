@@ -47,18 +47,18 @@
     [path addLineToPoint:CGPointMake(0, ph/3)];
     [path addLineToPoint:CGPointMake(pw/3, 0)];
     
-    self.imageView.innerShadowPath = path;//[UIBezierPath bezierPathWithRoundedRect:self.backView.bounds cornerRadius:1];
-    self.imageView.innerShadowColor = UIColor.redColor;
-    self.imageView.innerShadowOffset = CGSizeMake(self.xStepper.value, self.yStepper.value);
-    self.imageView.innerShadowRadius = self.slider2.value;
-    self.imageView.innerShadowOpacity = self.slider1.value;
+    self.imageView.kj_innerShadowPath = path;//[UIBezierPath bezierPathWithRoundedRect:self.backView.bounds cornerRadius:1];
+    self.imageView.kj_innerShadowColor = UIColor.redColor;
+    self.imageView.kj_innerShadowOffset = CGSizeMake(self.xStepper.value, self.yStepper.value);
+    self.imageView.kj_innerShadowRadius = self.slider2.value;
+    self.imageView.kj_innerShadowOpacity = self.slider1.value;
     [self.imageView kj_aroundInnerShine];
     
     _weakself;
     for (UIView *view in self.view.subviews) {
         if (520<=view.tag&&view.tag<=523) {
             [view kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
-                weakself.imageView.innerShadowColor = view.backgroundColor;
+                weakself.imageView.kj_innerShadowColor = view.backgroundColor;
                     weakself.displayImageView.image = [UIImage kj_captureScreen:weakself.imageView];
             }];
         }
@@ -66,23 +66,23 @@
 }
 
 - (IBAction)slider1:(UISlider *)sender {
-    self.imageView.innerShadowOpacity = sender.value;
+    self.imageView.kj_innerShadowOpacity = sender.value;
 }
 - (IBAction)slider2:(UISlider *)sender {
-    self.imageView.innerShadowRadius = sender.value;
+    self.imageView.kj_innerShadowRadius = sender.value;
 }
 - (IBAction)x:(UIStepper *)sender {
     self.xLabel.text = [NSString stringWithFormat:@"x:%.1f",self.xStepper.value];
-    CGSize old = self.imageView.innerShadowOffset;
+    CGSize old = self.imageView.kj_innerShadowOffset;
     CGSize new = CGSizeMake(old.width, sender.value);
-    self.imageView.innerShadowOffset = new;
+    self.imageView.kj_innerShadowOffset = new;
     self.displayImageView.image = [UIImage kj_captureScreen:self.imageView];
 }
 - (IBAction)y:(UIStepper *)sender {
     self.yLabel.text = [NSString stringWithFormat:@"y:%.1f",self.yStepper.value];
-    CGSize old = self.imageView.innerShadowOffset;
+    CGSize old = self.imageView.kj_innerShadowOffset;
     CGSize new = CGSizeMake(sender.value,old.height);
-    self.imageView.innerShadowOffset = new;
+    self.imageView.kj_innerShadowOffset = new;
     self.displayImageView.image = [UIImage kj_captureScreen:self.imageView];
 }
 

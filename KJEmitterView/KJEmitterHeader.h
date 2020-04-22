@@ -35,10 +35,17 @@
  博客地址：https://blog.csdn.net/qq_34534179
  
  ####版本更新日志:
+ #### Add 4.6.5
+ 1、UIImage+KJProcessing 新增屏幕截图 kj_captureScreenWindow
+ 2、UIImage+KJProcessing 新增多边形切图 kj_polygonCaptureImageWithImageView:PointArray:
+ 3、UIImage+KJProcessing 新增不规则图形切图 kj_anomalyCaptureImageWithView:BezierPath
+ 4、CALayer+KJReflection 新增倒影处理
+ 5、UIImage+KJCompressJoint 新增图片拼接处理
+ 
  #### Add 4.6.4
  1、UIView+KJShadow 新增一套计算阴影角度的算法
- 2、UIView+KJShadow 修改内发光kj_aroundInnerShine
- 
+ 2、UIView+KJShadow 修改内发光 kj_aroundInnerShine
+  
  #### Add 4.6.3
  1、UIButton+KJCountDown 新增倒计时按钮
  2、UITextView+KJHyperlink 返回超链接数据
@@ -159,6 +166,8 @@
 //#import "UIView+KJAppointView.h"  // 画一些指定图形（直线、虚线、五角星、六边形、八边形）
 #import "UIView+KJShadow.h" // 阴影相关
 
+#import "CALayer+KJReflection.h" // 倒影处理
+
 //#import "UINavigationBar+KJExtension.h" // 设置NavigationBar背景
 #import "UIBarButtonItem+KJExtension.h" // 设置BarButtonItem
 
@@ -167,6 +176,7 @@
 //#import "UITextView+KJHyperlink.h" // 超链接处理
 
 #import "UIImage+KJProcessing.h"  /// 图片加工处理相关
+#import "UIImage+KJCompressJoint.h" /// 图片压缩拼接处理
 //#import "UIImage+KJFloodFill.h" /// 图片泛洪算法
 //#import "UIImage+KJFilter.h"    /// 处理图片滤镜，渲染相关
 //#import "UIImage+KJRemoteSize.h" /// 获取网络图片尺寸

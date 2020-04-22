@@ -105,11 +105,11 @@
 @end
 
 @implementation UIView (KJShadow)
-- (UIBezierPath *)innerShadowPath {
-    return objc_getAssociatedObject(self, @selector(innerShadowPath));
+- (UIBezierPath *)kj_innerShadowPath {
+    return objc_getAssociatedObject(self, @selector(kj_innerShadowPath));
 }
-- (void)setInnerShadowPath:(UIBezierPath *)innerShadowPath {
-    objc_setAssociatedObject(self, @selector(innerShadowPath), innerShadowPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setKj_innerShadowPath:(UIBezierPath *)innerShadowPath {
+    objc_setAssociatedObject(self, @selector(kj_innerShadowPath), innerShadowPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     self.innerShadowLayer.innerShadowPath = innerShadowPath;
     [self.innerShadowLayer setNeedsDisplay];
     if (around) {
@@ -118,11 +118,11 @@
     }
 }
 
-- (UIColor *)innerShadowColor {
-    return objc_getAssociatedObject(self, @selector(innerShadowColor));
+- (UIColor *)kj_innerShadowColor {
+    return objc_getAssociatedObject(self, @selector(kj_innerShadowColor));
 }
-- (void)setInnerShadowColor:(UIColor *)innerShadowColor {
-    objc_setAssociatedObject(self, @selector(innerShadowColor), innerShadowColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setKj_innerShadowColor:(UIColor *)innerShadowColor {
+    objc_setAssociatedObject(self, @selector(kj_innerShadowColor), innerShadowColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     self.innerShadowLayer.innerShadowColor = innerShadowColor;
     [self.innerShadowLayer setNeedsDisplay];
     if (around) {
@@ -131,11 +131,11 @@
     }
 }
 
-- (CGSize)innerShadowOffset {
-    return [objc_getAssociatedObject(self, @selector(innerShadowOffset)) CGSizeValue];
+- (CGSize)kj_innerShadowOffset {
+    return [objc_getAssociatedObject(self, @selector(kj_innerShadowOffset)) CGSizeValue];
 }
-- (void)setInnerShadowOffset:(CGSize)innerShadowOffset {
-    objc_setAssociatedObject(self, @selector(innerShadowOffset), [NSValue valueWithCGSize:innerShadowOffset], OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)setKj_innerShadowOffset:(CGSize)innerShadowOffset {
+    objc_setAssociatedObject(self, @selector(kj_innerShadowOffset), [NSValue valueWithCGSize:innerShadowOffset], OBJC_ASSOCIATION_COPY_NONATOMIC);
     self.innerShadowLayer.innerShadowOffset = innerShadowOffset;
     [self.innerShadowLayer setNeedsDisplay];
     if (around) {
@@ -144,11 +144,11 @@
     }
 }
 
-- (CGFloat)innerShadowRadius {
-    return [objc_getAssociatedObject(self, @selector(innerShadowRadius)) doubleValue];
+- (CGFloat)kj_innerShadowRadius {
+    return [objc_getAssociatedObject(self, @selector(kj_innerShadowRadius)) doubleValue];
 }
-- (void)setInnerShadowRadius:(CGFloat)innerShadowRadius {
-    objc_setAssociatedObject(self, @selector(innerShadowRadius), @(innerShadowRadius), OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)setKj_innerShadowRadius:(CGFloat)innerShadowRadius {
+    objc_setAssociatedObject(self, @selector(kj_innerShadowRadius), @(innerShadowRadius), OBJC_ASSOCIATION_COPY_NONATOMIC);
     self.innerShadowLayer.innerShadowRadius = innerShadowRadius;
     [self.innerShadowLayer setNeedsDisplay];
     if (around) {
@@ -157,11 +157,11 @@
     }
 }
 
-- (CGFloat)innerShadowOpacity {
-    return [objc_getAssociatedObject(self, @selector(innerShadowOpacity)) doubleValue];
+- (CGFloat)kj_innerShadowOpacity {
+    return [objc_getAssociatedObject(self, @selector(kj_innerShadowOpacity)) doubleValue];
 }
-- (void)setInnerShadowOpacity:(CGFloat)innerShadowOpacity {
-    objc_setAssociatedObject(self, @selector(innerShadowOpacity), @(innerShadowOpacity), OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)setKj_innerShadowOpacity:(CGFloat)innerShadowOpacity {
+    objc_setAssociatedObject(self, @selector(kj_innerShadowOpacity), @(innerShadowOpacity), OBJC_ASSOCIATION_COPY_NONATOMIC);
     self.innerShadowLayer.innerShadowOpacity = innerShadowOpacity;
     [self.innerShadowLayer setNeedsDisplay];
     if (around) {
@@ -188,11 +188,11 @@
     around = false;
     KJShadowLayer *innerShadowLayer = [KJShadowLayer layer];
     innerShadowLayer.frame = self.bounds;
-    innerShadowLayer.innerShadowPath = self.innerShadowPath;
-    innerShadowLayer.innerShadowColor = self.innerShadowColor;
-    innerShadowLayer.innerShadowOffset = self.innerShadowOffset;
-    innerShadowLayer.innerShadowRadius = self.innerShadowRadius;
-    innerShadowLayer.innerShadowOpacity = self.innerShadowOpacity;
+    innerShadowLayer.innerShadowPath = self.kj_innerShadowPath;
+    innerShadowLayer.innerShadowColor = self.kj_innerShadowColor;
+    innerShadowLayer.innerShadowOffset = self.kj_innerShadowOffset;
+    innerShadowLayer.innerShadowRadius = self.kj_innerShadowRadius;
+    innerShadowLayer.innerShadowOpacity = self.kj_innerShadowOpacity;
     [self.layer addSublayer:innerShadowLayer];
     self.innerShadowLayer = innerShadowLayer;
 }
@@ -211,23 +211,23 @@ static bool around = false;
     around = true;
     self.innerShadowLayer = [KJShadowLayer layer];
     self.innerShadowLayer.frame = self.bounds;
-    self.innerShadowLayer.innerShadowPath = self.innerShadowPath;
-    self.innerShadowLayer.innerShadowColor = self.innerShadowColor;
-    self.innerShadowLayer.innerShadowOffset = self.innerShadowOffset;
-    self.innerShadowLayer.innerShadowRadius = self.innerShadowRadius;
-    self.innerShadowLayer.innerShadowOpacity = self.innerShadowOpacity;
+    self.innerShadowLayer.innerShadowPath = self.kj_innerShadowPath;
+    self.innerShadowLayer.innerShadowColor = self.kj_innerShadowColor;
+    self.innerShadowLayer.innerShadowOffset = self.kj_innerShadowOffset;
+    self.innerShadowLayer.innerShadowRadius = self.kj_innerShadowRadius;
+    self.innerShadowLayer.innerShadowOpacity = self.kj_innerShadowOpacity;
     [self.layer addSublayer:self.innerShadowLayer];
     
     self.innerShadowLayer2 = [self.innerShadowLayer copy];
     self.innerShadowLayer2.frame = self.bounds;
-    self.innerShadowLayer2.innerShadowOffset = CGSizeMake(-self.innerShadowOffset.width, -self.innerShadowOffset.height);
+    self.innerShadowLayer2.innerShadowOffset = CGSizeMake(-self.kj_innerShadowOffset.width, -self.kj_innerShadowOffset.height);
     [self.layer addSublayer:self.innerShadowLayer2];
 }
 // 提供一套阴影角度算法 angele:范围（0-360）distance:距离
 - (void)kj_innerShadowAngle:(CGFloat)angle Distance:(CGFloat)distance{
     double z = distance;
     double x = 0,y = 0;
-    angle = angle>=360?angle-360:angle;
+    angle = angle>=360?fmodl(angle,360):angle;
     if (0<=angle&&angle<90) {
         double t = tan(M_PI/(180.0/angle));
         x = -z/(t+1.0);
@@ -245,7 +245,7 @@ static bool around = false;
         x = -(z-z/(t+1.0));
         y = -(z-(z*t)/(t+1.0));
     }
-    self.innerShadowOffset = CGSizeMake(x, y);
+    self.kj_innerShadowOffset = CGSizeMake(x, y);
 }
 
 @end
