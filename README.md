@@ -51,8 +51,8 @@
 ```
 工具集合
 - 粒子效果、Button图文混排、点击事件封装、扩大点击域、点赞粒子效果，
-- 手势封装、圆角渐变、Xib属性、TextView输入框扩展、限制字数、识别网址超链接，
-- Image图片加工处理、滤镜渲染、泛洪算法等等
+- 手势封装、圆角渐变、倒影、内阴影处理、Xib属性、识别网址超链接，
+- 图片加工处理、对花铺贴效果、滤镜渲染、泛洪算法等等
 pod 'KJEmitterView'
 pod 'KJEmitterView/Function'#
 pod 'KJEmitterView/Control' # 自定义控件
@@ -70,6 +70,10 @@ pod 'KJLoadingAnimation' # 加载控件
 
 菜单控件 - 下拉控件 选择控件
 pod 'KJMenuView' # 菜单控件
+
+工具库 - 推送工具、网络下载工具、识别网页图片工具等
+pod 'KJWorkbox' # 系统工具
+pod 'KJWorkbox/CommonBox'
 
 ```
 

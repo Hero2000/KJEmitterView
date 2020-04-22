@@ -7,6 +7,7 @@
 //
 
 #import "CALayer+KJReflection.h"
+#import <objc/runtime.h>
 
 @implementation CALayer (KJReflection)
 - (CGFloat)kj_reflectionOpacity {
