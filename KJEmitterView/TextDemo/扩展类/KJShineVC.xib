@@ -45,7 +45,7 @@
                         <action selector="slider1:" destination="-1" eventType="valueChanged" id="l7x-mJ-HNQ"/>
                     </connections>
                 </slider>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="20" minValue="0.0" maxValue="360" translatesAutoresizingMaskIntoConstraints="NO" id="a29-b8-qPa">
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="360" translatesAutoresizingMaskIntoConstraints="NO" id="a29-b8-qPa">
                     <rect key="frame" x="80" y="401.5" width="277" height="31"/>
                     <connections>
                         <action selector="slider2:" destination="-1" eventType="valueChanged" id="yYN-vQ-egY"/>

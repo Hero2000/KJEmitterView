@@ -47,7 +47,7 @@
     [path addLineToPoint:CGPointMake(0, ph/3)];
     [path addLineToPoint:CGPointMake(pw/3, 0)];
     
-    self.imageView.kj_innerShadowPath = path;//[UIBezierPath bezierPathWithRoundedRect:self.backView.bounds cornerRadius:1];
+    self.imageView.kj_innerShadowPath = [UIBezierPath bezierPathWithRoundedRect:self.imageView.bounds cornerRadius:1];
     self.imageView.kj_innerShadowColor = UIColor.redColor;
     self.imageView.kj_innerShadowOffset = CGSizeMake(self.xStepper.value, self.yStepper.value);
     self.imageView.kj_innerShadowRadius = self.slider2.value;

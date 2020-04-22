@@ -141,37 +141,30 @@ end
 - 4.5．最后上传到trunk        `pod trunk push KJEmitterDemo.podspec`
 
 ###### 5、Unable to find a pod with name, author, summary, or description matching KJEmitterDemo
-- 原因：审核过程是要两三天
-- 解决方案：
+原因：审核过程是要两三天  
+解决方案：
+
 - 执行```pod setup```命令进行本地依赖库更新，然后再搜索
 - 如果还是不行删除~/Library/Caches/CocoaPods目录下的search_index.json文件
 - 执行```rm ~/Library/Caches/CocoaPods/search_index.json``` 
 - 然后再执行搜索```pod search KJEmitterDemo```
-- 成功如下：
+
+成功如下：
 ![WX20181126-131802@2x.png](https://upload-images.jianshu.io/upload_images/1933747-bfc239f54b544d92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ###### 6、校验不通过
+---
 ![Pasted Graphic 2.png](https://upload-images.jianshu.io/upload_images/1933747-85e4d416150a49df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+可能原因：github上面的tag文件格式已经确定,下图位置下载下来看一下，是否和本地的文件格式保持一致。如果不一致按照下列方式解决bug  
+解决方案：
 
-- 可能原因：github上面的tag文件格式已经确定,下图位置下载下来看一下，是否和本地的文件格式保持一致。如果不一致按照下列方式解决bug。
-
-- 查看git上面的文件格式
-![Pasted Graphic.png](https://upload-images.jianshu.io/upload_images/1933747-011ceece15976fbe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-- Github上面下载下来的文件格式：
-![Pasted Graphic 2 2.png](https://upload-images.jianshu.io/upload_images/1933747-69bbe45ff06fc811.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-- 本地文件格式：
-![Pasted Graphic 1.png](https://upload-images.jianshu.io/upload_images/1933747-c835b2f776a6ffeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-- 需要校验的格式：
-![WX20181126-171236@2x.png](https://upload-images.jianshu.io/upload_images/1933747-06d4be5c495d6cb2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-- 解决方案：很明显不一样
-- 删除本地tag： ```git tag -d 1.0.0```
-- 删除远端tag： ```git push origin -d tag 1.0.0```
-- 重新添加本地tag：```git tag -a 1.0.0 -m ‘release 1.0.0’```
-- 重新上传到远端：```git push origin --tags```
-- 再次校验：```pod spec lint KJEmitterView.podspec```
-
+```
+- 删除本地tag：git tag -d 1.0.0
+- 删除远端tag：git push origin -d tag 1.0.0
+- 重新添加本地tag：git tag -a 1.0.0 -m ‘release 1.0.0’
+- 重新上传到远端：git push origin --tags
+- 再次校验：pod spec lint KJEmitterView.podspec
+```
 ###### 7、[!] There was an error pushing a new version to trunk: execution expired
 
 - 原因：推送过期
@@ -202,6 +195,7 @@ end
 - 解决方案：s.frameworks当中加入可以用`dispatch_source_t`的库
 
 ###### 12、[KJEmitterView/Classes] xcodebuild:  KJEmitterView/KJEmitterView/Classes/AlertView/KJAlertView.m:163:116: error: property 'height' not found on object of type 'UILabel *'
+---
 ![2.png](https://upload-images.jianshu.io/upload_images/1933747-7de6a4b6abcac480.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 - 原因：未引入头文件`UIView+KJFrame`在KJAlertView当中
@@ -252,23 +246,27 @@ fatal: index-pack failed
 Analyzed 1 podspec.
 
 [!] The spec did not pass validation, due to 1 error.
-Yang:KJPlayerDemo yangkejun$ pod tru
 ```
+解决方案： 
 
-- 原因：网络问题  
-- 解决方案： 
+```
+git config http.postBuffer 524288000
+git config https.postBuffer 524288000
+```
 
 ###### 19、国内CDN源用不了
 ```
-Yang:KJWorkboxDemo yangkejun$ pod trunk push KJWorkbox.podspec
+Yang:KJEmitterView yangkejun$ pod trunk push KJEmitterView.podspec --allow-warnings
 Updating spec repo `trunk`
-[!] CDN: trunk Repo update failed - 3 error(s):
+[!] CDN: trunk Repo update failed - 6 error(s):
+no block given
+no block given
+no block given
 no block given
 no block given
 no block given
 ```
-- 原因：  
-- 解决方案：  
+解决方案：  
 1、移除trunk源`pod repo remove trunk`  
 2、升级你的cocoapods`sudo gem install cocoapods -n /usr/local/bin`
 
@@ -308,17 +306,4 @@ https://github.com/cocoapods/cocoapods/search?q=no%20block%20given&type=Issues&u
 原因：  
 解决方案：  
 
-###### 21、
-```
-error: RPC failed; curl 56 LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno 54
-fatal: the remote end hung up unexpectedly
-fatal: early EOF
-fatal: index-pack failed
-```
-原因：  
-解决方案:
 
-```
-git config http.postBuffer 524288000
-git config https.postBuffer 524288000
-```

@@ -7,23 +7,24 @@
 
 <p align="left">
   <img width="200" src="Res/131566445322_.pic.jpg" hspace="1px" />
-  <img width="200" src="Res/191566445328_.pic.jpg" hspace="30px" />
-  <img width="200" src="Res/181566445327_.pic.jpg" hspace="30px" />
+  <img width="200" src="Res/901587542855_.pic.jpg" hspace="30px" />
+  <img width="200" src="Res/911587542856_.pic.jpg" hspace="30px" />
 </p>
 
 <p align="left">
+  <img width="200" src="Res/951587543573_.pic.jpg" hspace="1px" />
+  <img width="200" src="Res/931587543571_.pic.jpg" hspace="30px" />
+  <img width="200" src="Res/941587543572_.pic.jpg" hspace="30px" />
+</p>
+
+<p align="left">
+  <img width="200" src="Res/971587543575_.pic.jpg" hspace="30px" />
   <img width="200" src="Res/231566445332_.pic.jpg" hspace="1px" />
+  <img width="200" src="Res/961587543574_.pic.jpg" hspace="30px" />
+</p>
+
+<p align="left">
   <img width="200" src="Res/151566445324_.pic.jpg" hspace="30px" />
-  <img width="200" src="Res/141566445323_.pic.jpg" hspace="30px" />
-</p>
-
-<p align="left">
-  <img width="200" src="Res/221566445331_.pic.jpg" hspace="1px" />
-  <img width="200" src="Res/281568958148_.pic.jpg" hspace="30px" />
-  <img width="200" src="Res/171566445326_.pic.jpg" hspace="30px" />
-</p>
-
-<p align="left">
   <img width="200" src="Res/211566445330_.pic.jpg" hspace="1px" />
   <img width="200" src="Res/201566445329_.pic.jpg" hspace="30px" />
 </p>
@@ -49,7 +50,11 @@
 
 #### <a id="作者其他库"></a>作者其他Pod库
 ```
-工具集合
+/*
+*********************************************************************************
+*
+*⭐️⭐️⭐️ ----- 本人其他库 ----- ⭐️⭐️⭐️
+*
 - 粒子效果、Button图文混排、点击事件封装、扩大点击域、点赞粒子效果，
 - 手势封装、圆角渐变、倒影、内阴影处理、Xib属性、识别网址超链接，
 - 图片加工处理、对花铺贴效果、滤镜渲染、泛洪算法等等
@@ -75,6 +80,10 @@ pod 'KJMenuView' # 菜单控件
 pod 'KJWorkbox' # 系统工具
 pod 'KJWorkbox/CommonBox'
 
+* 如果觉得好用,希望您能Star支持,你的 ⭐️ 是我持续更新的动力!
+*
+*********************************************************************************
+*/
 ```
 
 ##### Issue
@@ -196,11 +205,6 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="效果图"></a>效果图
 <p align="left">
   <img width="200" src="Res/131566445322_.pic.jpg" hspace="1px" />
-</p>
-
-#### <a id="目录结构"></a>目录结构
-<p align="left">
-  <img width="200" src="Res/目录结构.png" hspace="1px" />
 </p>
 
 #### 温馨提示
