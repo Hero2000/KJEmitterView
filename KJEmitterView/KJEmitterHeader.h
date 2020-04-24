@@ -186,6 +186,7 @@
 
 #import "UIImage+KJProcessing.h"  /// 图片加工处理相关
 #import "UIImage+KJCompressJoint.h" /// 图片压缩拼接处理
+#import "UIImage+KJPave.h" /// 图片铺设处理
 //#import "UIImage+KJFloodFill.h" /// 图片泛洪算法
 //#import "UIImage+KJFilter.h"    /// 处理图片滤镜，渲染相关
 //#import "UIImage+KJRemoteSize.h" /// 获取网络图片尺寸

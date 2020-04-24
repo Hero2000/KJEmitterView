@@ -74,6 +74,7 @@
         _temps = [NSMutableArray array];
         NSMutableArray *temp1 = [NSMutableArray array];
         [temp1 addObject:@{@"VCName":@"KJButtonVC",@"describeName":@"Button图文布局点赞粒子"}];
+        [temp1 addObject:@{@"VCName":@"KJFloorVC",@"describeName":@"地板拼接效果展示"}];
         [temp1 addObject:@{@"VCName":@"KJTiledVC",@"describeName":@"铺贴效果展示"}];
         [temp1 addObject:@{@"VCName":@"KJShadowVC",@"describeName":@"内阴影相关"}];
         [temp1 addObject:@{@"VCName":@"KJReflectionVC",@"describeName":@"倒影投影处理"}];

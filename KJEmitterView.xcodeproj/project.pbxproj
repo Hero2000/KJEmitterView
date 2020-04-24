@@ -91,6 +91,9 @@
 		68BA6C3321B303D40013C4AD /* UITextView+KJPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BA6C2221B303D40013C4AD /* UITextView+KJPlaceHolder.m */; };
 		68BA6C3421B303D40013C4AD /* UIBarButtonItem+KJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BA6C2521B303D40013C4AD /* UIBarButtonItem+KJExtension.m */; };
 		68BA6C3521B303D40013C4AD /* UINavigationBar+KJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BA6C2821B303D40013C4AD /* UINavigationBar+KJExtension.m */; };
+		68CFFD0F24503E2800EA3590 /* UIImage+KJPave.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CFFD0E24503E2800EA3590 /* UIImage+KJPave.m */; };
+		68CFFD13245040EC00EA3590 /* KJFloorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CFFD11245040EC00EA3590 /* KJFloorVC.m */; };
+		68CFFD14245040EC00EA3590 /* KJFloorVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68CFFD12245040EC00EA3590 /* KJFloorVC.xib */; };
 		68E166D0234F4D5B008E8A80 /* UIViewController+KJFullScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 68E166CF234F4D5A008E8A80 /* UIViewController+KJFullScreen.m */; };
 		68E283B821B38DCC009B708F /* KJAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68E283B621B38DCC009B708F /* KJAlertVC.m */; };
 		68E283B921B38DCC009B708F /* KJAlertVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68E283B721B38DCC009B708F /* KJAlertVC.xib */; };
@@ -250,6 +253,11 @@
 		68BA6C2521B303D40013C4AD /* UIBarButtonItem+KJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+KJExtension.m"; sourceTree = "<group>"; };
 		68BA6C2721B303D40013C4AD /* UINavigationBar+KJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+KJExtension.h"; sourceTree = "<group>"; };
 		68BA6C2821B303D40013C4AD /* UINavigationBar+KJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+KJExtension.m"; sourceTree = "<group>"; };
+		68CFFD0D24503E2800EA3590 /* UIImage+KJPave.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+KJPave.h"; sourceTree = "<group>"; };
+		68CFFD0E24503E2800EA3590 /* UIImage+KJPave.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KJPave.m"; sourceTree = "<group>"; };
+		68CFFD10245040EC00EA3590 /* KJFloorVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJFloorVC.h; sourceTree = "<group>"; };
+		68CFFD11245040EC00EA3590 /* KJFloorVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJFloorVC.m; sourceTree = "<group>"; };
+		68CFFD12245040EC00EA3590 /* KJFloorVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KJFloorVC.xib; sourceTree = "<group>"; };
 		68E166CE234F4D5A008E8A80 /* UIViewController+KJFullScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KJFullScreen.h"; sourceTree = "<group>"; };
 		68E166CF234F4D5A008E8A80 /* UIViewController+KJFullScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KJFullScreen.m"; sourceTree = "<group>"; };
 		68E283B521B38DCC009B708F /* KJAlertVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJAlertVC.h; sourceTree = "<group>"; };
@@ -479,6 +487,9 @@
 				689AF60A244EA15300DF19F3 /* KJReflectionVC.h */,
 				689AF60B244EA15300DF19F3 /* KJReflectionVC.m */,
 				689AF60C244EA15300DF19F3 /* KJReflectionVC.xib */,
+				68CFFD10245040EC00EA3590 /* KJFloorVC.h */,
+				68CFFD11245040EC00EA3590 /* KJFloorVC.m */,
+				68CFFD12245040EC00EA3590 /* KJFloorVC.xib */,
 			);
 			path = "扩展类";
 			sourceTree = "<group>";
@@ -628,6 +639,8 @@
 				68BA6C0E21B303D40013C4AD /* UIImage+KJFloodFill.m */,
 				68A08FD923BB3BBC005ECCD0 /* UIImage+KJRemoteSize.h */,
 				68A08FDA23BB3BBC005ECCD0 /* UIImage+KJRemoteSize.m */,
+				68CFFD0D24503E2800EA3590 /* UIImage+KJPave.h */,
+				68CFFD0E24503E2800EA3590 /* UIImage+KJPave.m */,
 			);
 			path = UIImage;
 			sourceTree = "<group>";
@@ -779,6 +792,7 @@
 				68B0301421B2FBC400349510 /* KJEmitter.bundle in Resources */,
 				68776CF221AC34A0000A1435 /* Assets.xcassets in Resources */,
 				689AF60E244EA15300DF19F3 /* KJReflectionVC.xib in Resources */,
+				68CFFD14245040EC00EA3590 /* KJFloorVC.xib in Resources */,
 				680C95D2236A700100304BAE /* KJEmitterLayer.bundle in Resources */,
 				68776CF021AC34A0000A1435 /* Main.storyboard in Resources */,
 				68708703244802CD006223E1 /* KJShadowVC.xib in Resources */,
@@ -813,6 +827,7 @@
 				68BA6C3021B303D40013C4AD /* UIView+KJRectCorner.m in Sources */,
 				680A61A1230E308500BCE302 /* KJIMageVC.m in Sources */,
 				689914972355C4C1008EE9C7 /* UIButton+KJEmitter.m in Sources */,
+				68CFFD0F24503E2800EA3590 /* UIImage+KJPave.m in Sources */,
 				68740F9D2443FD4D00E60223 /* UIView+KJShadow.m in Sources */,
 				6889C33A2354668E00D01F70 /* UISegmentedControl+KJCustom.m in Sources */,
 				68BA6C3521B303D40013C4AD /* UINavigationBar+KJExtension.m in Sources */,
@@ -829,6 +844,7 @@
 				68740FA1244409DA00E60223 /* KJShineVC.m in Sources */,
 				685CE15922560193004E3AF4 /* UIButton+KJBlock.m in Sources */,
 				686F0FC522B8C5F800D263CC /* NSObject+KJSwizzling.m in Sources */,
+				68CFFD13245040EC00EA3590 /* KJFloorVC.m in Sources */,
 				687115CA22631201009EC3E0 /* KJSelectControl.m in Sources */,
 				68B0301521B2FBC400349510 /* KJEmitterView.m in Sources */,
 				680D0A4D2315186F0029A5FC /* KJEmiterLayerVC.m in Sources */,

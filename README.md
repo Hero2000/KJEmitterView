@@ -6,27 +6,33 @@
 * 整理好用的自定义控件，部分数据来源于网络 
 
 <p align="left">
-  <img width="200" src="Res/131566445322_.pic.jpg" hspace="1px" />
-  <img width="200" src="Res/901587542855_.pic.jpg" hspace="30px" />
-  <img width="200" src="Res/911587542856_.pic.jpg" hspace="30px" />
+<img src="https://upload-images.jianshu.io/upload_images/1933747-239364ee4c736ec5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-6561a3bae67f461a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="30px">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-5fee5e92f2df341d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
 </p>
 
 <p align="left">
-  <img width="200" src="Res/951587543573_.pic.jpg" hspace="1px" />
-  <img width="200" src="Res/931587543571_.pic.jpg" hspace="30px" />
-  <img width="200" src="Res/941587543572_.pic.jpg" hspace="30px" />
+<img src="https://upload-images.jianshu.io/upload_images/1933747-6b51769f19338dba.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-6cc69b6c96f252e0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="30px">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-f75249465cc14d81.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
 </p>
 
 <p align="left">
-  <img width="200" src="Res/971587543575_.pic.jpg" hspace="30px" />
-  <img width="200" src="Res/231566445332_.pic.jpg" hspace="1px" />
-  <img width="200" src="Res/961587543574_.pic.jpg" hspace="30px" />
+<img src="https://upload-images.jianshu.io/upload_images/1933747-9385d8d7fb2909d0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-372ef40fe388d844.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="30px">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-f147b4553be64856.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
 </p>
 
 <p align="left">
-  <img width="200" src="Res/151566445324_.pic.jpg" hspace="30px" />
-  <img width="200" src="Res/211566445330_.pic.jpg" hspace="1px" />
-  <img width="200" src="Res/201566445329_.pic.jpg" hspace="30px" />
+<img src="https://upload-images.jianshu.io/upload_images/1933747-ea61b0e9dfe9b6ca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-b5c171bee7c7bae5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="30px">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-3a5a89ada127313b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
+</p>
+
+<p align="left">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-b06d24effbdb86ab.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
+<img src="https://upload-images.jianshu.io/upload_images/1933747-8e01116d67e820ad.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="30px">
+<img src="" width="200" hspace="30px">
 </p>
 
 ----------------------------------------
@@ -204,7 +210,7 @@ pod 'KJEmitterView/Control' # 自定义控件
 ```
 #### <a id="效果图"></a>效果图
 <p align="left">
-  <img width="200" src="Res/131566445322_.pic.jpg" hspace="1px" />
+<img src="https://upload-images.jianshu.io/upload_images/1933747-2200e0b4cf71f88f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="300" hspace="1px">
 </p>
 
 #### 温馨提示

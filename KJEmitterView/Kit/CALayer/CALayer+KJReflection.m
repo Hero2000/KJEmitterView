@@ -36,10 +36,9 @@
     if (self.kj_reflectionLayer) {
         CGFloat m = h*reflectionSize;
         CGFloat cy = b+(h+m)*.5+nav;
-        self.kj_reflectionLayer.bounds = CGRectMake(0, 0, w, m);
+        self.kj_gradientLayer.bounds = self.kj_reflectionLayer.bounds = CGRectMake(0, 0, w, m);
         self.kj_reflectionLayer.position = CGPointMake(a, cy);
-        self.kj_gradientLayer.bounds = self.kj_reflectionLayer.bounds;
-        self.kj_gradientLayer.position = CGPointMake(self.kj_reflectionLayer.bounds.size.width/2, self.kj_reflectionLayer.bounds.size.height/2);
+        self.kj_gradientLayer.position = CGPointMake(w/2, m/2);
     }
 }
 - (BOOL)kj_reflectionHideNavigation {
@@ -80,27 +79,27 @@ static CGFloat w,h,a,b,nav;
     CGFloat m = h*self.kj_reflectionSize;
     CGFloat cy = b+(h+m)*.5+nav;
     //倒影(图片旋转180度)
-    CALayer *reflectionLayer = [[CALayer alloc] init];
-    reflectionLayer.bounds = CGRectMake(0, 0, w, m);
-    reflectionLayer.position = CGPointMake(a, cy);
-    reflectionLayer.contents = [self contents];
-    [reflectionLayer setValue:[NSNumber numberWithFloat:M_PI] forKeyPath:@"transform.rotation.x"];
-    reflectionLayer.opacity = self.kj_reflectionOpacity;
-    self.kj_reflectionLayer = reflectionLayer;
+    CALayer *xLayer = [[CALayer alloc] init];
+    xLayer.bounds = CGRectMake(0, 0, w, m);
+    xLayer.position = CGPointMake(a, cy);
+    xLayer.contents = [self contents];
+    [xLayer setValue:[NSNumber numberWithFloat:M_PI] forKeyPath:@"transform.rotation.x"];
+    xLayer.opacity = self.kj_reflectionOpacity;
+    self.kj_reflectionLayer = xLayer;
     
     //创建镜像层上的遮蔽层
-    CAGradientLayer *gradientLayer = [[CAGradientLayer alloc] init];
-    gradientLayer.bounds = reflectionLayer.bounds;
-    gradientLayer.position = CGPointMake(reflectionLayer.bounds.size.width/2, reflectionLayer.bounds.size.height/2);
-    gradientLayer.colors = @[(id)UIColor.clearColor.CGColor,(id)UIColor.blackColor.CGColor];
-    gradientLayer.locations = @[@(self.kj_reflectionFuzzy),@1];
-    gradientLayer.startPoint = CGPointMake(0.5,0.0);
-    gradientLayer.endPoint = CGPointMake(0.5,1.0);
+    CAGradientLayer *gLayer = [[CAGradientLayer alloc] init];
+    gLayer.bounds = xLayer.bounds;
+    gLayer.position = CGPointMake(w/2, m/2);
+    gLayer.colors = @[(id)UIColor.clearColor.CGColor,(id)UIColor.blackColor.CGColor];
+    gLayer.locations = @[@(self.kj_reflectionFuzzy),@1];
+    gLayer.startPoint = CGPointMake(0.5,0.0);
+    gLayer.endPoint = CGPointMake(0.5,1.0);
     //设置倒影的遮蔽层
-    [reflectionLayer setMask:gradientLayer];
-    self.kj_gradientLayer = gradientLayer;
+    [xLayer setMask:gLayer];
+    self.kj_gradientLayer = gLayer;
     
-    [self.superlayer addSublayer:reflectionLayer];
+    [self.superlayer addSublayer:xLayer];
 }
 
 @end
