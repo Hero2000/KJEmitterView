@@ -44,6 +44,11 @@
  */
 /*
  ####版本更新日志:
+ #### Add 4.6.7
+ 1、UIView+KJShadow 移出，修改至KJShadowLayer
+ 2、KJShadowLayer 继承CALayer的阴影、发光处理
+ 3、UIImage+KJPave 新增地板拼接处理、获取图片指定区域、横向和纵向裁剪图片
+ 
  #### Add 4.6.6
  1、UIImage+KJProcessing 新增屏幕截图 kj_captureScreenWindow
  2、UIImage+KJProcessing 新增多边形切图 kj_polygonCaptureImageWithImageView:PointArray:
@@ -173,8 +178,8 @@
 #import "UIView+KJRectCorner.h" // 切圆角 - 渐变
 #import "UIView+KJGestureBlock.h" // 手势Block
 //#import "UIView+KJAppointView.h"  // 画一些指定图形（直线、虚线、五角星、六边形、八边形）
-#import "UIView+KJShadow.h" // 阴影相关
 
+#import "KJShadowLayer.h" // 内阴影、外阴影、投影相关
 #import "CALayer+KJReflection.h" // 倒影处理
 
 //#import "UINavigationBar+KJExtension.h" // 设置NavigationBar背景

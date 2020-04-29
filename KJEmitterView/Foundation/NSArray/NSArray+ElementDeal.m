@@ -9,13 +9,17 @@
 #import "NSArray+ElementDeal.h"
 
 @implementation NSArray (ElementDeal)
-
+/// 随机打乱数组
+- (NSArray*)kj_disorganizeArray{
+    return [self sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        return arc4random_uniform(2) ? [obj1 compare:obj2] : [obj2 compare:obj1];
+    }];
+}
 // 删除数组当中的相同元素
 - (NSArray*)kj_delArrayEquelObj{
     ///去除数组中重复的对象
     return [self valueForKeyPath:@"@distinctUnionOfObjects.self"];
 }
-
 // 对比两个数组删除相同元素并合并
 - (NSArray*)kj_mergeArrayAndDelEqualObjWithOtherArray:(NSArray*)temp{
     // 谓词（NSPredicate）使用
@@ -29,7 +33,6 @@
 // 查找数据 返回-1表示未查询到
 - (NSInteger)kj_searchDataWithTarget:(id)target{
     NSArray *source = self.mutableCopy;
-    //Where is "Beth"?
     unsigned index = (unsigned)CFArrayBSearchValues((CFArrayRef)source, CFRangeMake(0, CFArrayGetCount((CFArrayRef)source)), (CFStringRef)target, (CFComparatorFunction)CFStringCompare, NULL);
     if (index < [source count] && [target isEqualToString:source[index]]){
         return index;

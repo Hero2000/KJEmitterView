@@ -105,6 +105,11 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
+#### Add 4.6.7
+1、UIView+KJShadow 移出，修改至KJShadowLayer
+2、KJShadowLayer 继承CALayer的阴影、发光处理
+3、UIImage+KJPave 新增地板拼接处理、获取图片指定区域、横向和纵向裁剪图片
+
 #### Add 4.6.6
 1、UIImage+KJProcessing 新增屏幕截图 kj_captureScreenWindow
 2、UIImage+KJProcessing 新增多边形切图 kj_polygonCaptureImageWithImageView:PointArray:

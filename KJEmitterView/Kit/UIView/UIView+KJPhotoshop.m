@@ -7,7 +7,7 @@
 //  
 
 #import "UIView+KJPhotoshop.h"
-
+#import <objc/runtime.h>
 @implementation UIView (KJPhotoshop)
 
 @end

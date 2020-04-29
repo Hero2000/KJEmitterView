@@ -34,7 +34,7 @@
 - (void)setKj_reflectionSize:(CGFloat)reflectionSize {
     objc_setAssociatedObject(self, @selector(kj_reflectionSize), @(reflectionSize), OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (self.kj_reflectionLayer) {
-        CGFloat m = h*reflectionSize;
+        CGFloat m  = h*reflectionSize;
         CGFloat cy = b+(h+m)*.5+nav;
         self.kj_gradientLayer.bounds = self.kj_reflectionLayer.bounds = CGRectMake(0, 0, w, m);
         self.kj_reflectionLayer.position = CGPointMake(a, cy);

@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSArray (ElementDeal)
+/// 随机打乱数组
+- (NSArray*)kj_disorganizeArray;
 
 // 删除数组当中的相同元素
 - (NSArray*)kj_delArrayEquelObj;

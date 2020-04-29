@@ -37,6 +37,7 @@
 		6869046C21B2D36B00ED072F /* KJFloodImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6869046A21B2D36B00ED072F /* KJFloodImageVC.m */; };
 		6869046D21B2D36B00ED072F /* KJFloodImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6869046B21B2D36B00ED072F /* KJFloodImageVC.xib */; };
 		686F0FC522B8C5F800D263CC /* NSObject+KJSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 686F0FC422B8C5F800D263CC /* NSObject+KJSwizzling.m */; };
+		686FC7452457DA8E00668666 /* KJShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 686FC7442457DA8E00668666 /* KJShadowLayer.m */; };
 		68708702244802CD006223E1 /* KJShadowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68708700244802CD006223E1 /* KJShadowVC.m */; };
 		68708703244802CD006223E1 /* KJShadowVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68708701244802CD006223E1 /* KJShadowVC.xib */; };
 		687115CA22631201009EC3E0 /* KJSelectControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 687115C822631200009EC3E0 /* KJSelectControl.m */; };
@@ -47,7 +48,6 @@
 		687115DA22633BCA009EC3E0 /* KJSwitchControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 687115D822633BCA009EC3E0 /* KJSwitchControl.m */; };
 		687115DE22633BF0009EC3E0 /* KJSwitchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 687115DC22633BF0009EC3E0 /* KJSwitchVC.m */; };
 		687115DF22633BF0009EC3E0 /* KJSwitchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 687115DD22633BF0009EC3E0 /* KJSwitchVC.xib */; };
-		68740F9D2443FD4D00E60223 /* UIView+KJShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 68740F9C2443FD4D00E60223 /* UIView+KJShadow.m */; };
 		68740FA1244409DA00E60223 /* KJShineVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68740F9F244409DA00E60223 /* KJShineVC.m */; };
 		68740FA2244409DA00E60223 /* KJShineVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68740FA0244409DA00E60223 /* KJShineVC.xib */; };
 		68776CEA21AC34A0000A1435 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68776CE921AC34A0000A1435 /* AppDelegate.m */; };
@@ -156,6 +156,8 @@
 		6869046B21B2D36B00ED072F /* KJFloodImageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KJFloodImageVC.xib; sourceTree = "<group>"; };
 		686F0FC322B8C5F800D263CC /* NSObject+KJSwizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+KJSwizzling.h"; sourceTree = "<group>"; };
 		686F0FC422B8C5F800D263CC /* NSObject+KJSwizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KJSwizzling.m"; sourceTree = "<group>"; };
+		686FC7432457DA8E00668666 /* KJShadowLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJShadowLayer.h; sourceTree = "<group>"; };
+		686FC7442457DA8E00668666 /* KJShadowLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJShadowLayer.m; sourceTree = "<group>"; };
 		687086FF244802CD006223E1 /* KJShadowVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJShadowVC.h; sourceTree = "<group>"; };
 		68708700244802CD006223E1 /* KJShadowVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJShadowVC.m; sourceTree = "<group>"; };
 		68708701244802CD006223E1 /* KJShadowVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KJShadowVC.xib; sourceTree = "<group>"; };
@@ -173,8 +175,6 @@
 		687115DB22633BF0009EC3E0 /* KJSwitchVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJSwitchVC.h; sourceTree = "<group>"; };
 		687115DC22633BF0009EC3E0 /* KJSwitchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJSwitchVC.m; sourceTree = "<group>"; };
 		687115DD22633BF0009EC3E0 /* KJSwitchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KJSwitchVC.xib; sourceTree = "<group>"; };
-		68740F9B2443FD4D00E60223 /* UIView+KJShadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+KJShadow.h"; sourceTree = "<group>"; };
-		68740F9C2443FD4D00E60223 /* UIView+KJShadow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+KJShadow.m"; sourceTree = "<group>"; };
 		68740F9E244409DA00E60223 /* KJShineVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJShineVC.h; sourceTree = "<group>"; };
 		68740F9F244409DA00E60223 /* KJShineVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJShineVC.m; sourceTree = "<group>"; };
 		68740FA0244409DA00E60223 /* KJShineVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KJShineVC.xib; sourceTree = "<group>"; };
@@ -572,6 +572,8 @@
 			children = (
 				68ABB004244FEFE10029FF74 /* CALayer+KJReflection.h */,
 				68ABB005244FEFE10029FF74 /* CALayer+KJReflection.m */,
+				686FC7432457DA8E00668666 /* KJShadowLayer.h */,
+				686FC7442457DA8E00668666 /* KJShadowLayer.m */,
 			);
 			path = CALayer;
 			sourceTree = "<group>";
@@ -679,8 +681,6 @@
 				68BA6C1921B303D40013C4AD /* UIView+KJXib.m */,
 				6850B5382435EA7D00EA24C4 /* UIView+KJPhotoshop.h */,
 				6850B5392435EA7D00EA24C4 /* UIView+KJPhotoshop.m */,
-				68740F9B2443FD4D00E60223 /* UIView+KJShadow.h */,
-				68740F9C2443FD4D00E60223 /* UIView+KJShadow.m */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -828,7 +828,6 @@
 				680A61A1230E308500BCE302 /* KJIMageVC.m in Sources */,
 				689914972355C4C1008EE9C7 /* UIButton+KJEmitter.m in Sources */,
 				68CFFD0F24503E2800EA3590 /* UIImage+KJPave.m in Sources */,
-				68740F9D2443FD4D00E60223 /* UIView+KJShadow.m in Sources */,
 				6889C33A2354668E00D01F70 /* UISegmentedControl+KJCustom.m in Sources */,
 				68BA6C3521B303D40013C4AD /* UINavigationBar+KJExtension.m in Sources */,
 				684BFEF021BA11020015641A /* NSArray+KJLog.m in Sources */,
@@ -844,6 +843,7 @@
 				68740FA1244409DA00E60223 /* KJShineVC.m in Sources */,
 				685CE15922560193004E3AF4 /* UIButton+KJBlock.m in Sources */,
 				686F0FC522B8C5F800D263CC /* NSObject+KJSwizzling.m in Sources */,
+				686FC7452457DA8E00668666 /* KJShadowLayer.m in Sources */,
 				68CFFD13245040EC00EA3590 /* KJFloorVC.m in Sources */,
 				687115CA22631201009EC3E0 /* KJSelectControl.m in Sources */,
 				68B0301521B2FBC400349510 /* KJEmitterView.m in Sources */,
