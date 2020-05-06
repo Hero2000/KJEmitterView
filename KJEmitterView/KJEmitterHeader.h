@@ -44,6 +44,9 @@
  */
 /*
  ####版本更新日志:
+ #### Add 4.6.8
+ 1、KJShadowLayer 完善外发光、外阴影、内发光
+ 
  #### Add 4.6.7
  1、UIView+KJShadow 移出，修改至KJShadowLayer
  2、KJShadowLayer 继承CALayer的阴影、发光处理

@@ -9,13 +9,11 @@
 #import "UIView+KJAppointView.h"
 
 @implementation UIView (KJAppointView)
-//画直线 - draw line in view.
+// 画直线
 - (void)kj_DrawLineWithPoint:(CGPoint)fPoint toPoint:(CGPoint)tPoint lineColor:(UIColor *)color lineWidth:(CGFloat)width{
     CAShapeLayer* shapeLayer = [CAShapeLayer layer];
     shapeLayer.strokeColor = [UIColor lightGrayColor].CGColor;
-    if (color) {
-        shapeLayer.strokeColor = color.CGColor;
-    }
+    if (color) shapeLayer.strokeColor = color.CGColor;
     shapeLayer.fillColor = [UIColor clearColor].CGColor;
     shapeLayer.path = ({
         UIBezierPath *path = [UIBezierPath bezierPath];
@@ -27,13 +25,11 @@
     [self.layer addSublayer:shapeLayer];
 }
 
-//画虚线 - draw dash line.
+// 画虚线
 - (void)kj_DrawDashLineWithPoint:(CGPoint)fPoint toPoint:(CGPoint)tPoint lineColor:(UIColor *)color lineWidth:(CGFloat)width lineSpace:(CGFloat)space lineType:(NSInteger)type{
     CAShapeLayer* shapeLayer = [CAShapeLayer layer];
     shapeLayer.strokeColor = [UIColor lightGrayColor].CGColor;
-    if (color) {
-        shapeLayer.strokeColor = color.CGColor;
-    }
+    if (color) shapeLayer.strokeColor = color.CGColor;
     shapeLayer.fillColor = [UIColor clearColor].CGColor;
     shapeLayer.path = ({
         UIBezierPath *path = [UIBezierPath bezierPath];
@@ -67,9 +63,7 @@
         [path moveToPoint:first];
         //点与点之间点夹角为2*M_PI/5.0,要隔一个点才连线
         CGFloat angle = 4 * M_PI / 5.0;
-        if (rate > 1.5) {
-            rate = 1.5;
-        }
+        if (rate > 1.5) rate = 1.5;
         for (int i= 1; i <= 5; i++) {
             CGFloat x = center.x - sinf(i*angle)*radius;
             CGFloat y = center.y - cosf(i*angle)*radius;
@@ -77,7 +71,6 @@
             CGFloat midy = center.y - cosf(i*angle-2*M_PI/5.0)*radius*rate;
             [path addQuadCurveToPoint:CGPointMake(x, y) controlPoint:CGPointMake(midx, midy)];
         }
-        
         path.CGPath;
     });
     shapeLayer.lineWidth = 1.0f;

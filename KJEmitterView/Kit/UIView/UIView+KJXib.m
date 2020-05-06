@@ -13,9 +13,7 @@
 @dynamic borderColor,borderWidth,cornerRadius;
 @dynamic shadowColor,shadowRadius,shadowOffset,shadowOpacity;
 
-/**
- * 判断一个控件是否真正显示在主窗口
- */
+/** 判断一个控件是否真正显示在主窗口 */
 - (BOOL)kj_isShowingOnKeyWindow{
     // 主窗口
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
@@ -27,9 +25,7 @@
     return !self.isHidden && self.alpha > 0.01 && self.window == keyWindow && intersects;
 }
 
-/**
- * xib创建的view
- */
+/** xib创建的view */
 + (instancetype)kj_viewFromXib{
     return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:nil options:nil] lastObject];
 }

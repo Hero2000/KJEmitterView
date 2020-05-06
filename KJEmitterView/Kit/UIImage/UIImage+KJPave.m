@@ -358,7 +358,7 @@ typedef struct KJImageRowAndCol KJImageRowAndCol;
         case KJImageFloorJointTypeThree: /// 三拼法
             rc.col = x+1;
             break;
-        case KJImageFloorJointTypeConcaveConvex:/// 凹凸效果
+        case KJImageFloorJointTypeConcaveConvex:/// 凹凸效果（长短二分之一效果）
             rc.col = (x-x/3)+(x-x/3+1);
             break;
         case KJImageFloorJointTypeLongShortThird:/// 长短三分之一效果
