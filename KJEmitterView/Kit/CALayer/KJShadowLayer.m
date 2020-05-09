@@ -61,17 +61,27 @@
     CGRect rect = self.bounds;
     if (self.borderWidth != 0) rect = CGRectInset(rect, self.borderWidth, self.borderWidth);
     
-    CGContextAddPath(context, self.kj_path.CGPath);// 设置阴影路径
     if (self.kj_shadowType == KJShadowTypeInner || self.kj_shadowType == KJShadowTypeInnerShine) { /// 内阴影、内发光
-        CGContextClip(context); // 反向裁剪
+        CGContextAddPath(context, self.kj_path.CGPath);
+        CGContextClip(context); // 裁剪路径以外部分
         CGMutablePathRef outer = CGPathCreateMutable();
         CGPathAddRect(outer, NULL, CGRectInset(rect, -1 * rect.size.width, -1 * rect.size.height));
         CGPathAddPath(outer, NULL, self.kj_path.CGPath);
         CGPathCloseSubpath(outer); /// 闭合路径
         CGContextAddPath(context, outer);
         CGPathRelease(outer);
+    }else{
+        CGContextAddPath(context, self.kj_path.CGPath);// 设置阴影路径
+//        CGContextResetClip(context); // 裁剪重复区域
+//        CGMutablePathRef path = CGPathCreateMutable();
+//        UIBezierPath *bPath = [UIBezierPath bezierPathWithRect:rect];
+//        CGPathAddPath(path, NULL, bPath.CGPath);
+//        CGContextAddPath(context, path);
+//        CFRelease(path);
     }
     
+    // 填充颜色
+    CGContextSetFillColorWithColor(context, UIColor.blueColor.CGColor);
     // 阴影颜色
     UIColor *color = [self.kj_color colorWithAlphaComponent:self.kj_opacity];
     CGContextSetShadowWithColor(context, self.kj_offset, self.kj_radius, color.CGColor);
@@ -99,8 +109,10 @@
      kCGPathEOFillStroke：奇偶填充并绘制边框
     */
     if (self.kj_shadowType == KJShadowTypeProjection) {
-        CGContextDrawPath(context, kCGPathFill); //指定模式下渲染路径
+        CGContextDrawPath(context, kCGPathEOFill); //指定模式下渲染路径
     }else if (self.kj_shadowType == KJShadowTypeOuterShine || self.kj_shadowType == KJShadowTypeOuter) {
+//        CGImageRef imgRef = CGImageRetain([UIImage imageNamed:@"xxsf"].CGImage);
+//        CGContextDrawImage(context,rect,imgRef);
         CGContextDrawPath(context, kCGPathEOFill);
     }else{
         CGContextDrawPath(context, kCGPathEOFillStroke); //指定模式下渲染路径
@@ -136,7 +148,7 @@
     self.kj_path = self.kj_shadowPath;
     self.kj_color = self.kj_shadowColor;
     self.kj_radius = self.kj_shadowRadius;
-    self.kj_opacity = self.kj_shadowDiaphaneity;
+    self.kj_opacity = self.kj_shadowOpacity;
     self.kj_offset = CGSizeMake(self.kj_shadowDiffuse, self.kj_shadowDiffuse);
     switch (self.kj_shadowType) {
         case KJShadowTypeInner: /// 内阴影
@@ -147,7 +159,7 @@
             self.xxLayer.kj_path = self.kj_shadowPath;
             self.xxLayer.kj_color = self.kj_shadowColor;
             self.xxLayer.kj_radius = self.kj_shadowRadius;
-            self.xxLayer.kj_opacity = self.kj_shadowDiaphaneity;
+            self.xxLayer.kj_opacity = self.kj_shadowOpacity;
             self.xxLayer.kj_offset = CGSizeMake(-self.kj_shadowDiffuse, -self.kj_shadowDiffuse);
             [self.xxLayer setNeedsDisplay];
             break;
@@ -156,23 +168,22 @@
             self.xLayer.kj_path = self.kj_shadowPath;
             self.xLayer.kj_color = self.kj_shadowColor;
             self.xLayer.kj_radius = self.kj_shadowRadius;
-            self.xLayer.kj_opacity = self.kj_shadowDiaphaneity;
+            self.xLayer.kj_opacity = self.kj_shadowOpacity;
             self.xLayer.kj_offset = CGSizeMake(-self.kj_shadowDiffuse, -self.kj_shadowDiffuse);
             [self.xLayer setNeedsDisplay];
             self.xxLayer.kj_path = self.kj_shadowPath;
             self.xxLayer.kj_color = self.kj_shadowColor;
             self.xxLayer.kj_radius = self.kj_shadowRadius;
-            self.xxLayer.kj_opacity = self.kj_shadowDiaphaneity;
+            self.xxLayer.kj_opacity = self.kj_shadowOpacity;
             self.xxLayer.kj_offset = CGSizeMake(self.kj_shadowDiffuse, -self.kj_shadowDiffuse);
             [self.xxLayer setNeedsDisplay];
             self.xxxLayer.kj_path = self.kj_shadowPath;
             self.xxxLayer.kj_color = self.kj_shadowColor;
             self.xxxLayer.kj_radius = self.kj_shadowRadius;
-            self.xxxLayer.kj_opacity = self.kj_shadowDiaphaneity;
+            self.xxxLayer.kj_opacity = self.kj_shadowOpacity;
             self.xxxLayer.kj_offset = CGSizeMake(-self.kj_shadowDiffuse, self.kj_shadowDiffuse);
             [self.xxxLayer setNeedsDisplay];
             break;
-            
         default:
             break;
     }
@@ -196,8 +207,8 @@
     _kj_shadowRadius = kj_shadowRadius;
     [self kj_changeShadowLayerValue];
 }
-- (void)setKj_shadowDiaphaneity:(CGFloat)kj_shadowDiaphaneity {
-    _kj_shadowDiaphaneity = kj_shadowDiaphaneity;
+- (void)setKj_shadowOpacity:(CGFloat)kj_shadowOpacity {
+    _kj_shadowOpacity = kj_shadowOpacity;
     [self kj_changeShadowLayerValue];
 }
 - (void)setKj_shadowAngle:(CGFloat)kj_shadowAngle {

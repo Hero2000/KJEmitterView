@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *H;
 @property (weak, nonatomic) IBOutlet UIStepper *ste;
 @property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UIButton *Button1;
+@property (weak, nonatomic) IBOutlet UIButton *Button2;
 
 @end
 
@@ -32,8 +34,8 @@
 
     image = self.imageView2.image;
     imagew = 123;
-    textTemps = @[@"艺术地板拼法",@"两拼法",@"横倒角",@"竖倒角",@"三拼法",@"长短混合",@"古典拼法",@"凹凸效果",@"长短三分之一效果"];
-    type = self.ste.value = 5;
+    textTemps = @[@"艺术地板拼法",@"两拼法",@"三拼法",@"长短混合",@"古典拼法",@"凹凸效果",@"长短三分之一效果"];
+    type = self.ste.value = 4;
     self.ste.minimumValue = 0;
     self.ste.maximumValue = textTemps.count-1;
     self.label.text = [NSString stringWithFormat:@"拼接方式:%@",textTemps[(int)self.ste.value]];
@@ -62,7 +64,8 @@
     CGFloat h = [self.H.text doubleValue];
     w = w <= 0 ? 1000 : w;
     h = h <= 0 ? 1000 : h;
-    self.imageView.image = [image kj_imageFloorWithFloorJointType:(type) TargetImageSize:KJImageSizeMake(w, h) FloorWidth:imagew];
+    UIImage *img = [image kj_imageFloorWithFloorJointType:(type) TargetImageSize:KJImageSizeMake(w, h) FloorWidth:imagew OpenAcross:self.Button1.selected OpenVertical:self.Button2.selected];
+    self.imageView.image = img;
 }
 
 - (IBAction)ste:(UIStepper *)sender {
@@ -71,6 +74,14 @@
 }
 - (IBAction)button1:(UIButton *)sender {
     
+}
+- (IBAction)hen:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    [self xxx:type];
+}
+- (IBAction)shu:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    [self xxx:type];
 }
 
 @end

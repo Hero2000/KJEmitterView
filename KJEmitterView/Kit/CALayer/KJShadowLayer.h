@@ -23,15 +23,17 @@ typedef NS_ENUM(NSInteger, KJShadowType) {
 /* 颜色 */
 @property (nonatomic, strong) UIColor *kj_shadowColor;
 /* 透明度 */
-@property (nonatomic, assign) CGFloat kj_shadowDiaphaneity;
-/* 半径（大小） */
+@property (nonatomic, assign) CGFloat kj_shadowOpacity;
+/* 半径（大小）*/
 @property (nonatomic, assign) CGFloat kj_shadowRadius;
-/* 距离（扩展） */
+/* 偏移 */
+@property (nonatomic, assign) CGSize kj_shadowOffset;
+
+// ***************************** 非Layer自带参数 **********************************
+/* 距离（扩展）*/
 @property (nonatomic, assign) CGFloat kj_shadowDiffuse;
 /* 角度 */
 @property (nonatomic, assign) CGFloat kj_shadowAngle;
-/* 偏移 */
-@property (nonatomic, assign) CGSize kj_shadowOffset;
 
 /// 初始化
 - (instancetype)kj_initWithFrame:(CGRect)frame ShadowType:(KJShadowType)type;

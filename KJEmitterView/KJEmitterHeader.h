@@ -44,6 +44,11 @@
  */
 /*
  ####版本更新日志:
+ #### Add 4.6.9
+ 1、UIImage+KJPhotoshop 新增 CoreImage 框架多种滤镜效果
+ 2、UIImage+KJPhotoshop 新增透视和透视矫正处理
+ 3、UIImage+KJPave 修改横竖倒角选择操作
+ 
  #### Add 4.6.8
  1、KJShadowLayer 完善外发光、外阴影、内发光
  
@@ -195,6 +200,7 @@
 #import "UIImage+KJProcessing.h"  /// 图片加工处理相关
 #import "UIImage+KJCompressJoint.h" /// 图片压缩拼接处理
 #import "UIImage+KJPave.h" /// 图片铺设处理
+#import "UIImage+KJPhotoshop.h" /// CoreImage 框架图片效果处理
 //#import "UIImage+KJFloodFill.h" /// 图片泛洪算法
 //#import "UIImage+KJFilter.h"    /// 处理图片滤镜，渲染相关
 //#import "UIImage+KJRemoteSize.h" /// 获取网络图片尺寸

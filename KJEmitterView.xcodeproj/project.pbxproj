@@ -91,6 +91,7 @@
 		68BA6C3321B303D40013C4AD /* UITextView+KJPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BA6C2221B303D40013C4AD /* UITextView+KJPlaceHolder.m */; };
 		68BA6C3421B303D40013C4AD /* UIBarButtonItem+KJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BA6C2521B303D40013C4AD /* UIBarButtonItem+KJExtension.m */; };
 		68BA6C3521B303D40013C4AD /* UINavigationBar+KJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BA6C2821B303D40013C4AD /* UINavigationBar+KJExtension.m */; };
+		68C264DC2463A0DF005266CB /* UIImage+KJPhotoshop.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C264DB2463A0DF005266CB /* UIImage+KJPhotoshop.m */; };
 		68CFFD0F24503E2800EA3590 /* UIImage+KJPave.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CFFD0E24503E2800EA3590 /* UIImage+KJPave.m */; };
 		68CFFD13245040EC00EA3590 /* KJFloorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CFFD11245040EC00EA3590 /* KJFloorVC.m */; };
 		68CFFD14245040EC00EA3590 /* KJFloorVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68CFFD12245040EC00EA3590 /* KJFloorVC.xib */; };
@@ -253,6 +254,8 @@
 		68BA6C2521B303D40013C4AD /* UIBarButtonItem+KJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+KJExtension.m"; sourceTree = "<group>"; };
 		68BA6C2721B303D40013C4AD /* UINavigationBar+KJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+KJExtension.h"; sourceTree = "<group>"; };
 		68BA6C2821B303D40013C4AD /* UINavigationBar+KJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+KJExtension.m"; sourceTree = "<group>"; };
+		68C264DA2463A0DF005266CB /* UIImage+KJPhotoshop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+KJPhotoshop.h"; sourceTree = "<group>"; };
+		68C264DB2463A0DF005266CB /* UIImage+KJPhotoshop.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KJPhotoshop.m"; sourceTree = "<group>"; };
 		68CFFD0D24503E2800EA3590 /* UIImage+KJPave.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+KJPave.h"; sourceTree = "<group>"; };
 		68CFFD0E24503E2800EA3590 /* UIImage+KJPave.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KJPave.m"; sourceTree = "<group>"; };
 		68CFFD10245040EC00EA3590 /* KJFloorVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJFloorVC.h; sourceTree = "<group>"; };
@@ -643,6 +646,8 @@
 				68A08FDA23BB3BBC005ECCD0 /* UIImage+KJRemoteSize.m */,
 				68CFFD0D24503E2800EA3590 /* UIImage+KJPave.h */,
 				68CFFD0E24503E2800EA3590 /* UIImage+KJPave.m */,
+				68C264DA2463A0DF005266CB /* UIImage+KJPhotoshop.h */,
+				68C264DB2463A0DF005266CB /* UIImage+KJPhotoshop.m */,
 			);
 			path = UIImage;
 			sourceTree = "<group>";
@@ -845,6 +850,7 @@
 				686F0FC522B8C5F800D263CC /* NSObject+KJSwizzling.m in Sources */,
 				686FC7452457DA8E00668666 /* KJShadowLayer.m in Sources */,
 				68CFFD13245040EC00EA3590 /* KJFloorVC.m in Sources */,
+				68C264DC2463A0DF005266CB /* UIImage+KJPhotoshop.m in Sources */,
 				687115CA22631201009EC3E0 /* KJSelectControl.m in Sources */,
 				68B0301521B2FBC400349510 /* KJEmitterView.m in Sources */,
 				680D0A4D2315186F0029A5FC /* KJEmiterLayerVC.m in Sources */,
@@ -958,7 +964,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1011,7 +1017,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1027,6 +1033,7 @@
 				DEVELOPMENT_TEAM = A48YQ26WG3;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/KJEmitterView/PrefixHeader.pch";
 				INFOPLIST_FILE = KJEmitterView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1045,6 +1052,7 @@
 				DEVELOPMENT_TEAM = A48YQ26WG3;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/KJEmitterView/PrefixHeader.pch";
 				INFOPLIST_FILE = KJEmitterView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -30,8 +30,9 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_4931" translatesAutoresizingMaskIntoConstraints="NO" id="irM-ho-VAm">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zuqiu" translatesAutoresizingMaskIntoConstraints="NO" id="irM-ho-VAm">
                     <rect key="frame" x="30" y="10" width="315" height="315"/>
+                    <color key="backgroundColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="irM-ho-VAm" secondAttribute="height" multiplier="1:1" id="0XJ-g3-V4i"/>
                         <constraint firstAttribute="width" secondItem="irM-ho-VAm" secondAttribute="height" multiplier="1:1" id="R3Z-cq-mb0"/>
@@ -123,6 +124,6 @@
         </view>
     </objects>
     <resources>
-        <image name="IMG_4931" width="1241" height="1211"/>
+        <image name="zuqiu" width="1654" height="1654"/>
     </resources>
 </document>

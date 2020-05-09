@@ -105,6 +105,11 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
+#### Add 4.6.9
+1、UIImage+KJPhotoshop 新增 CoreImage 框架多种滤镜效果
+2、UIImage+KJPhotoshop 新增透视和透视矫正处理
+3、UIImage+KJPave 修改横竖倒角选择操作
+
 #### Add 4.6.8
 1、KJShadowLayer 完善外发光、外阴影、内发光
 

@@ -41,10 +41,12 @@
     layer = [[KJShadowLayer alloc]kj_initWithFrame:self.imageView.bounds ShadowType:(KJShadowTypeOuterShine)];
     layer.kj_shadowPath = path;
     layer.kj_shadowColor = UIColor.redColor;
-    layer.kj_shadowDiaphaneity = self.slider1.value;
+    layer.kj_shadowOpacity = self.slider1.value;
     layer.kj_shadowDiffuse = self.slider2.value;
     layer.kj_shadowRadius = self.slider3.value;
     [self.imageView.layer addSublayer:layer];
+//    [self.imageView.layer insertSublayer:layer atIndex:0];
+    layer.contents = self.imageView.image;
     
     _weakself;
     for (UIView *view in self.view.subviews) {
@@ -58,7 +60,7 @@
 }
 
 - (IBAction)slider1:(UISlider *)sender {
-    layer.kj_shadowDiaphaneity = self.slider1.value;
+    layer.kj_shadowOpacity = self.slider1.value;
 }
 - (IBAction)slider2:(UISlider *)sender {
     layer.kj_shadowDiffuse = self.slider2.value;

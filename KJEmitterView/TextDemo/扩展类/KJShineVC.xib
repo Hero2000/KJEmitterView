@@ -30,7 +30,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_4931" translatesAutoresizingMaskIntoConstraints="NO" id="HX6-Ob-c1J">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fff" translatesAutoresizingMaskIntoConstraints="NO" id="HX6-Ob-c1J">
                     <rect key="frame" x="20" y="10" width="335" height="335"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="HX6-Ob-c1J" secondAttribute="height" multiplier="1:1" id="B0x-Id-ndz"/>
@@ -156,6 +156,6 @@
         </view>
     </objects>
     <resources>
-        <image name="IMG_4931" width="1241" height="1211"/>
+        <image name="fff" width="1024" height="985"/>
     </resources>
 </document>
