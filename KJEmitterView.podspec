@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KJEmitterView"
-  s.version      = "4.7.0"
+  s.version      = "4.7.1"
   s.summary      = "Some iOS Emitter"
   s.homepage     = "https://github.com/yangKJ/KJEmitterView"
   s.license      = "MIT"
@@ -41,10 +41,10 @@ Pod::Spec.new do |s|
     fun.dependency 'KJEmitterView/Kit'
   end
   
-  s.subspec 'InteriorFinish' do |in|
-    in.source_files = "KJEmitterView/InteriorFinish/**/*.{h,m}"
-    in.public_header_files = 'KJEmitterView/InteriorFinish/*.h',"KJEmitterView/InteriorFinish/**/*.h"
-    in.dependency 'KJEmitterView/Kit'
+  s.subspec 'InteriorFinish' do |fin|
+    fin.source_files = "KJEmitterView/InteriorFinish/**/*.{h,m}"
+    fin.public_header_files = 'KJEmitterView/InteriorFinish/*.h'
+    fin.dependency 'KJEmitterView/Kit'
   end
   
 end

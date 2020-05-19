@@ -483,6 +483,9 @@ static inline CGPoint kj_perpendicularLineDots(CGPoint A,CGPoint B, CGFloat len,
     CGFloat x2 = B.x,y2 = B.y;
     CGFloat k1 = 0,k = 0;
     if (x1 == x2) {
+        k1 = -1;/// 垂直线
+        k = 1;
+    }else if (y1 == y2) {
         k1 = 1;/// 水平线
         k = -1;
     }else{

@@ -73,6 +73,7 @@
     if (!_temps) {
         _temps = [NSMutableArray array];
         NSMutableArray *temp0 = [NSMutableArray array];
+        [temp0 addObject:@{@"VCName":@"KJLegWireVC",@"describeName":@"脚线处理展示"}];
         [temp0 addObject:@{@"VCName":@"KJSuspendedVC",@"describeName":@"吊顶效果展示"}];
         [temp0 addObject:@{@"VCName":@"KJFloorVC",@"describeName":@"地板拼接效果展示"}];
         [temp0 addObject:@{@"VCName":@"KJTiledVC",@"describeName":@"墙纸铺贴效果展示"}];

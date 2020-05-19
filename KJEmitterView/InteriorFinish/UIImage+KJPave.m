@@ -438,15 +438,6 @@ static int AcrossAndVertical(bool a,bool v){
 /// lineType线条类型 0：横向 1：竖向 2：横向和竖向
 - (void)kj_drawLineWithLineType:(NSInteger)lineType Line:(CGFloat)line A:(CGFloat)a B:(CGFloat)b C:(CGFloat)c D:(CGFloat)d{
     CGFloat red = 63,green = 58,blue = 58,alpe = 1; /// 线条颜色
-//    if (lineType==3 || d==0) { // 蓝色
-//        red = 3;green = 38;blue = 254;
-//    }else if (lineType==3 || d==1) {// 绿色
-//        red = 3;green = 254;blue = 56;
-//    }else if (lineType==4 || d==2) {// 黄色
-//        red = 239;green = 254;blue = 3;
-//    }else if (lineType==5 || d==3) {// 红色
-//        red = 255;green = 3;blue = 6;
-//    }
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetRGBStrokeColor(context, red/255., green/255., blue/255., alpe);
     CGContextSetLineWidth(context, line);

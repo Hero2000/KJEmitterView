@@ -62,9 +62,11 @@
 *⭐️⭐️⭐️ ----- 本人其他库 ----- ⭐️⭐️⭐️
 *
 - 粒子效果、Button图文混排、点击事件封装、扩大点击域、点赞粒子效果，
-- 手势封装、圆角渐变、倒影、内阴影处理、Xib属性、识别网址超链接，
-- 图片加工处理、对花铺贴效果、滤镜渲染、泛洪算法等等
+- 手势封装、圆角渐变、倒影、投影、内阴影、内外发光处理、Xib属性，
+- 图片加工处理、滤镜渲染、泛洪算法、识别网址超链接等等
+- 脚线处理、地板拼接处理、墙纸铺贴处理、吊顶处理
 pod 'KJEmitterView'
+pod 'KJEmitterView/InteriorFinish' # 装修控件
 pod 'KJEmitterView/Function'#
 pod 'KJEmitterView/Control' # 自定义控件
 
@@ -98,6 +100,7 @@ pod 'KJWorkbox/CommonBox'
 #### <a id="Cocoapods安装"></a>Cocoapods安装
 ```
 pod 'KJEmitterView'
+pod 'KJEmitterView/InteriorFinish' # 装修控件
 pod 'KJEmitterView/Function'#
 pod 'KJEmitterView/Control' # 自定义控件
 ```
@@ -105,6 +108,9 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
+#### Add 4.7.1
+1、KJLegWireLayer 新增脚线处理
+
 #### Add 4.7.0
 1、UIView+KJGestureBlock 新增单指双击操作
 2、NSObject+KJGeometry 新增几何方程式算法
