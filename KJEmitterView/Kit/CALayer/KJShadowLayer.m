@@ -52,8 +52,8 @@
     return self;
 }
 - (void)layoutSublayers {
-    [super layoutSublayers];
-    [self setNeedsDisplay];
+    [super layoutSublayers]; /// 异步执行、处理子视图数据
+    [self setNeedsDisplay];  /// 异步执行、自动调用drawInContext绘图方法
 }
 
 #pragma mark - 绘制
@@ -61,9 +61,11 @@
     CGRect rect = self.bounds;
     if (self.borderWidth != 0) rect = CGRectInset(rect, self.borderWidth, self.borderWidth);
     
+    CGContextSaveGState(context);
     if (self.kj_shadowType == KJShadowTypeInner || self.kj_shadowType == KJShadowTypeInnerShine) { /// 内阴影、内发光
+//        [self.kj_path addClip];// 裁剪路径以外部分
         CGContextAddPath(context, self.kj_path.CGPath);
-        CGContextClip(context); // 裁剪路径以外部分
+        CGContextClip(context);
         CGMutablePathRef outer = CGPathCreateMutable();
         CGPathAddRect(outer, NULL, CGRectInset(rect, -1 * rect.size.width, -1 * rect.size.height));
         CGPathAddPath(outer, NULL, self.kj_path.CGPath);
@@ -80,8 +82,8 @@
 //        CFRelease(path);
     }
     
-    // 填充颜色
-    CGContextSetFillColorWithColor(context, UIColor.blueColor.CGColor);
+//    // 填充颜色
+//    CGContextSetFillColorWithColor(context, UIColor.blueColor.CGColor);
     // 阴影颜色
     UIColor *color = [self.kj_color colorWithAlphaComponent:self.kj_opacity];
     CGContextSetShadowWithColor(context, self.kj_offset, self.kj_radius, color.CGColor);
@@ -97,6 +99,36 @@
 //        CGContextSetAllowsAntialiasing(context,NO); //
 //        CGContextSetLineJoin(context, kCGLineJoinRound); /// 线条拐点处样式
 //        CGContextSetShouldAntialias(context, YES); // 不采用抗锯齿
+//        //第二种填充方式
+//        CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
+//        CGFloat colors[] = {
+//            1,1,1, 1.00,
+//            1,1,0, 1.00,
+//            1,0,0, 1.00,
+//            1,0,1, 1.00,
+//            0,1,1, 1.00,
+//            0,1,0, 1.00,
+//            0,0,1, 1.00,
+//            0,0,0, 1.00,
+//        };
+//        CGGradientRef gradient = CGGradientCreateWithColorComponents(rgb, colors, NULL, sizeof(colors)/(sizeof(colors[0])*4));//形成梯形，渐变的效果
+//        CGColorSpaceRelease(rgb);
+//        //画线形成一个矩形
+//        //CGContextSaveGState与CGContextRestoreGState的作用
+//        /*
+//         CGContextSaveGState函数的作用是将当前图形状态推入堆栈。之后，您对图形状态所做的修改会影响随后的描画操作，但不影响存储在堆栈中的拷贝。在修改完成后，您可以通过CGContextRestoreGState函数把堆栈顶部的状态弹出，返回到之前的图形状态。这种推入和弹出的方式是回到之前图形状态的快速方法，避免逐个撤消所有的状态修改；这也是将某些状态（比如裁剪路径）恢复到原有设置的唯一方式。
+//         */
+////        CGContextSaveGState(context);
+////        CGContextAddPath(context, self.kj_path.CGPath);
+////        CGContextMoveToPoint(context, 220, 90);
+////        CGContextAddLineToPoint(context, 240, 90);
+////        CGContextAddLineToPoint(context, 240, 110);
+////        CGContextAddLineToPoint(context, 220, 110);
+//        CGContextClip(context);//context裁剪路径,后续操作的路径
+//        //CGContextDrawLinearGradient(CGContextRef context,CGGradientRef gradient, CGPoint startPoint, CGPoint endPoint,CGGradientDrawingOptions options)
+//        //gradient渐变颜色,startPoint开始渐变的起始位置,endPoint结束坐标,options开始坐标之前or开始之后开始渐变
+//        CGContextDrawLinearGradient(context, gradient,CGPointMake(220,90) ,CGPointMake(240,110), kCGGradientDrawsAfterEndLocation);
+////        CGContextRestoreGState(context);// 恢复到之前的context
 //    }else{
 //        CGContextSetShadowWithColor(context, self.kj_offset, self.kj_radius, color.CGColor);
 //    }
@@ -111,12 +143,11 @@
     if (self.kj_shadowType == KJShadowTypeProjection) {
         CGContextDrawPath(context, kCGPathEOFill); //指定模式下渲染路径
     }else if (self.kj_shadowType == KJShadowTypeOuterShine || self.kj_shadowType == KJShadowTypeOuter) {
-//        CGImageRef imgRef = CGImageRetain([UIImage imageNamed:@"xxsf"].CGImage);
-//        CGContextDrawImage(context,rect,imgRef);
         CGContextDrawPath(context, kCGPathEOFill);
     }else{
         CGContextDrawPath(context, kCGPathEOFillStroke); //指定模式下渲染路径
     }
+    CGContextRestoreGState(context);
 }
 
 // 提供一套阴影角度算法 angele:范围（0-360）distance:距离

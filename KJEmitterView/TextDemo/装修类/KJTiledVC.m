@@ -7,6 +7,7 @@
 //
 
 #import "KJTiledVC.h"
+#import "UIImage+KJPave.h" /// 图片铺设处理
 
 @interface KJTiledVC (){
     KJImageTiledType tiledType;
@@ -38,28 +39,29 @@
     self.label.text = [NSString stringWithFormat:@"当前对花：%@", KJImageTiledTypeStringMap[tiledType]];
     self.rowLabel.text = [NSString stringWithFormat:@"行：%d", (int)self.rowSte.value];
     self.colLabel.text = [NSString stringWithFormat:@"列：%d", (int)self.colSte.value];
-    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:KJImageSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
+//    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:KJImageSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
+    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Width:87];
     self.imageView.image = img;
 }
 - (IBAction)row:(UIStepper*)sender {
-    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:KJImageSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
+    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
     self.imageView.image = img;
     self.rowLabel.text = [NSString stringWithFormat:@"行：%d", (int)self.rowSte.value];
 }
 - (IBAction)col:(UIStepper*)sender {
     self.colLabel.text = [NSString stringWithFormat:@"列：%d", (int)self.colSte.value];
-    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:KJImageSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
+    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
     self.imageView.image = img;
 }
 - (IBAction)button:(UIButton *)sender {
     self.smallImageView.image = [self.smallImageView.image kj_rotationImageWithOrientation:(UIImageOrientationLeft)];
-    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:KJImageSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
+    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
     self.imageView.image = img;
 }
 - (IBAction)hua:(UIStepper *)sender {
     tiledType = sender.value;
     self.label.text = [NSString stringWithFormat:@"当前对花：%@", KJImageTiledTypeStringMap[tiledType]];
-    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:KJImageSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
+    UIImage *img = [self.smallImageView.image kj_imageTiledWithTiledType:(tiledType) TargetImageSize:CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.width) Row:self.rowSte.value Col:self.colSte.value];
     self.imageView.image = img;
 }
 

@@ -21,6 +21,8 @@ static const char *KJGestureBlockKey;
     if (block) {
         NSString *string = KJGestureTypeStringMap[type];
         UIGestureRecognizer *gesture = [[NSClassFromString(string) alloc] initWithTarget:self action:@selector(kGestureAction:)];
+        /// 单指双击
+        if (type == KJGestureTypeDouble) ((UITapGestureRecognizer*)gesture).numberOfTapsRequired = 2;
         [self addGestureRecognizer:gesture];
         NSMutableDictionary *dict = objc_getAssociatedObject(self, KJGestureBlockKey);
         if (dict == nil) {

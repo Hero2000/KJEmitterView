@@ -61,7 +61,7 @@
 ////    reflectionLayer.transform = transform;
 //    [reflectionLayer setValue:[NSNumber numberWithFloat:M_PI] forKeyPath:@"transform.rotation.x"];
     
-    self.imageView.layer.kj_reflectionHideNavigation = self.fd_prefersNavigationBarHidden = NO;
+    self.imageView.layer.kj_reflectionHideNavigation = NO;//self.fd_prefersNavigationBarHidden = NO;
     self.imageView.layer.kj_reflectionOpacity = self.slider1.value;
     self.imageView.layer.kj_reflectionFuzzy = self.slider2.value;
     self.imageView.layer.kj_reflectionSize = self.slider3.value;

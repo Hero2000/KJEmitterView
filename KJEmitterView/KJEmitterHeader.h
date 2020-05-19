@@ -44,6 +44,12 @@
  */
 /*
  ####版本更新日志:
+ #### Add 4.7.0
+ 1、UIView+KJGestureBlock 新增单指双击操作
+ 2、NSObject+KJGeometry 新增几何方程式算法
+ 3、KJSuspendedView 新增吊顶操作
+ 4、重新整理装修类归纳到InteriorFinish
+ 
  #### Add 4.6.9
  1、UIImage+KJPhotoshop 新增 CoreImage 框架多种滤镜效果
  2、UIImage+KJPhotoshop 新增透视和透视矫正处理
@@ -199,7 +205,6 @@
 
 #import "UIImage+KJProcessing.h"  /// 图片加工处理相关
 #import "UIImage+KJCompressJoint.h" /// 图片压缩拼接处理
-#import "UIImage+KJPave.h" /// 图片铺设处理
 #import "UIImage+KJPhotoshop.h" /// CoreImage 框架图片效果处理
 //#import "UIImage+KJFloodFill.h" /// 图片泛洪算法
 //#import "UIImage+KJFilter.h"    /// 处理图片滤镜，渲染相关
@@ -214,5 +219,6 @@
 /******************* Foundation ******************************/
 //#import "NSArray+ElementDeal.h"  /// 对数组元素的处理 包括排序、查找、去重等等
 //#import "NSObject+KJMath.h"  /// 数学方程式
+//#import "NSObject+KJGeometry.h" /// 几何方程式
 
 #endif /* KJEmitterHeader_h */

@@ -36,7 +36,7 @@
         /// 裁剪图片
         UIImage *img = [weakself.Image2.image kj_scalingAndCroppingForTargetSize:CGSizeMake(wd, wd)];
         /// 旋转图片
-        UIImage *image = [weakself.Image2.image kj_rotationImageWithOrientation:UIImageOrientationLeft];
+        UIImage *image = [weakself.Image2.image kj_rotateInRadians:90];//[weakself.Image2.image kj_rotationImageWithOrientation:UIImageOrientationLeft];
         /// 拼接图片
         weakself.ImageView2.image = [weakself.Image1.image kj_jointImageWithHeadImage:img FootImage:image];
     }];

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KJEmitterView"
-  s.version      = "4.6.9"
+  s.version      = "4.7.0"
   s.summary      = "Some iOS Emitter"
   s.homepage     = "https://github.com/yangKJ/KJEmitterView"
   s.license      = "MIT"
@@ -22,23 +22,29 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Control' do |a|
-    a.source_files = "KJEmitterView/Control/**/*.{h,m}" # 添加文件
-    a.public_header_files = "KJEmitterView/Control/**/*.h",'KJEmitterView/Control/*.h'# 添加头文件
+    a.source_files = "KJEmitterView/Control/**/*.{h,m}"
+    a.public_header_files = "KJEmitterView/Control/**/*.h",'KJEmitterView/Control/*.h'
     a.dependency 'KJEmitterView/Kit'
     a.frameworks = 'QuartzCore'
   end
 
   s.subspec 'Classes' do |ss|
-    ss.source_files = "KJEmitterView/Classes/**/*.{h,m}" # 添加文件
-    ss.public_header_files = "KJEmitterView/Classes/**/*.h",'KJEmitterView/Classes/*.h'# 添加头文件
+    ss.source_files = "KJEmitterView/Classes/**/*.{h,m}"
+    ss.public_header_files = "KJEmitterView/Classes/**/*.h",'KJEmitterView/Classes/*.h'
     ss.resources = "KJEmitterView/Classes/**/*.{bundle}" # 添加数据资料
     ss.dependency 'KJEmitterView/Kit'
   end
 
   s.subspec 'Function' do |fun|
-    fun.source_files = "KJEmitterView/Foundation/**/*.{h,m}" # 添加文件
-    fun.public_header_files = 'KJEmitterView/Foundation/*.h',"KJEmitterView/Foundation/**/*.h"   # 添加头文件
+    fun.source_files = "KJEmitterView/Foundation/**/*.{h,m}"
+    fun.public_header_files = 'KJEmitterView/Foundation/*.h',"KJEmitterView/Foundation/**/*.h"
     fun.dependency 'KJEmitterView/Kit'
+  end
+  
+  s.subspec 'InteriorFinish' do |in|
+    in.source_files = "KJEmitterView/InteriorFinish/**/*.{h,m}"
+    in.public_header_files = 'KJEmitterView/InteriorFinish/*.h',"KJEmitterView/InteriorFinish/**/*.h"
+    in.dependency 'KJEmitterView/Kit'
   end
   
 end

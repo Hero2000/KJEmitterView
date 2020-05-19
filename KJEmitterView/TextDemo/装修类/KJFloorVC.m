@@ -7,6 +7,7 @@
 //
 
 #import "KJFloorVC.h"
+#import "UIImage+KJPave.h" /// 图片铺设处理
 
 @interface KJFloorVC (){
     NSArray *textTemps;
@@ -54,6 +55,7 @@
         image = weakself.imageView3.image;
         [weakself xxx:type];
     }];
+    
 }
 
 - (void)xxx:(KJImageFloorJointType)type{
@@ -64,7 +66,7 @@
     CGFloat h = [self.H.text doubleValue];
     w = w <= 0 ? 1000 : w;
     h = h <= 0 ? 1000 : h;
-    UIImage *img = [image kj_imageFloorWithFloorJointType:(type) TargetImageSize:KJImageSizeMake(w, h) FloorWidth:imagew OpenAcross:self.Button1.selected OpenVertical:self.Button2.selected];
+    UIImage *img = [image kj_imageFloorWithFloorJointType:(type) TargetImageSize:CGSizeMake(w, h) FloorWidth:imagew OpenAcross:self.Button1.selected OpenVertical:self.Button2.selected];
     self.imageView.image = img;
 }
 

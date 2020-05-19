@@ -11,91 +11,188 @@
 #import <Accelerate/Accelerate.h>
 
 @implementation UIImage (KJPave)
-
-#pragma mark - 图片旋转处理
 /** 旋转图片和镜像处理 orientation 图片旋转方向 */
 - (UIImage*)kj_rotationImageWithOrientation:(UIImageOrientation)orientation{
-    CGRect bnds = CGRectZero;
-    UIImage *copy = nil;
-    CGContextRef ctxt = nil;
-    CGImageRef imag = self.CGImage;
     CGRect rect = CGRectZero;
-    CGAffineTransform tran = CGAffineTransformIdentity;
-    rect.size.width  = CGImageGetWidth(imag);
-    rect.size.height = CGImageGetHeight(imag);
-    bnds = rect;
+    rect.size.width  = CGImageGetWidth(self.CGImage);
+    rect.size.height = CGImageGetHeight(self.CGImage);
+    CGRect bounds = rect;
+    CGAffineTransform transform = CGAffineTransformIdentity;
     switch (orientation){
         case UIImageOrientationUp:
             break;
         case UIImageOrientationUpMirrored:
-            tran = CGAffineTransformMakeTranslation(rect.size.width, 0.0);
-            tran = CGAffineTransformScale(tran, -1.0, 1.0);
+            transform = CGAffineTransformMakeTranslation(rect.size.width, 0.0);
+            transform = CGAffineTransformScale(transform, -1.0, 1.0);
             break;
         case UIImageOrientationDown:
-            tran = CGAffineTransformMakeTranslation(rect.size.width,rect.size.height);
-            tran = CGAffineTransformRotate(tran, M_PI);
+            transform = CGAffineTransformMakeTranslation(rect.size.width,rect.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
             break;
         case UIImageOrientationDownMirrored:
-            tran = CGAffineTransformMakeTranslation(0.0, rect.size.height);
-            tran = CGAffineTransformScale(tran, 1.0, -1.0);
+            transform = CGAffineTransformMakeTranslation(0.0, rect.size.height);
+            transform = CGAffineTransformScale(transform, 1.0, -1.0);
             break;
         case UIImageOrientationLeft:
-            bnds = kj_swapWidthAndHeight(bnds);
-            tran = CGAffineTransformMakeTranslation(0.0, rect.size.width);
-            tran = CGAffineTransformRotate(tran, 3.0 * M_PI / 2.0);
+            bounds = kj_swapWidthAndHeight(bounds);
+            transform = CGAffineTransformMakeTranslation(0.0, rect.size.width);
+            transform = CGAffineTransformRotate(transform, 3.0 * M_PI / 2.0);
             break;
         case UIImageOrientationLeftMirrored:
-            bnds = kj_swapWidthAndHeight(bnds);
-            tran = CGAffineTransformMakeTranslation(rect.size.height,rect.size.width);
-            tran = CGAffineTransformScale(tran, -1.0, 1.0);
-            tran = CGAffineTransformRotate(tran, 3.0 * M_PI / 2.0);
+            bounds = kj_swapWidthAndHeight(bounds);
+            transform = CGAffineTransformMakeTranslation(rect.size.height,rect.size.width);
+            transform = CGAffineTransformScale(transform, -1.0, 1.0);
+            transform = CGAffineTransformRotate(transform, 3.0 * M_PI / 2.0);
             break;
         case UIImageOrientationRight:
-            bnds = kj_swapWidthAndHeight(bnds);
-            tran = CGAffineTransformMakeTranslation(rect.size.height, 0.0);
-            tran = CGAffineTransformRotate(tran, M_PI / 2.0);
+            bounds = kj_swapWidthAndHeight(bounds);
+            transform = CGAffineTransformMakeTranslation(rect.size.height, 0.0);
+            transform = CGAffineTransformRotate(transform, M_PI / 2.0);
             break;
         case UIImageOrientationRightMirrored:
-            bnds = kj_swapWidthAndHeight(bnds);
-            tran = CGAffineTransformMakeScale(-1.0, 1.0);
-            tran = CGAffineTransformRotate(tran, M_PI / 2.0);
+            bounds = kj_swapWidthAndHeight(bounds);
+            transform = CGAffineTransformMakeScale(-1.0, 1.0);
+            transform = CGAffineTransformRotate(transform, M_PI / 2.0);
             break;
     }
-
-    UIGraphicsBeginImageContext(bnds.size);
-    ctxt = UIGraphicsGetCurrentContext();
+    UIGraphicsBeginImageContext(bounds.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
     switch (orientation){
         case UIImageOrientationLeft:
         case UIImageOrientationLeftMirrored:
         case UIImageOrientationRight:
         case UIImageOrientationRightMirrored:
-        CGContextScaleCTM(ctxt, -1.0, 1.0);
-        CGContextTranslateCTM(ctxt, -rect.size.height, 0.0);
+        CGContextScaleCTM(context, -1.0, 1.0);
+        CGContextTranslateCTM(context, -rect.size.height, 0.0);
         break;
-          
         default:
-        CGContextScaleCTM(ctxt, 1.0, -1.0);
-        CGContextTranslateCTM(ctxt, 0.0, -rect.size.height);
+        CGContextScaleCTM(context, 1.0, -1.0);
+        CGContextTranslateCTM(context, 0.0, -rect.size.height);
         break;
     }
 
-    CGContextConcatCTM(ctxt, tran);
-    CGContextDrawImage(UIGraphicsGetCurrentContext(), rect, imag);
-    copy = UIGraphicsGetImageFromCurrentImageContext();
+    CGContextConcatCTM(context, transform);
+    CGContextDrawImage(UIGraphicsGetCurrentContext(), rect, self.CGImage);
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return copy;
+    return newImage;
 }
-static CGRect kj_swapWidthAndHeight(CGRect rect){
+static inline CGRect kj_swapWidthAndHeight(CGRect rect){
     CGFloat swap = rect.size.width;
     rect.size.width  = rect.size.height;
     rect.size.height = swap;
     return rect;
 }
 
-#pragma mark - 对花铺贴效果
+/** 获取图片指定区域 */
+- (UIImage*)kj_getImageAppointAreaWithImageAppointType:(KJImageAppointType)type CustomFrame:(CGRect)rect{
+    CGFloat w = self.size.width;
+    CGFloat h = self.size.height;
+    switch (type) {
+        case KJImageAppointTypeCustom:
+            break;
+        case KJImageAppointTypeTop21:
+            rect = CGRectMake(0, 0, w, h/2.);
+            break;
+        case KJImageAppointTypeCenter21:
+            rect = CGRectMake(0, h/4., w, h/2.);
+            break;
+        case KJImageAppointTypeBottom21:
+            rect = CGRectMake(0, h/2., w, h/2.);
+            break;
+        case KJImageAppointTypeTop31:
+            rect = CGRectMake(0, 0, w, h/3.);
+            break;
+        case KJImageAppointTypeCenter31:
+            rect = CGRectMake(0, h/3., w, h/3.);
+            break;
+        case KJImageAppointTypeBottom31:
+            rect = CGRectMake(0, h/3.*2, w, h/3.);
+            break;
+        case KJImageAppointTypeTop41:
+            rect = CGRectMake(0, 0, w, h/4.);
+            break;
+        case KJImageAppointTypeCenter41:
+            rect = CGRectMake(0, h/4., w, h/4.);
+            break;
+        case KJImageAppointTypeBottom41:
+            rect = CGRectMake(0, h/4.*2, w, h/4.);
+            break;
+        case KJImageAppointTypeTop43:
+            rect = CGRectMake(0, 0, w, h/4.*3);
+            break;
+        case KJImageAppointTypeCenter43:
+            rect = CGRectMake(0, h/8., w, h/4.*3);
+            break;
+        case KJImageAppointTypeBottom43:
+            rect = CGRectMake(0, h/4., w, h/4.*3);
+            break;
+        default:
+            rect = CGRectMake(0, 0, w, h);
+            break;
+    }
+    /// 获取裁剪图片区域 - 从原图片中取小图
+    CGImageRef imageRef = CGImageCreateWithImageInRect(self.CGImage, rect);
+    UIImage *img = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return img;
+}
+
+#pragma mark - 墙纸铺贴效果
+- (UIImage*)kj_imageTiledWithTiledType:(KJImageTiledType)type TargetImageSize:(CGSize)size Width:(CGFloat)w{
+    CGFloat FH = (w*self.size.height)/self.size.width;
+    CGFloat xw = size.width / w;
+    CGFloat rw = roundf(xw);
+    int row = xw<=rw ? rw : rw+1;
+    CGFloat xh = size.height / FH;
+    CGFloat rh = roundf(xh);
+    int col = xh<=rh ? rh : rh+1;
+    
+    UIImage *image = nil;
+    if (type == KJImageTiledTypeAcross) {
+        image = [self kj_rotationImageWithOrientation:(UIImageOrientationUpMirrored)];
+    }else if (type == KJImageTiledTypeVertical) {
+        image = [self kj_rotationImageWithOrientation:(UIImageOrientationDownMirrored)];
+    }
+    UIGraphicsBeginImageContextWithOptions(size ,NO, 0.0);
+    CGFloat x,y;
+//    CGFloat w = size.w / row;
+    CGFloat h = FH;//size.h / col;
+    for (int i=0; i<row; i++) {
+        for (int j=0; j<col; j++) {
+            x = w * i;
+            y = h * j;
+            if (type == KJImageTiledTypeCustom) {
+                [self drawInRect:CGRectMake(x,y,w,h)];
+            }else if (type == KJImageTiledTypeAcross) {
+                if (i%2) {
+                    [image drawInRect:CGRectMake(x,y,w,h)];
+                }else{
+                    [self drawInRect:CGRectMake(x,y,w,h)];
+                }
+            }else if (type == KJImageTiledTypeVertical) {
+                if (j%2) {
+                    [image drawInRect:CGRectMake(x,y,w,h)];
+                }else{
+                    [self drawInRect:CGRectMake(x,y,w,h)];
+                }
+            }else if (type == KJImageTiledTypePositively || type == KJImageTiledTypeBackslash) {
+                bool boo = type == KJImageTiledTypePositively ? i%2 : !(i%2);
+                if (boo) {
+                    y = y - h/2;
+                    if (j==col-1) [self drawInRect:CGRectMake(x,y+h,w,h)];
+                }
+                [self drawInRect:CGRectMake(x,y,w,h)];
+            }
+        }
+    }
+    UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return resultingImage;
+}
 /** 对花铺贴效果 */
-- (UIImage*)kj_imageTiledWithTiledType:(KJImageTiledType)type TargetImageSize:(KJImageSize)size Row:(NSInteger)row Col:(NSInteger)col{
+- (UIImage*)kj_imageTiledWithTiledType:(KJImageTiledType)type TargetImageSize:(CGSize)size Row:(NSInteger)row Col:(NSInteger)col{
     /// 旋转处理之后的图片
 //    UIImage *image = [self kj_rotateInRadians:-M_PI*180./180];
     UIImage *image = nil;
@@ -104,11 +201,11 @@ static CGRect kj_swapWidthAndHeight(CGRect rect){
     }else if (type == KJImageTiledTypeVertical) {
         image = [self kj_rotationImageWithOrientation:(UIImageOrientationDownMirrored)];
     }
-    CGSize siz = CGSizeMake(size.w, size.h);
+    CGSize siz = CGSizeMake(size.width, size.height);
     UIGraphicsBeginImageContextWithOptions(siz ,NO, 0.0);
     CGFloat x,y;
-    CGFloat w = size.w / row;
-    CGFloat h = size.h / col;
+    CGFloat w = size.width / row;
+    CGFloat h = size.height / col;
     for (int i=0; i<row; i++) {
         for (int j=0; j<col; j++) {
             x = w * i;
@@ -144,8 +241,7 @@ static CGRect kj_swapWidthAndHeight(CGRect rect){
 
 #pragma mark - 地板拼接
 /** 地板拼接效果 */
-- (UIImage*)kj_imageFloorWithFloorJointType:(KJImageFloorJointType)type TargetImageSize:(KJImageSize)size FloorWidth:(CGFloat)w OpenAcross:(BOOL)openAcross OpenVertical:(BOOL)openVertical{
-//    size = KJImageSizeMake(size.w+20, size.h+20); /// 扩大一点画布，用于偏移
+- (UIImage*)kj_imageFloorWithFloorJointType:(KJImageFloorJointType)type TargetImageSize:(CGSize)size FloorWidth:(CGFloat)w OpenAcross:(BOOL)openAcross OpenVertical:(BOOL)openVertical{
     /// 裁剪小图
     NSArray *temps = [self kj_tailorImageWithAcross:0 Vertical:2];
     NSInteger count = temps.count;
@@ -221,7 +317,7 @@ static CGRect kj_swapWidthAndHeight(CGRect rect){
         }
     }
     /// 设置画布尺寸
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(size.w, size.h) ,NO, 0.0);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(size.width, size.height) ,NO, 0.0);
     for (int i=0; i<row; i++) {
         for (int j=0; j<col; j++) {
             switch (type) {
@@ -292,9 +388,6 @@ static CGRect kj_swapWidthAndHeight(CGRect rect){
     }
     UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
-//    /// 偏移10个点
-//    UIImage *skewingImage = [resultingImage kj_getImageAppointAreaWithImageAppointType:(KJImageAppointTypeCustom) CustomFrame:CGRectMake(10, 10, resultingImage.size.width-10, resultingImage.size.height-10)];
     return resultingImage;
 }
 /// 横竖倒角处理 0：无横倒角也无竖倒角 1：有横倒角无竖倒角 2：无横倒角有竖倒角 3：有横倒角也有竖倒角
@@ -399,14 +492,14 @@ static int AcrossAndVertical(bool a,bool v){
 /// 根据拼接效果判断需要几行几列
 struct KJImageRowAndCol {int row; int col;};
 typedef struct KJImageRowAndCol KJImageRowAndCol;
-- (KJImageRowAndCol)kj_rowAndColWithTargetImageSize:(KJImageSize)size FloorJointType:(KJImageFloorJointType)type SmallImage:(UIImage*)img FloorWidth:(CGFloat)w{
+- (KJImageRowAndCol)kj_rowAndColWithTargetImageSize:(CGSize)size FloorJointType:(KJImageFloorJointType)type SmallImage:(UIImage*)img FloorWidth:(CGFloat)w{
     KJImageRowAndCol rc;
     rc.row = 1; rc.col = 1;
     CGFloat FH = (w*img.size.height)/img.size.width;
-    CGFloat xw = size.w / w;
+    CGFloat xw = size.width / w;
     CGFloat rw = roundf(xw);
     rc.row = xw<=rw ? rw : rw+1;
-    CGFloat xh = size.h / FH;
+    CGFloat xh = size.height / FH;
     CGFloat rh = roundf(xh);
     int x = xh<=rh ? rh : rh+1; /// 需要的最长尺寸的地板数目
     switch (type) {
@@ -425,64 +518,10 @@ typedef struct KJImageRowAndCol KJImageRowAndCol;
             rc.col = (x-x/4)+(x-x/4+1);
             break;
         case KJImageFloorJointTypeLengthMix: /// 长短混合
-            rc.col = (int)(size.h/(FH/4.))+1;
+            rc.col = (int)(size.height/(FH/4.))+1;
             break;
     }
     return rc;
-}
-
-/** 获取图片指定区域 */
-- (UIImage*)kj_getImageAppointAreaWithImageAppointType:(KJImageAppointType)type CustomFrame:(CGRect)rect{
-    CGFloat w = self.size.width;
-    CGFloat h = self.size.height;
-    switch (type) {
-        case KJImageAppointTypeCustom:
-            break;
-        case KJImageAppointTypeTop21:
-            rect = CGRectMake(0, 0, w, h/2.);
-            break;
-        case KJImageAppointTypeCenter21:
-            rect = CGRectMake(0, h/4., w, h/2.);
-            break;
-        case KJImageAppointTypeBottom21:
-            rect = CGRectMake(0, h/2., w, h/2.);
-            break;
-        case KJImageAppointTypeTop31:
-            rect = CGRectMake(0, 0, w, h/3.);
-            break;
-        case KJImageAppointTypeCenter31:
-            rect = CGRectMake(0, h/3., w, h/3.);
-            break;
-        case KJImageAppointTypeBottom31:
-            rect = CGRectMake(0, h/3.*2, w, h/3.);
-            break;
-        case KJImageAppointTypeTop41:
-            rect = CGRectMake(0, 0, w, h/4.);
-            break;
-        case KJImageAppointTypeCenter41:
-            rect = CGRectMake(0, h/4., w, h/4.);
-            break;
-        case KJImageAppointTypeBottom41:
-            rect = CGRectMake(0, h/4.*2, w, h/4.);
-            break;
-        case KJImageAppointTypeTop43:
-            rect = CGRectMake(0, 0, w, h/4.*3);
-            break;
-        case KJImageAppointTypeCenter43:
-            rect = CGRectMake(0, h/8., w, h/4.*3);
-            break;
-        case KJImageAppointTypeBottom43:
-            rect = CGRectMake(0, h/4., w, h/4.*3);
-            break;
-        default:
-            rect = CGRectMake(0, 0, w, h);
-            break;
-    }
-    /// 获取裁剪图片区域
-    CGImageRef imageRef = CGImageCreateWithImageInRect(self.CGImage, rect);
-    UIImage *img = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    return img;
 }
 
 @end
