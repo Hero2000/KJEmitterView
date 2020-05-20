@@ -1,249 +1,34 @@
 //
-//  UIImage+KJPave.m
+//  KJFloorJoint.m
 //  KJEmitterView
 //
-//  Created by 杨科军 on 2020/4/22.
+//  Created by 杨科军 on 2020/5/20.
 //  Copyright © 2020 杨科军. All rights reserved.
 //
 
-#import "UIImage+KJPave.h"
-#import <objc/runtime.h>
-#import <Accelerate/Accelerate.h>
+#import "KJFloorJoint.h"
 
-@implementation UIImage (KJPave)
-/** 旋转图片和镜像处理 orientation 图片旋转方向 */
-- (UIImage*)kj_rotationImageWithOrientation:(UIImageOrientation)orientation{
-    CGRect rect = CGRectZero;
-    rect.size.width  = CGImageGetWidth(self.CGImage);
-    rect.size.height = CGImageGetHeight(self.CGImage);
-    CGRect bounds = rect;
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    switch (orientation){
-        case UIImageOrientationUp:
-            break;
-        case UIImageOrientationUpMirrored:
-            transform = CGAffineTransformMakeTranslation(rect.size.width, 0.0);
-            transform = CGAffineTransformScale(transform, -1.0, 1.0);
-            break;
-        case UIImageOrientationDown:
-            transform = CGAffineTransformMakeTranslation(rect.size.width,rect.size.height);
-            transform = CGAffineTransformRotate(transform, M_PI);
-            break;
-        case UIImageOrientationDownMirrored:
-            transform = CGAffineTransformMakeTranslation(0.0, rect.size.height);
-            transform = CGAffineTransformScale(transform, 1.0, -1.0);
-            break;
-        case UIImageOrientationLeft:
-            bounds = kj_swapWidthAndHeight(bounds);
-            transform = CGAffineTransformMakeTranslation(0.0, rect.size.width);
-            transform = CGAffineTransformRotate(transform, 3.0 * M_PI / 2.0);
-            break;
-        case UIImageOrientationLeftMirrored:
-            bounds = kj_swapWidthAndHeight(bounds);
-            transform = CGAffineTransformMakeTranslation(rect.size.height,rect.size.width);
-            transform = CGAffineTransformScale(transform, -1.0, 1.0);
-            transform = CGAffineTransformRotate(transform, 3.0 * M_PI / 2.0);
-            break;
-        case UIImageOrientationRight:
-            bounds = kj_swapWidthAndHeight(bounds);
-            transform = CGAffineTransformMakeTranslation(rect.size.height, 0.0);
-            transform = CGAffineTransformRotate(transform, M_PI / 2.0);
-            break;
-        case UIImageOrientationRightMirrored:
-            bounds = kj_swapWidthAndHeight(bounds);
-            transform = CGAffineTransformMakeScale(-1.0, 1.0);
-            transform = CGAffineTransformRotate(transform, M_PI / 2.0);
-            break;
-    }
-    UIGraphicsBeginImageContext(bounds.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    switch (orientation){
-        case UIImageOrientationLeft:
-        case UIImageOrientationLeftMirrored:
-        case UIImageOrientationRight:
-        case UIImageOrientationRightMirrored:
-        CGContextScaleCTM(context, -1.0, 1.0);
-        CGContextTranslateCTM(context, -rect.size.height, 0.0);
-        break;
-        default:
-        CGContextScaleCTM(context, 1.0, -1.0);
-        CGContextTranslateCTM(context, 0.0, -rect.size.height);
-        break;
-    }
-
-    CGContextConcatCTM(context, transform);
-    CGContextDrawImage(UIGraphicsGetCurrentContext(), rect, self.CGImage);
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    return newImage;
+@implementation KJFloorJoint
+static UIColor *_lineColor = nil;
+static CGFloat _lineWidth = 0.0;
++ (UIColor*)lineColor{
+    if (!_lineColor) _lineColor = UIColor.blackColor;
+    return _lineColor;
 }
-static inline CGRect kj_swapWidthAndHeight(CGRect rect){
-    CGFloat swap = rect.size.width;
-    rect.size.width  = rect.size.height;
-    rect.size.height = swap;
-    return rect;
++ (void)setLineColor:(UIColor*)lineColor{
+    _lineColor = lineColor;
 }
-
-/** 获取图片指定区域 */
-- (UIImage*)kj_getImageAppointAreaWithImageAppointType:(KJImageAppointType)type CustomFrame:(CGRect)rect{
-    CGFloat w = self.size.width;
-    CGFloat h = self.size.height;
-    switch (type) {
-        case KJImageAppointTypeCustom:
-            break;
-        case KJImageAppointTypeTop21:
-            rect = CGRectMake(0, 0, w, h/2.);
-            break;
-        case KJImageAppointTypeCenter21:
-            rect = CGRectMake(0, h/4., w, h/2.);
-            break;
-        case KJImageAppointTypeBottom21:
-            rect = CGRectMake(0, h/2., w, h/2.);
-            break;
-        case KJImageAppointTypeTop31:
-            rect = CGRectMake(0, 0, w, h/3.);
-            break;
-        case KJImageAppointTypeCenter31:
-            rect = CGRectMake(0, h/3., w, h/3.);
-            break;
-        case KJImageAppointTypeBottom31:
-            rect = CGRectMake(0, h/3.*2, w, h/3.);
-            break;
-        case KJImageAppointTypeTop41:
-            rect = CGRectMake(0, 0, w, h/4.);
-            break;
-        case KJImageAppointTypeCenter41:
-            rect = CGRectMake(0, h/4., w, h/4.);
-            break;
-        case KJImageAppointTypeBottom41:
-            rect = CGRectMake(0, h/4.*2, w, h/4.);
-            break;
-        case KJImageAppointTypeTop43:
-            rect = CGRectMake(0, 0, w, h/4.*3);
-            break;
-        case KJImageAppointTypeCenter43:
-            rect = CGRectMake(0, h/8., w, h/4.*3);
-            break;
-        case KJImageAppointTypeBottom43:
-            rect = CGRectMake(0, h/4., w, h/4.*3);
-            break;
-        default:
-            rect = CGRectMake(0, 0, w, h);
-            break;
-    }
-    /// 获取裁剪图片区域 - 从原图片中取小图
-    CGImageRef imageRef = CGImageCreateWithImageInRect(self.CGImage, rect);
-    UIImage *img = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    return img;
++ (CGFloat)lineWidth{
+    return _lineWidth;
 }
-
-#pragma mark - 墙纸铺贴效果
-- (UIImage*)kj_imageTiledWithTiledType:(KJImageTiledType)type TargetImageSize:(CGSize)size Width:(CGFloat)w{
-    CGFloat FH = (w*self.size.height)/self.size.width;
-    CGFloat xw = size.width / w;
-    CGFloat rw = roundf(xw);
-    int row = xw<=rw ? rw : rw+1;
-    CGFloat xh = size.height / FH;
-    CGFloat rh = roundf(xh);
-    int col = xh<=rh ? rh : rh+1;
-    
-    UIImage *image = nil;
-    if (type == KJImageTiledTypeAcross) {
-        image = [self kj_rotationImageWithOrientation:(UIImageOrientationUpMirrored)];
-    }else if (type == KJImageTiledTypeVertical) {
-        image = [self kj_rotationImageWithOrientation:(UIImageOrientationDownMirrored)];
-    }
-    UIGraphicsBeginImageContextWithOptions(size ,NO, 0.0);
-    CGFloat x,y;
-//    CGFloat w = size.w / row;
-    CGFloat h = FH;//size.h / col;
-    for (int i=0; i<row; i++) {
-        for (int j=0; j<col; j++) {
-            x = w * i;
-            y = h * j;
-            if (type == KJImageTiledTypeCustom) {
-                [self drawInRect:CGRectMake(x,y,w,h)];
-            }else if (type == KJImageTiledTypeAcross) {
-                if (i%2) {
-                    [image drawInRect:CGRectMake(x,y,w,h)];
-                }else{
-                    [self drawInRect:CGRectMake(x,y,w,h)];
-                }
-            }else if (type == KJImageTiledTypeVertical) {
-                if (j%2) {
-                    [image drawInRect:CGRectMake(x,y,w,h)];
-                }else{
-                    [self drawInRect:CGRectMake(x,y,w,h)];
-                }
-            }else if (type == KJImageTiledTypePositively || type == KJImageTiledTypeBackslash) {
-                bool boo = type == KJImageTiledTypePositively ? i%2 : !(i%2);
-                if (boo) {
-                    y = y - h/2;
-                    if (j==col-1) [self drawInRect:CGRectMake(x,y+h,w,h)];
-                }
-                [self drawInRect:CGRectMake(x,y,w,h)];
-            }
-        }
-    }
-    UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return resultingImage;
++ (void)setLineWidth:(CGFloat)lineWidth{
+    _lineWidth = lineWidth;
 }
-/** 对花铺贴效果 */
-- (UIImage*)kj_imageTiledWithTiledType:(KJImageTiledType)type TargetImageSize:(CGSize)size Row:(NSInteger)row Col:(NSInteger)col{
-    /// 旋转处理之后的图片
-//    UIImage *image = [self kj_rotateInRadians:-M_PI*180./180];
-    UIImage *image = nil;
-    if (type == KJImageTiledTypeAcross) {
-        image = [self kj_rotationImageWithOrientation:(UIImageOrientationUpMirrored)];
-    }else if (type == KJImageTiledTypeVertical) {
-        image = [self kj_rotationImageWithOrientation:(UIImageOrientationDownMirrored)];
-    }
-    CGSize siz = CGSizeMake(size.width, size.height);
-    UIGraphicsBeginImageContextWithOptions(siz ,NO, 0.0);
-    CGFloat x,y;
-    CGFloat w = size.width / row;
-    CGFloat h = size.height / col;
-    for (int i=0; i<row; i++) {
-        for (int j=0; j<col; j++) {
-            x = w * i;
-            y = h * j;
-            if (type == KJImageTiledTypeCustom) {
-                [self drawInRect:CGRectMake(x,y,w,h)];
-            }else if (type == KJImageTiledTypeAcross) {
-                if (i%2) {
-                    [image drawInRect:CGRectMake(x,y,w,h)];
-                }else{
-                    [self drawInRect:CGRectMake(x,y,w,h)];
-                }
-            }else if (type == KJImageTiledTypeVertical) {
-                if (j%2) {
-                    [image drawInRect:CGRectMake(x,y,w,h)];
-                }else{
-                    [self drawInRect:CGRectMake(x,y,w,h)];
-                }
-            }else if (type == KJImageTiledTypePositively || type == KJImageTiledTypeBackslash) {
-                bool boo = type == KJImageTiledTypePositively ? i%2 : !(i%2);
-                if (boo) {
-                    y = y - h/2;
-                    if (j==col-1) [self drawInRect:CGRectMake(x,y+h,w,h)];
-                }
-                [self drawInRect:CGRectMake(x,y,w,h)];
-            }
-        }
-    }
-    UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return resultingImage;
-}
-
 #pragma mark - 地板拼接
 /** 地板拼接效果 */
-- (UIImage*)kj_imageFloorWithFloorJointType:(KJImageFloorJointType)type TargetImageSize:(CGSize)size FloorWidth:(CGFloat)w OpenAcross:(BOOL)openAcross OpenVertical:(BOOL)openVertical{
++ (UIImage*)kj_floorJointWithMaterialImage:(UIImage*)xImage Type:(KJImageFloorJointType)type TargetImageSize:(CGSize)size FloorWidth:(CGFloat)w OpenAcross:(BOOL)openAcross OpenVertical:(BOOL)openVertical{
     /// 裁剪小图
-    NSArray *temps = [self kj_tailorImageWithAcross:0 Vertical:2];
+    NSArray *temps = [self kj_tailorImageWithMaterialImage:xImage Across:0 Vertical:2];
     NSInteger count = temps.count;
     NSMutableArray *temps2 = nil;
     /// 计算行列
@@ -274,13 +59,13 @@ static inline CGRect kj_swapWidthAndHeight(CGRect rect){
         for (int i=0; i<temps.count; i++) {
             UIImage *timg = temps[i];
             NSInteger index = arc4random() % halfTemp.count;
-            [temps2 addObject:[timg kj_getImageAppointAreaWithImageAppointType:[halfTemp[index] integerValue] CustomFrame:CGRectZero]];
+            [temps2 addObject:[_KJIFinishTools kj_getImageAppointAreaWithImage:timg ImageAppointType:[halfTemp[index] integerValue] CustomFrame:CGRectZero]];
         }
     }else if (type == KJImageFloorJointTypeClassical) { /// 古典拼法
         temps2 = [NSMutableArray array];
         for (int i=0; i<temps.count; i++) {
             UIImage *timg = temps[i];
-            [temps2 addObject:[timg kj_rotationImageWithOrientation:(UIImageOrientationRight)]];
+            [temps2 addObject:[_KJIFinishTools kj_rotationImageWithImage:timg Orientation:UIImageOrientationRight]];
         }
         /// 交换行列、宽高、数据源
         UIImage *img = temps[0];
@@ -307,13 +92,13 @@ static inline CGRect kj_swapWidthAndHeight(CGRect rect){
             UIImage *timg = temps[i];
             /// 取四分之三
             NSInteger index1 = arc4random() % appointTemp1.count;
-            [temps2 addObject:[timg kj_getImageAppointAreaWithImageAppointType:[appointTemp1[index1] integerValue] CustomFrame:CGRectZero]];
+            [temps2 addObject:[_KJIFinishTools kj_getImageAppointAreaWithImage:timg ImageAppointType:[appointTemp1[index1] integerValue] CustomFrame:CGRectZero]];
             /// 取四分之二
             NSInteger index2 = arc4random() % appointTemp2.count;
-            [temps2 addObject:[timg kj_getImageAppointAreaWithImageAppointType:[appointTemp2[index2] integerValue] CustomFrame:CGRectZero]];
+            [temps2 addObject:[_KJIFinishTools kj_getImageAppointAreaWithImage:timg ImageAppointType:[appointTemp2[index2] integerValue] CustomFrame:CGRectZero]];
             /// 取四分之一
             NSInteger index3 = arc4random() % appointTemp3.count;
-            [temps2 addObject:[timg kj_getImageAppointAreaWithImageAppointType:[appointTemp3[index3] integerValue] CustomFrame:CGRectZero]];
+            [temps2 addObject:[_KJIFinishTools kj_getImageAppointAreaWithImage:timg ImageAppointType:[appointTemp3[index3] integerValue] CustomFrame:CGRectZero]];
         }
     }
     /// 设置画布尺寸
@@ -399,10 +184,10 @@ static int AcrossAndVertical(bool a,bool v){
     return 0;
 }
 /// 划线
-- (void)kj_drawLineWithType:(KJImageFloorJointType)type Across:(BOOL)across Vertical:(BOOL)vertical X:(CGFloat)x Y:(CGFloat)y W:(CGFloat)w H:(CGFloat)h Ratio:(CGFloat)r{
++ (void)kj_drawLineWithType:(KJImageFloorJointType)type Across:(BOOL)across Vertical:(BOOL)vertical X:(CGFloat)x Y:(CGFloat)y W:(CGFloat)w H:(CGFloat)h Ratio:(CGFloat)r{
     int boo = AcrossAndVertical(across, vertical);
     if (boo == 0) return; /// 不需要划线
-    CGFloat l = w/40.; /// 线条宽度
+    CGFloat l = self.lineWidth ? self.lineWidth : w/40; /// 线条宽度
     // 古典拼法划线单独处理
     if (type == KJImageFloorJointTypeClassical) {
         CGFloat x1 = x, y1 = y;/// 左下竖直
@@ -436,10 +221,9 @@ static int AcrossAndVertical(bool a,bool v){
     }
 }
 /// lineType线条类型 0：横向 1：竖向 2：横向和竖向
-- (void)kj_drawLineWithLineType:(NSInteger)lineType Line:(CGFloat)line A:(CGFloat)a B:(CGFloat)b C:(CGFloat)c D:(CGFloat)d{
-    CGFloat red = 63,green = 58,blue = 58,alpe = 1; /// 线条颜色
++ (void)kj_drawLineWithLineType:(NSInteger)lineType Line:(CGFloat)line A:(CGFloat)a B:(CGFloat)b C:(CGFloat)c D:(CGFloat)d{
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetRGBStrokeColor(context, red/255., green/255., blue/255., alpe);
+    CGContextSetStrokeColorWithColor(context, self.lineColor.CGColor);/// 线条颜色
     CGContextSetLineWidth(context, line);
     if (lineType == 0) { /// 横向
         CGContextMoveToPoint(context, a, b);
@@ -448,18 +232,23 @@ static int AcrossAndVertical(bool a,bool v){
         CGContextMoveToPoint(context, a, b);
         CGContextAddLineToPoint(context, a, c);
     }else if (lineType >= 2) { /// 横向和竖向
-        CGContextMoveToPoint(context, a, b);
+        CGContextMoveToPoint(context,a, b);
         CGContextAddLineToPoint(context, a, d);
         CGContextAddLineToPoint(context, c, d);
+//        CGPoint sPoints[3];//坐标点
+//        sPoints[0] = CGPointMake(a,b);//坐标1
+//        sPoints[1] = CGPointMake(a,d);//坐标2
+//        sPoints[1] = CGPointMake(c,d);//坐标3
+//        CGContextAddLines(context, sPoints, 3);//添加线
     }
     CGContextStrokePath(context);
 }
 
 /// 横向和纵向裁剪图片，然后再旋转180
-- (NSArray<UIImage*>*)kj_tailorImageWithAcross:(int)across Vertical:(int)vertical{
++ (NSArray<UIImage*>*)kj_tailorImageWithMaterialImage:(UIImage*)xImage Across:(int)across Vertical:(int)vertical{
     NSMutableArray<UIImage*>*temps = [NSMutableArray array];
-    CGFloat w = self.size.width;
-    CGFloat h = self.size.height;
+    CGFloat w = xImage.size.width;
+    CGFloat h = xImage.size.height;
     NSMutableArray *rectTemps = [NSMutableArray array];
     for (int i=0; i<across+1; i++) {
         for (int j=0; j<vertical+1; j++) {
@@ -471,10 +260,10 @@ static int AcrossAndVertical(bool a,bool v){
     CGImageRef imageRef = NULL;
     for (int i=0; i<(across+1)*(vertical+1); i++) {
         CGRect rect = [[rectTemps objectAtIndex:i] CGRectValue];
-        imageRef = CGImageCreateWithImageInRect(self.CGImage, rect);
+        imageRef = CGImageCreateWithImageInRect(xImage.CGImage, rect);
         UIImage *img = [UIImage imageWithCGImage:imageRef];
         [temps addObject:img];
-        UIImage *img2 = [img kj_rotationImageWithOrientation:(UIImageOrientationDown)];/// 图片旋转180°
+        UIImage *img2 = [_KJIFinishTools kj_rotationImageWithImage:img Orientation:UIImageOrientationDown];/// 图片旋转180°
         [temps addObject:img2];
     }
     CGImageRelease(imageRef);
@@ -483,7 +272,7 @@ static int AcrossAndVertical(bool a,bool v){
 /// 根据拼接效果判断需要几行几列
 struct KJImageRowAndCol {int row; int col;};
 typedef struct KJImageRowAndCol KJImageRowAndCol;
-- (KJImageRowAndCol)kj_rowAndColWithTargetImageSize:(CGSize)size FloorJointType:(KJImageFloorJointType)type SmallImage:(UIImage*)img FloorWidth:(CGFloat)w{
++ (KJImageRowAndCol)kj_rowAndColWithTargetImageSize:(CGSize)size FloorJointType:(KJImageFloorJointType)type SmallImage:(UIImage*)img FloorWidth:(CGFloat)w{
     KJImageRowAndCol rc;
     rc.row = 1; rc.col = 1;
     CGFloat FH = (w*img.size.height)/img.size.width;

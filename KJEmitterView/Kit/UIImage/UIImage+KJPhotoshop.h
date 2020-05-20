@@ -58,6 +58,15 @@ static NSString * const _Nonnull KJCoreImagePhotoshopTypeStringMap[] = {
 /// 马赛克
 - (UIImage*)kj_coreImagePixellateWithCenter:(CGPoint)center Scale:(CGFloat)scale;
 
+/// 图片圆形变形
+- (UIImage*)kj_coreImageCircularWrapWithCenter:(CGPoint)center Radius:(CGFloat)radius Angle:(CGFloat)angle;
+
+/// 环形透镜畸变
+- (UIImage*)kj_coreImageTorusLensDistortionCenter:(CGPoint)center Radius:(CGFloat)radius Width:(CGFloat)width Refraction:(CGFloat)refraction;
+
+/// 空变形
+- (UIImage*)kj_coreImageHoleDistortionCenter:(CGPoint)center Radius:(CGFloat)radius;
+
 /// 应用透视校正，将源图像中的任意四边形区域转换为矩形输出图像
 - (UIImage*)kj_coreImagePerspectiveCorrectionWithTopLeft:(CGPoint)TopLeft TopRight:(CGPoint)TopRight BottomRight:(CGPoint)BottomRight BottomLeft:(CGPoint)BottomLeft;
 

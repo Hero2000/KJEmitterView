@@ -250,6 +250,19 @@
     _kj_shadowDiffuse = kj_shadowDiffuse;
     [self kj_changeShadowLayerValue];
 }
-
+- (void)ff_setAllWithShadowPath:(UIBezierPath*)kj_shadowPath
+                    shadowColor:(UIColor*)kj_shadowColor
+                   shadowRadius:(CGFloat)kj_shadowRadius
+                  shadowOpacity:(CGFloat)kj_shadowOpacity
+                    shadowAngle:(CGFloat)kj_shadowAngle
+                  shadowDiffuse:(CGFloat)kj_shadowDiffuse{
+    _kj_shadowPath = kj_shadowPath;
+    _kj_shadowColor = kj_shadowColor;
+    _kj_shadowRadius = kj_shadowRadius;
+    _kj_shadowOpacity = kj_shadowOpacity;
+    _kj_shadowAngle = kj_shadowAngle;
+    _kj_shadowDiffuse = kj_shadowDiffuse;
+    [self kj_changeShadowLayerValue];
+}
 @end
 

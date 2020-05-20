@@ -7,13 +7,6 @@
 //
 
 #import "KJSuspendedView.h"
-/// 滑动方向
-typedef NS_ENUM(NSInteger, KJSlideDirectionType) {
-    KJSlideDirectionTypeLeftBottom, /// 左下
-    KJSlideDirectionTypeRightBottom,/// 右下
-    KJSlideDirectionTypeRightTop,   /// 右上
-    KJSlideDirectionTypeLeftTop,    /// 左上
-};
 /// 凹凸方向
 typedef NS_ENUM(NSInteger, KJConcaveConvexType) {
     KJConcaveConvexTypeConcave = 0,/// 向内凹
@@ -28,10 +21,9 @@ typedef NS_ENUM(NSInteger, KJPointsType) {
     KJPointsTypeG1, /// G1点
     KJPointsTypeH1, /// H1点
 };
-
 static CGFloat minLen = 1.0; /// 最小的滑动距离
 @interface KJSuspendedView ()
-@property(nonatomic,assign) KJSuspendedKnownPoints points;
+@property(nonatomic,assign) KJKnownPoints points;
 @property(nonatomic,strong) CAShapeLayer *topLayer; /// 虚线选区
 @property(nonatomic,assign) CGPoint touchBeginPoint; /// 记录touch开始的点
 @property(nonatomic,assign) CGPoint PointE,PointF,PointG,PointH;
@@ -47,7 +39,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 
 @implementation KJSuspendedView
 /// 初始化
-- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJSuspendedKnownPoints)points{
+- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points{
     if (self == [super init]) {
         self.points = points;
         self.frame = frame;
@@ -249,6 +241,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 #pragma mark - 绘图
 - (void)drawRect:(CGRect)rect{
     CGContextRef ctx = UIGraphicsGetCurrentContext(); //获取当前绘制环境
+    CGContextSaveGState(ctx);
     if (self.clearDarw) {
         CGContextClearRect(ctx, self.bounds);//清除指定矩形区域上绘制的图形
         self.clearDarw = NO;
@@ -436,144 +429,41 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 #pragma mark - 找点方法
 /// 获取F点
 static inline CGPoint kj_FPoint(CGPoint A,CGPoint B,CGPoint C,CGPoint D,CGPoint E,CGPoint G){
-    CGPoint O = kj_linellaeCrosspoint(A,B,C,D);
-    CGPoint M = kj_parallelLineDots(B,C,G);
-    return kj_linellaeCrosspoint(E,O,M,G);
+    CGPoint O = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:A Point2:B Point3:C Point4:D];//kj_linellaeCrosspoint(A,B,C,D);
+    CGPoint M = [_KJIFinishTools kj_parallelLineDotsWithPoint1:B Point2:C Point3:G];//kj_parallelLineDots(B,C,G);
+    return [_KJIFinishTools kj_linellaeCrosspointWithPoint1:E Point2:O Point3:M Point4:G];//kj_linellaeCrosspoint(E,O,M,G);
 }
 /// 获取H点
 static inline CGPoint kj_HPoint(CGPoint A,CGPoint B,CGPoint C,CGPoint D,CGPoint E,CGPoint G){
-    CGPoint O = kj_linellaeCrosspoint(A,B,C,D);
-    CGPoint M1 = kj_parallelLineDots(A,D,E);
-    return kj_linellaeCrosspoint(G,O,M1,E);
+    CGPoint O = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:A Point2:B Point3:C Point4:D];
+    CGPoint M1 = [_KJIFinishTools kj_parallelLineDotsWithPoint1:A Point2:D Point3:E];//kj_parallelLineDots(A,D,E);
+    return [_KJIFinishTools kj_linellaeCrosspointWithPoint1:G Point2:O Point3:M1 Point4:E];//kj_linellaeCrosspoint(G,O,M1,E);
 }
 /// 获取E1点
 static inline CGPoint kj_E1Point(CGPoint A,CGPoint B,CGPoint C,CGPoint D,CGPoint E,CGPoint G,CGFloat len,BOOL positive){
+    CGPoint O = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:A Point2:B Point3:C Point4:D];
     CGPoint H = kj_HPoint(A, B, C, D, E, G);
     CGPoint F1 = kj_F1Point(A, B, C, D, E, G, len, positive);
-    CGPoint E2 = kj_perpendicularLineDots(H,E,len,positive);
-    CGPoint O = kj_linellaeCrosspoint(A,B,C,D);
-    return kj_linellaeCrosspoint(O,F1,E,E2);
+    CGPoint E2 = [_KJIFinishTools kj_perpendicularLineDotsWithPoint1:H Point2:E VerticalLenght:len Positive:positive ];//kj_perpendicularLineDots(H,E,len,positive);
+    return [_KJIFinishTools kj_linellaeCrosspointWithPoint1:O Point2:F1 Point3:E Point4:E2];//kj_linellaeCrosspoint(O,F1,E,E2);
 }
 /// 获取H1点
 static inline CGPoint kj_H1Point(CGPoint A,CGPoint B,CGPoint C,CGPoint D,CGPoint E,CGPoint G,CGFloat len,BOOL positive){
     CGPoint H = kj_HPoint(A, B, C, D, E, G);
-    CGPoint H2 = kj_perpendicularLineDots(E,H,len,positive);
+    CGPoint H2 = [_KJIFinishTools kj_perpendicularLineDotsWithPoint1:E Point2:H VerticalLenght:len Positive:positive ];//kj_perpendicularLineDots(E,H,len,positive);
     CGPoint E1 = kj_E1Point(A, B, C, D, E, G, len, positive);
-    CGPoint M = kj_parallelLineDots(H,E,E1);
-    return kj_linellaeCrosspoint(E1,M,H,H2);
+    CGPoint M = [_KJIFinishTools kj_parallelLineDotsWithPoint1:H Point2:E Point3:E1];//kj_parallelLineDots(H,E,E1);
+    return [_KJIFinishTools kj_linellaeCrosspointWithPoint1:E1 Point2:M Point3:H Point4:H2];//kj_linellaeCrosspoint(E1,M,H,H2);
 }
 /// 获取F1点
 static inline CGPoint kj_F1Point(CGPoint A,CGPoint B,CGPoint C,CGPoint D,CGPoint E,CGPoint G,CGFloat len,BOOL positive){
     CGPoint F = kj_FPoint(A, B, C, D, E, G);
-    return kj_perpendicularLineDots(G,F,len,positive);
+    return [_KJIFinishTools kj_perpendicularLineDotsWithPoint1:G Point2:F VerticalLenght:len Positive:positive ];//kj_perpendicularLineDots(G,F,len,positive);
 }
 /// 获取G1点
 static inline CGPoint kj_G1Point(CGPoint A,CGPoint B,CGPoint C,CGPoint D,CGPoint E,CGPoint G,CGFloat len,BOOL positive){
     CGPoint F = kj_FPoint(A, B, C, D, E, G);
-    return kj_perpendicularLineDots(F,G,len,positive);
-}
-
-#pragma mark - 几何方程式
-/// 已知A、B两点和C点到B点的长度，求垂直AB的C点
-+ (CGPoint)kj_perpendicularLineDotsWithA:(CGPoint)A B:(CGPoint)B Len:(CGFloat)len Positive:(BOOL)positive{
-    return kj_perpendicularLineDots(A,B,len,positive);
-}
-static inline CGPoint kj_perpendicularLineDots(CGPoint A,CGPoint B, CGFloat len,BOOL positive){
-    CGFloat x1 = A.x,y1 = A.y;
-    CGFloat x2 = B.x,y2 = B.y;
-    CGFloat k1 = 0,k = 0;
-    if (x1 == x2) {
-        k1 = -1;/// 垂直线
-        k = 1;
-    }else if (y1 == y2) {
-        k1 = 1;/// 水平线
-        k = -1;
-    }else{
-        k1 = (y1-y2)/(x1-x2);
-        k = -1/k1;
-    }
-    CGFloat b = y2 - k*x2;
-    
-    /// 根据 len² = (x-x2)² + (y-y2)²  和  y = kx + b 推倒出x、y
-    CGFloat t = k*k + 1;
-    CGFloat g = k*(b-y2) - x2;
-    CGFloat f = x2*x2 + (b-y2)*(b-y2);
-    CGFloat m = g/t;
-    CGFloat n = (len*len - f)/t + m*m;
-    
-    CGFloat xa = sqrt(n) - m;
-    CGFloat ya = k * xa + b;
-    CGFloat xb = -sqrt(n) - m;
-    CGFloat yb = k * xb + b;
-    if (positive) {
-        return yb>ya ? CGPointMake(xb, yb) : CGPointMake(xa, ya);
-    }else{
-        return yb>ya ? CGPointMake(xa, ya) : CGPointMake(xb, yb);
-    }
-    return CGPointZero;
-}
-/// 已知A、B、C、D 4个点，求AB与CD交点  备注：重合和平行返回（0,0）
-+ (CGPoint)kj_linellaeCrosspointWithA:(CGPoint)A B:(CGPoint)B C:(CGPoint)C D:(CGPoint)D{
-    return kj_linellaeCrosspoint(A,B,C,D);
-}
-static inline CGPoint kj_linellaeCrosspoint(CGPoint A,CGPoint B,CGPoint C,CGPoint D){
-    CGFloat x1 = A.x,y1 = A.y;
-    CGFloat x2 = B.x,y2 = B.y;
-    CGFloat x3 = C.x,y3 = C.y;
-    CGFloat x4 = D.x,y4 = D.y;
-    
-    CGFloat k1 = (y1-y2)/(x1-x2);
-    CGFloat k2 = (y3-y4)/(x3-x4);
-    CGFloat b1 = y1-k1*x1;
-    CGFloat b2 = y4-k2*x4;
-    if (x1==x2&&x3!=x4) {
-        return CGPointMake(x1, k2*x1+b2);
-    }else if (x3==x4&&x1!=x2){
-        return CGPointMake(x3, k1*x3+b1);
-    }else if (x3==x4&&x1==x2){
-        return CGPointMake(0, 0);
-    }else{
-        if (y1==y2&&y3!=y4) {
-            return CGPointMake((y1-b2)/k2, y1);
-        }else if (y3==y4&&y1!=y2){
-            return CGPointMake((y4-b1)/k1, y4);
-        }else if (y3==y4&&y1==y2){
-            return CGPointMake(0, 0);
-        }else{
-            if (k1==k2){
-                return CGPointMake(0, 0);
-            }else{
-                CGFloat x = (b2-b1)/(k1-k2);
-                CGFloat y = k2*x+b2;
-                return CGPointMake(x, y);
-            }
-        }
-    }
-}
-/// 求两点线段长度
-+ (CGFloat)kj_distanceBetweenPointsWithA:(CGPoint)A B:(CGPoint)B{
-    return kj_distanceBetweenPoints(A,B);
-}
-static inline CGFloat kj_distanceBetweenPoints(CGPoint point1,CGPoint point2) {
-    CGFloat deX = point2.x - point1.x;
-    CGFloat deY = point2.y - point1.y;
-    return sqrt(deX*deX + deY*deY);
-};
-/// 已知A、B、C三个点，求AB线对应C的平行线上的点  y = kx + b
-+ (CGPoint)kj_parallelLineDotsWithA:(CGPoint)A B:(CGPoint)B C:(CGPoint)C{
-    return kj_parallelLineDots(A,B,C);
-}
-static inline CGPoint kj_parallelLineDots(CGPoint A,CGPoint B,CGPoint C){
-    CGFloat x1 = A.x,y1 = A.y;
-    CGFloat x2 = B.x,y2 = B.y;
-    CGFloat x3 = C.x,y3 = C.y;
-    CGFloat k = 0;
-    if (x1 == x2) k = 1;/// 水平线
-    k = (y1-y2)/(x1-x2);
-    CGFloat b = y3 - k*x3;
-    CGFloat x = x1;
-    CGFloat y = k * x + b;/// y = kx + b
-    return CGPointMake(x, y);
+    return [_KJIFinishTools kj_perpendicularLineDotsWithPoint1:F Point2:G VerticalLenght:len Positive:positive ];//kj_perpendicularLineDots(F,G,len,positive);
 }
 
 @end

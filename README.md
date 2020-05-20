@@ -108,14 +108,18 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
-#### Add 4.7.1
-1、KJLegWireLayer 新增脚线处理
+#### Add 4.7.2
+1、KJMuralView 新增壁画
+2、KJFloorJoint 地板拼接
+3、KJWallpaperPave 墙纸铺贴
+4、_KJIFinishTools 装修公共类
 
-#### Add 4.7.0
+#### Add 4.7.1
 1、UIView+KJGestureBlock 新增单指双击操作
 2、NSObject+KJGeometry 新增几何方程式算法
 3、KJSuspendedView 新增吊顶操作
-4、重新整理装修类归纳到InteriorFinish
+4、KJLegWireLayer 新增脚线处理
+5、重新整理装修类归纳到InteriorFinish
 
 #### Add 4.6.9
 1、UIImage+KJPhotoshop 新增 CoreImage 框架多种滤镜效果

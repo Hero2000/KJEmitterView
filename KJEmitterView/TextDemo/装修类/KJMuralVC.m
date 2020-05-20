@@ -1,19 +1,18 @@
 //
-//  KJLegWireVC.m
+//  KJMuralVC.m
 //  KJEmitterView
 //
-//  Created by 杨科军 on 2020/5/19.
+//  Created by 杨科军 on 2020/5/20.
 //  Copyright © 2020 杨科军. All rights reserved.
 //
 
-#import "KJLegWireVC.h"
-#import "KJLegWireLayer.h"
-
-@interface KJLegWireVC ()
+#import "KJMuralVC.h"
+#import "KJMuralView.h"
+@interface KJMuralVC ()
 @property(nonatomic,strong) CAShapeLayer *redLayer; /// 红色透视选区
 @end
 
-@implementation KJLegWireVC
+@implementation KJMuralVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,24 +35,20 @@
         [path closePath]; /// 闭合路径
         path.CGPath;
     });
-    __block UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, w, 100)];
-    imageView.image = [UIImage imageNamed:@"IMG_4931"];
+    __block UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 50)];
+    imageView.image = [UIImage imageNamed:@"timg-2"];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0.5];
-    imageView.center = CGPointMake(w/2, h-100);
+    imageView.center = CGPointMake(w/2, h-50);
     [self.view addSubview:imageView];
     
-    __block KJLegWireLayer *layer = [[KJLegWireLayer alloc]kj_initWithFrame:CGRectMake(100, 40, w, 500) KnownPoints:points Size:CGSizeMake(w-20, h/2) LegWireHeight:0.0];
-    [self.view.layer addSublayer:layer];
+    __block KJMuralView *muralView = [[KJMuralView alloc] kj_initWithFrame:CGRectMake(0, 0, w, 500) KnownPoints:points];
+    [self.view addSubview:muralView];
     
     [imageView kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
-        layer.materialImage = imageView.image;
-        layer.kChartletBlcok = ^UIImage * _Nonnull(KJKnownPoints points, UIImage * _Nonnull jointImage) {
-            /// 透视图片
-//            UIImage *imag = [jointImage kj_coreImagePerspectiveTransformWithTopLeft:CGPointMake(0, 0) TopRight:CGPointMake(100, 20) BottomRight:CGPointMake(200, 100) BottomLeft:CGPointMake(-20, 100)];
-            UIImage *img = [jointImage kj_coreImagePerspectiveTransformWithTopLeft:points.PointA TopRight:points.PointD BottomRight:points.PointC BottomLeft:points.PointB];
-            imageView.image = jointImage;
-            return jointImage;
+        muralView.muralImage = imageView.image;
+        muralView.kChartletBlcok = ^UIImage * _Nonnull(KJKnownPoints points, UIImage * _Nonnull muralImage) {
+            return muralImage;
         };
     }];
 }
@@ -69,5 +64,6 @@
     }
     return _redLayer;
 }
+
 
 @end

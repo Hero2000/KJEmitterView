@@ -7,7 +7,7 @@
 //
 
 #import "KJFloorVC.h"
-#import "UIImage+KJPave.h" /// 图片铺设处理
+#import "KJFloorJoint.h"
 
 @interface KJFloorVC (){
     NSArray *textTemps;
@@ -66,7 +66,9 @@
     CGFloat h = [self.H.text doubleValue];
     w = w <= 0 ? 1000 : w;
     h = h <= 0 ? 1000 : h;
-    UIImage *img = [image kj_imageFloorWithFloorJointType:(type) TargetImageSize:CGSizeMake(w, h) FloorWidth:imagew OpenAcross:self.Button1.selected OpenVertical:self.Button2.selected];
+    KJFloorJoint.lineWidth = 5;
+    KJFloorJoint.lineColor = UIColor.redColor;
+    UIImage *img = [KJFloorJoint kj_floorJointWithMaterialImage:image Type:type TargetImageSize:CGSizeMake(w, h) FloorWidth:imagew OpenAcross:self.Button1.selected OpenVertical:self.Button2.selected];
     self.imageView.image = img;
 }
 

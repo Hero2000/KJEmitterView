@@ -62,10 +62,34 @@
 /// 马赛克
 - (UIImage*)kj_coreImagePixellateWithCenter:(CGPoint)center Scale:(CGFloat)scale{
     CIVector *vector1 = [CIVector vectorWithX:center.x Y:center.y];
-    NSDictionary *dict = @{@"inputCenter":vector1,@"inputScale":@(scale)};
+    NSDictionary *dict = @{@"inputCenter":vector1,
+                           @"inputScale":@(scale)};
     return [self kj_coreImageCustomWithName:@"CIPixellate" Dicts:dict];
 }
-
+/// 图片圆形变形
+- (UIImage*)kj_coreImageCircularWrapWithCenter:(CGPoint)center Radius:(CGFloat)radius Angle:(CGFloat)angle{
+    CIVector *vector1 = [CIVector vectorWithX:center.x Y:center.y];
+    NSDictionary *dict = @{@"inputCenter":vector1,
+                           @"inputRadius":@(radius),
+                           @"inputAngle":@(angle)};
+    return [self kj_coreImageCustomWithName:@"CICircularWrap" Dicts:dict];
+}
+/// 环形透镜畸变
+- (UIImage*)kj_coreImageTorusLensDistortionCenter:(CGPoint)center Radius:(CGFloat)radius Width:(CGFloat)width Refraction:(CGFloat)refraction{
+    CIVector *vector1 = [CIVector vectorWithX:center.x Y:center.y];
+    NSDictionary *dict = @{@"inputCenter":vector1,
+                           @"inputRadius":@(radius),
+                           @"inputWidth":@(width),
+                           @"inputRefraction":@(refraction)};
+    return [self kj_coreImageCustomWithName:@"CITorusLensDistortion" Dicts:dict];
+}
+/// 空变形
+- (UIImage*)kj_coreImageHoleDistortionCenter:(CGPoint)center Radius:(CGFloat)radius{
+    CIVector *vector1 = [CIVector vectorWithX:center.x Y:center.y];
+    NSDictionary *dict = @{@"inputCenter":vector1,
+                           @"inputRadius":@(radius)};
+    return [self kj_coreImageCustomWithName:@"CIHoleDistortion" Dicts:dict];
+}
 /// 应用透视校正，将源图像中的任意四边形区域转换为矩形输出图像
 - (UIImage*)kj_coreImagePerspectiveCorrectionWithTopLeft:(CGPoint)TopLeft TopRight:(CGPoint)TopRight BottomRight:(CGPoint)BottomRight BottomLeft:(CGPoint)BottomLeft{
     return [self kj_PerspectiveTransformAndPerspectiveCorrection:@"CIPerspectiveCorrection" TopLeft:TopLeft TopRight:TopRight BottomRight:BottomRight BottomLeft:BottomLeft];

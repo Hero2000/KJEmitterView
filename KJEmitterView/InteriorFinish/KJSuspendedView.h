@@ -7,15 +7,9 @@
 //  吊顶处理
 
 #import <UIKit/UIKit.h>
+#import "_KJIFinishTools.h"
 
 NS_ASSUME_NONNULL_BEGIN
-/// 已知吊顶的A、B、C、D、E、G六个点
-struct KJSuspendedKnownPoints {
-    CGPoint PointA;
-    CGPoint PointB;
-    CGPoint PointC;
-    CGPoint PointD;
-};typedef struct KJSuspendedKnownPoints KJSuspendedKnownPoints;
 /// 所画物体形状
 typedef NS_ENUM(NSInteger, KJDarwShapeType) {
     KJDarwShapeTypeQuadrangle, /// 四边形
@@ -31,12 +25,12 @@ typedef NS_ENUM(NSInteger, KJDarwShapeType) {
 @property(nonatomic,strong) UIImage *rightImage;
 
 /// 每个面对应的透视4点
-@property(nonatomic,assign) KJSuspendedKnownPoints topPoints;
-@property(nonatomic,assign) KJSuspendedKnownPoints bottomPoints;
-@property(nonatomic,assign) KJSuspendedKnownPoints frontPoints;
-@property(nonatomic,assign) KJSuspendedKnownPoints backPoints;
-@property(nonatomic,assign) KJSuspendedKnownPoints leftPoints;
-@property(nonatomic,assign) KJSuspendedKnownPoints rightPoints;
+@property(nonatomic,assign) KJKnownPoints topPoints;
+@property(nonatomic,assign) KJKnownPoints bottomPoints;
+@property(nonatomic,assign) KJKnownPoints frontPoints;
+@property(nonatomic,assign) KJKnownPoints backPoints;
+@property(nonatomic,assign) KJKnownPoints leftPoints;
+@property(nonatomic,assign) KJKnownPoints rightPoints;
 @end
 
 @interface KJSuspendedView : UIView
@@ -51,7 +45,7 @@ typedef NS_ENUM(NSInteger, KJDarwShapeType) {
 /// 所绘虚线宽度，默认1px
 @property(nonatomic,assign) CGFloat dashPatternWidth;
 /// 初始化
-- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJSuspendedKnownPoints)points;
+- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points;
 /// 重置
 - (void)kj_clearLayers;
 @end

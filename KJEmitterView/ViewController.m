@@ -73,12 +73,14 @@
     if (!_temps) {
         _temps = [NSMutableArray array];
         NSMutableArray *temp0 = [NSMutableArray array];
+        [temp0 addObject:@{@"VCName":@"KJMuralVC",@"describeName":@"墙壁壁画展示"}];
         [temp0 addObject:@{@"VCName":@"KJLegWireVC",@"describeName":@"脚线处理展示"}];
         [temp0 addObject:@{@"VCName":@"KJSuspendedVC",@"describeName":@"吊顶效果展示"}];
         [temp0 addObject:@{@"VCName":@"KJFloorVC",@"describeName":@"地板拼接效果展示"}];
         [temp0 addObject:@{@"VCName":@"KJTiledVC",@"describeName":@"墙纸铺贴效果展示"}];
         
         NSMutableArray *temp1 = [NSMutableArray array];
+        [temp1 addObject:@{@"VCName":@"KJCoreImageVC",@"describeName":@"CoreImage框架相关"}];
         [temp1 addObject:@{@"VCName":@"KJButtonVC",@"describeName":@"Button图文布局点赞粒子"}];
         [temp1 addObject:@{@"VCName":@"KJShadowVC",@"describeName":@"内阴影相关"}];
         [temp1 addObject:@{@"VCName":@"KJReflectionVC",@"describeName":@"倒影投影处理"}];

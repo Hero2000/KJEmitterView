@@ -41,6 +41,13 @@ typedef NS_ENUM(NSInteger, KJShadowType) {
 // 提供一套阴影角度算法 angele:范围（0-360）distance:距离
 - (CGSize)kj_innerShadowAngle:(CGFloat)angle Distance:(CGFloat)distance;
 
+- (void)ff_setAllWithShadowPath:(UIBezierPath*)kj_shadowPath
+                    shadowColor:(UIColor*)kj_shadowColor
+                   shadowRadius:(CGFloat)kj_shadowRadius
+                  shadowOpacity:(CGFloat)kj_shadowOpacity
+                    shadowAngle:(CGFloat)kj_shadowAngle
+                  shadowDiffuse:(CGFloat)kj_shadowDiffuse;
+
 @end
 
 NS_ASSUME_NONNULL_END
