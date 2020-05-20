@@ -20,7 +20,7 @@
     // Do any additional setup after loading the view.
     CGFloat w = self.view.size.width;
     CGFloat h = self.view.size.height;
-    KJKnownPoints points = {
+    KJKnownPoint points = {
         CGPointMake(50, 64+20),
         CGPointMake(20, h/2),
         CGPointMake(w-30, h/2-50),
@@ -48,7 +48,7 @@
     
     [imageView kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
         layer.materialImage = imageView.image;
-        layer.kChartletBlcok = ^UIImage * _Nonnull(KJKnownPoints points, UIImage * _Nonnull jointImage) {
+        layer.kChartletBlcok = ^UIImage * _Nonnull(KJKnownPoint points, UIImage * _Nonnull jointImage) {
             /// 透视图片
 //            UIImage *imag = [jointImage kj_coreImagePerspectiveTransformWithTopLeft:CGPointMake(0, 0) TopRight:CGPointMake(100, 20) BottomRight:CGPointMake(200, 100) BottomLeft:CGPointMake(-20, 100)];
             UIImage *img = [jointImage kj_coreImagePerspectiveTransformWithTopLeft:points.PointA TopRight:points.PointD BottomRight:points.PointC BottomLeft:points.PointB];

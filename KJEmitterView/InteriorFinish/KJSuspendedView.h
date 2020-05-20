@@ -25,12 +25,12 @@ typedef NS_ENUM(NSInteger, KJDarwShapeType) {
 @property(nonatomic,strong) UIImage *rightImage;
 
 /// 每个面对应的透视4点
-@property(nonatomic,assign) KJKnownPoints topPoints;
-@property(nonatomic,assign) KJKnownPoints bottomPoints;
-@property(nonatomic,assign) KJKnownPoints frontPoints;
-@property(nonatomic,assign) KJKnownPoints backPoints;
-@property(nonatomic,assign) KJKnownPoints leftPoints;
-@property(nonatomic,assign) KJKnownPoints rightPoints;
+@property(nonatomic,assign) KJKnownPoint topPoints;
+@property(nonatomic,assign) KJKnownPoint bottomPoints;
+@property(nonatomic,assign) KJKnownPoint frontPoints;
+@property(nonatomic,assign) KJKnownPoint backPoints;
+@property(nonatomic,assign) KJKnownPoint leftPoints;
+@property(nonatomic,assign) KJKnownPoint rightPoints;
 @end
 
 @interface KJSuspendedView : UIView
@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, KJDarwShapeType) {
 /// 所绘虚线宽度，默认1px
 @property(nonatomic,assign) CGFloat dashPatternWidth;
 /// 初始化
-- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points;
+- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoint)points;
 /// 重置
 - (void)kj_clearLayers;
 @end

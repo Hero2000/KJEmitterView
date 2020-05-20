@@ -99,6 +99,7 @@ end
 ```
 ###### 3．验证你本地的podspec文件     ```pod spec lint KJEmitterView.podspec```
 ###### 4．忽略警告     ```pod spec lint KJEmitterView.podspec --allow-warnings```
+###### 5. 忽略警告和看到进度验证 ```pod spec lint KJEmitterView.podspec --allow-warnings --verbose```
 验证成功
 ![图片 7.png](https://upload-images.jianshu.io/upload_images/1933747-a0561698c89fcacf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 

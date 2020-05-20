@@ -25,7 +25,7 @@
     _topLayer = nil;
 }
 /// 初始化
-- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points Size:(CGSize)size LegWireHeight:(CGFloat)height{
+- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoint)points Size:(CGSize)size LegWireHeight:(CGFloat)height{
     if (self == [super init]) {
 //        self.backgroundColor = UIColor.yellowColor.CGColor;
         self.drawsAsynchronously = YES;// 进行异步绘制
@@ -73,8 +73,8 @@
     _materialImage = materialImage;
     [self kj_jointImage];
 }
-- (void)setKChartletBlcok:(UIImage * _Nonnull (^)(KJKnownPoints, UIImage * _Nonnull))kChartletBlcok{
-    KJKnownPoints points = {self.PointE,self.PointF,self.PointG,self.PointH};
+- (void)setKChartletBlcok:(UIImage * _Nonnull (^)(KJKnownPoint, UIImage * _Nonnull))kChartletBlcok{
+    KJKnownPoint points = {self.PointE,self.PointF,self.PointG,self.PointH};
     self.perspectiveImage = kChartletBlcok(points,self.jointImage);
     if (_topLayer) {
 //        _topLayer.lineWidth = 0.0;
@@ -129,7 +129,7 @@
     self.jointImage = resultingImage;
 }
 /// 获取对应的4点
-- (void)kj_getFourPoints:(KJKnownPoints)points{
+- (void)kj_getFourPoints:(KJKnownPoint)points{
     CGPoint A = points.PointA;
     CGPoint B = points.PointB;
     CGPoint C = points.PointC;
@@ -146,7 +146,7 @@
         self.PointF = B;self.PointG = C;
         self.PointH = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:O Point2:M Point3:C Point4:D];
     }
-    KJKnownPoints kp = {self.PointE,self.PointF,self.PointG,self.PointH};
+    KJKnownPoint kp = {self.PointE,self.PointF,self.PointG,self.PointH};
     self.imageRect = [_KJIFinishTools kj_rectWithPoints:kp];
 }
 

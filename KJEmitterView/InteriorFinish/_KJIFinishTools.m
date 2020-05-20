@@ -136,7 +136,7 @@ static inline CGPoint kj_parallelLineDots(CGPoint A,CGPoint B,CGPoint C){
     return pt;
 }
 /// 获取对应的Rect
-+ (CGRect)kj_rectWithPoints:(KJKnownPoints)points{
++ (CGRect)kj_rectWithPoints:(KJKnownPoint)points{
     NSArray *temp = @[NSStringFromCGPoint(points.PointA),
                       NSStringFromCGPoint(points.PointB),
                       NSStringFromCGPoint(points.PointC),

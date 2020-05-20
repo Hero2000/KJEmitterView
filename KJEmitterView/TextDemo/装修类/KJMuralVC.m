@@ -19,7 +19,7 @@
     // Do any additional setup after loading the view.
     CGFloat w = self.view.size.width;
     CGFloat h = self.view.size.height;
-    KJKnownPoints points = {
+    KJKnownPoint points = {
         CGPointMake(50, 64+20),
         CGPointMake(20, h/2),
         CGPointMake(w-30, h/2-50),
@@ -47,7 +47,7 @@
     
     [imageView kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
         muralView.muralImage = imageView.image;
-        muralView.kChartletBlcok = ^UIImage * _Nonnull(KJKnownPoints points, UIImage * _Nonnull muralImage) {
+        muralView.kChartletBlcok = ^UIImage * _Nonnull(KJKnownPoint points, UIImage * _Nonnull muralImage) {
             return muralImage;
         };
     }];

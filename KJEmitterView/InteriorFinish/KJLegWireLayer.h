@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KJLegWireLayer : CALayer
 /// 透视图形回调 - 贴图回调，透视四点和拼接好的素材图
-@property(nonatomic,readwrite,copy) UIImage *(^kChartletBlcok)(KJKnownPoints points,UIImage *jointImage);
+@property(nonatomic,readwrite,copy) UIImage *(^kChartletBlcok)(KJKnownPoint points,UIImage *jointImage);
 /// 脚线素材图，备注此属性必须在 kChartletBlcok 之前设置
 @property(nonatomic,strong) UIImage *materialImage;
 /// 所绘虚线颜色，默认黑色
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 所绘虚线宽度，默认1px
 @property(nonatomic,assign) CGFloat dashPatternWidth;
 /// 初始化
-- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points Size:(CGSize)size LegWireHeight:(CGFloat)height;
+- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoint)points Size:(CGSize)size LegWireHeight:(CGFloat)height;
 /// 重置
 - (void)kj_clearLayers;
 
