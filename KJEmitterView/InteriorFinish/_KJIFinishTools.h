@@ -18,8 +18,7 @@ struct KJKnownPoints {
     CGPoint PointB;
     CGPoint PointC;
     CGPoint PointD;
-};
-typedef struct KJKnownPoints KJKnownPoint;
+};typedef struct KJKnownPoints KJKnownPoints;
 /// 滑动方向
 typedef NS_ENUM(NSInteger, KJSlideDirectionType) {
     KJSlideDirectionTypeLeftBottom, /// 左下
@@ -57,7 +56,7 @@ typedef NS_ENUM(NSInteger, KJImageAppointType) {
 /// 椭圆求点方程
 + (CGPoint)kj_ovalPointWithRect:(CGRect)lpRect Angle:(CGFloat)angle;
 /// 获取对应的Rect
-+ (CGRect)kj_rectWithPoints:(KJKnownPoint)points;
++ (CGRect)kj_rectWithPoints:(KJKnownPoints)points;
 #pragma mark - 图片处理
 /** 获取图片指定区域 */
 + (UIImage*)kj_getImageAppointAreaWithImage:(UIImage*)image ImageAppointType:(KJImageAppointType)type CustomFrame:(CGRect)rect;

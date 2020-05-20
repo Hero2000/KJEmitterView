@@ -9,7 +9,7 @@
 #import "KJMuralView.h"
 static CGFloat minLen = 1.0; /// 最小的滑动距离
 @interface KJMuralView ()
-@property(nonatomic,assign) KJKnownPoint points;
+@property(nonatomic,assign) KJKnownPoints points;
 @property(nonatomic,strong) CAShapeLayer *topLayer; /// 虚线选区
 @property(nonatomic,assign) CGPoint touchBeginPoint; /// 记录touch开始的点
 @property(nonatomic,assign) CGPoint PointE,PointF,PointG,PointH;
@@ -20,7 +20,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 @implementation KJMuralView
 
 /// 初始化
-- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoint)points{
+- (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points{
     if (self == [super init]) {
         self.points = points;
         self.frame = frame;
@@ -55,8 +55,8 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     _dashPatternWidth = dashPatternWidth;
     if (_topLayer) _topLayer.lineWidth = dashPatternWidth;
 }
-- (void)setKChartletBlcok:(UIImage * _Nonnull (^)(KJKnownPoint, UIImage * _Nonnull))kChartletBlcok{
-    KJKnownPoint points = {self.PointE,self.PointF,self.PointG,self.PointH};
+- (void)setKChartletBlcok:(UIImage * _Nonnull (^)(KJKnownPoints, UIImage * _Nonnull))kChartletBlcok{
+    KJKnownPoints points = {self.PointE,self.PointF,self.PointG,self.PointH};
     UIImage *image = kChartletBlcok(points,self.muralImage);
     if (_topLayer) {
         _topLayer.lineWidth = 0.0;

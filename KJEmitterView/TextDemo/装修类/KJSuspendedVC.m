@@ -20,7 +20,7 @@
     // Do any additional setup after loading the view from its nib.
     CGFloat w = self.view.size.width;
     CGFloat h = self.view.size.height;
-    KJKnownPoint points = {
+    KJKnownPoints points = {
         CGPointMake(20+64, 20),
         CGPointMake(100+64, w/2-30),
         CGPointMake(h-150, w/2-20),

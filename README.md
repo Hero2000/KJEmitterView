@@ -108,7 +108,7 @@ pod 'KJEmitterView/Control' # 自定义控件
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
-#### Add 4.7.2
+#### Add 4.7.4
 1、KJMuralView 新增壁画
 2、KJFloorJoint 地板拼接
 3、KJWallpaperPave 墙纸铺贴

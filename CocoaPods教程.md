@@ -307,4 +307,10 @@ https://github.com/cocoapods/cocoapods/search?q=no%20block%20given&type=Issues&u
 原因：  
 解决方案：  
 
+###### 21、error: duplicate interface definition for class '_KJIFinishTools'
+```
+- ERROR | [KJEmitterView/InteriorFinish] xcodebuild:  /Users/yangkejun/Library/Developer/Xcode/DerivedData/App-gpmktkjjgkmqxbewzsgsipmxwyrx/Build/Products/Release-iphonesimulator/KJEmitterView/KJEmitterView.framework/Headers/_KJInteriorFinishTools.h:22:1: error: duplicate interface definition for class '_KJIFinishTools'
+```
+原因：文件冲突  
+解决方案：找到该文件，删除即可
 
