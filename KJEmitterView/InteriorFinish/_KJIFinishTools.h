@@ -12,13 +12,18 @@
 #import <Accelerate/Accelerate.h>
 
 NS_ASSUME_NONNULL_BEGIN
+/// 图片扭曲之后的参数
+typedef struct KJImageWarpResult {
+    UIImage *newImage; /// 扭曲后图片
+    CGRect newRect; /// 扭曲后尺寸
+}KJImageWarpResult;
 /// 透视选区四点
-struct KJKnownPoints {
+typedef struct KJKnownPoints {
     CGPoint PointA;
     CGPoint PointB;
     CGPoint PointC;
     CGPoint PointD;
-};typedef struct KJKnownPoints KJKnownPoints;
+}KJKnownPoints;
 /// 滑动方向
 typedef NS_ENUM(NSInteger, KJSlideDirectionType) {
     KJSlideDirectionTypeLeftBottom, /// 左下
@@ -44,6 +49,17 @@ typedef NS_ENUM(NSInteger, KJImageAppointType) {
 };
 @interface _KJIFinishTools : NSObject
 
+#pragma mark - 逻辑处理
+/// 确定滑动方向
++ (KJSlideDirectionType)kj_slideDirectionWithPoint:(CGPoint)point Point2:(CGPoint)point2;
+/// 判断当前点是否在路径选区内
++ (bool)kj_confirmCurrentPointWithPoint:(CGPoint)point BezierPath:(UIBezierPath*)path;
+/// 判断当前点是否在已知四点选区内
++ (bool)kj_confirmCurrentPointWithPoint:(CGPoint)point KnownPoints:(KJKnownPoints)points;
+/// 判断当前点是否在Rect内
++ (bool)kj_confirmCurrentPointWithPoint:(CGPoint)point Rect:(CGRect)rect;
+/// 获取对应的Rect
++ (CGRect)kj_rectWithPoints:(KJKnownPoints)points;
 #pragma mark - 几何方程式
 /// 已知A、B两点和C点到B点的长度，求垂直AB的C点
 + (CGPoint)kj_perpendicularLineDotsWithPoint1:(CGPoint)A Point2:(CGPoint)B VerticalLenght:(CGFloat)len Positive:(BOOL)pos;
@@ -55,13 +71,14 @@ typedef NS_ENUM(NSInteger, KJImageAppointType) {
 + (CGPoint)kj_parallelLineDotsWithPoint1:(CGPoint)A Point2:(CGPoint)B Point3:(CGPoint)C;
 /// 椭圆求点方程
 + (CGPoint)kj_ovalPointWithRect:(CGRect)lpRect Angle:(CGFloat)angle;
-/// 获取对应的Rect
-+ (CGRect)kj_rectWithPoints:(KJKnownPoints)points;
 #pragma mark - 图片处理
-/** 获取图片指定区域 */
+/// 获取图片指定区域
 + (UIImage*)kj_getImageAppointAreaWithImage:(UIImage*)image ImageAppointType:(KJImageAppointType)type CustomFrame:(CGRect)rect;
-/** 旋转图片和镜像处理 orientation 图片旋转方向 */
+/// 旋转图片和镜像处理 orientation 图片旋转方向
 + (UIImage*)kj_rotationImageWithImage:(UIImage*)image Orientation:(UIImageOrientation)orientation;
+/// 矩形图扭曲变形成椭圆弧形图
++ (UIImage*)kj_orthogonImageBecomeOvalWithImage:(UIImage*)image Rect:(CGRect)rect Margin:(bool)margin;
+//+ (KJImageWarpResult)changeImageByPoints:(NSArray*)pointArray Image:(UIImage*)image;
 @end
 
 NS_ASSUME_NONNULL_END

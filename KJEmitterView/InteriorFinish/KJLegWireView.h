@@ -6,11 +6,18 @@
 //  Copyright © 2020 杨科军. All rights reserved.
 //  脚线处理
 
-#import <QuartzCore/QuartzCore.h>
+#import <UIKit/UIKit.h>
 #import "_KJIFinishTools.h"
 
 NS_ASSUME_NONNULL_BEGIN
-@interface KJLegWireLayer : CALayer
+/// 踢脚线位置
+typedef NS_ENUM(NSInteger, KJLegWireType) {
+    KJLegWireTypeTop = 0,/// 上边
+    KJLegWireTypeBottom, /// 下边
+    KJLegWireTypeLeft,   /// 左边
+    KJLegWireTypeRight,  /// 右边
+};
+@interface KJLegWireView : UIView
 /// 透视图形回调 - 贴图回调，透视四点和拼接好的素材图
 @property(nonatomic,readwrite,copy) UIImage *(^kChartletBlcok)(KJKnownPoints points,UIImage *jointImage);
 /// 脚线素材图，备注此属性必须在 kChartletBlcok 之前设置

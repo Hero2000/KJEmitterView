@@ -15,19 +15,42 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 @property(nonatomic,assign) CGPoint PointE,PointF,PointG,PointH;
 @property(nonatomic,assign) BOOL drawTop; /// 是否绘制顶部选区
 @property(nonatomic,assign) BOOL clearDarw; /// 清除画布内容开关
+@property(nonatomic,assign) BOOL sureDarw; /// 是否点在正确的选区内
+@property(nonatomic,strong) UIImage *perspectiveImage; /// 透视好的素材图
+@property(nonatomic,assign) CGRect imageRect;
+@property(nonatomic,assign) KJKnownPoints topPoints;
+@property(nonatomic,assign) KJSlideDirectionType directionType; /// 选区滑动方向
 @end
 
 @implementation KJMuralView
-
+/// 子类需要实现父类方法
+- (bool)kj_delGestureWithPoint:(CGPoint)point{
+    if (self.openDrawMural) {
+        /// 不在透视选区内不做手势处理
+        return [_KJIFinishTools kj_confirmCurrentPointWithPoint:point KnownPoints:self.points];
+    }
+    return false;
+}
+/// 重置
+- (void)kj_clearLayers{
+    self.sureDarw = self.drawTop = NO; /// 重置开关
+    [_topLayer removeFromSuperlayer];
+    _topLayer = nil;
+    self.clearDarw = YES;
+    [self setNeedsDisplay];
+}
 /// 初始化
 - (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points{
     if (self == [super init]) {
+        self.backgroundColor = UIColor.clearColor;
         self.points = points;
-        self.frame = frame;
+        self.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         self.dashPatternColor = UIColor.blackColor;
         self.dashPatternWidth = 1.;
+        self.sureDarw = NO;
         self.drawTop = NO;
         self.clearDarw = NO;
+        self.layer.contentsScale = [[UIScreen mainScreen] scale];/// 绘图模糊有锯齿解决方案
     }
     return self;
 }
@@ -47,6 +70,8 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     }
     return _topLayer;
 }
+@synthesize dashPatternColor = _dashPatternColor;
+@synthesize dashPatternWidth = _dashPatternWidth;
 - (void)setDashPatternColor:(UIColor*)dashPatternColor{
     _dashPatternColor = dashPatternColor;
     if (_topLayer) _topLayer.strokeColor = dashPatternColor.CGColor;
@@ -56,22 +81,16 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     if (_topLayer) _topLayer.lineWidth = dashPatternWidth;
 }
 - (void)setKChartletBlcok:(UIImage * _Nonnull (^)(KJKnownPoints, UIImage * _Nonnull))kChartletBlcok{
-    KJKnownPoints points = {self.PointE,self.PointF,self.PointG,self.PointH};
-    UIImage *image = kChartletBlcok(points,self.muralImage);
+    self.perspectiveImage = kChartletBlcok(_topPoints,self.muralImage);
     if (_topLayer) {
-        _topLayer.lineWidth = 0.0;
+        [_topLayer removeFromSuperlayer];
+        _topLayer = nil;
+        [self setNeedsDisplay];
+//        _topLayer.lineWidth = 0.0;
 //        UIImage *img = [self kj_rotationImage:image]; /// 上下翻转图片
-        UIColor *color = [UIColor colorWithPatternImage:image]; /// 图片转颜色
-        _topLayer.fillColor = color.CGColor;
+//        UIColor *color = [UIColor colorWithPatternImage:image]; /// 图片转颜色
+//        _topLayer.fillColor = color.CGColor;
     }
-}
-/// 重置
-- (void)kj_clearLayers{
-    self.drawTop = NO; /// 重置开关
-    [_topLayer removeFromSuperlayer];
-    _topLayer = nil;
-    self.clearDarw = YES;
-    [self setNeedsDisplay];
 }
 #pragma mark - touches
 /// 触摸开始
@@ -89,10 +108,17 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     [super touchesBegan:touches withEvent:event];
     // 设置起始位置
     self.touchBeginPoint = [touches.anyObject locationInView:self];
+    /// 判断开始点是否在选区内
+    if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:self.touchBeginPoint KnownPoints:self.points]) {
+        return;
+    }else{
+        self.sureDarw = YES;
+    }
     if (!_drawTop) self.PointE = self.touchBeginPoint;
 }
 /// 滑动当中
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+    if (!self.sureDarw) return; /// 未在正确选区内
     UITouch *touch = (UITouch *)touches.anyObject;
     if (touches.count > 1 || [touch tapCount] > 1  || event.allTouches.count > 1) {
         return;
@@ -107,13 +133,20 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     if (fabs(tempPoint.x - self.touchBeginPoint.x) < minLen && fabs(tempPoint.y - self.touchBeginPoint.y) < minLen) {
         return;
     }
-    if (!_drawTop) [self kj_darwQuadrangleTopWithPoint:tempPoint];
+    if (!_drawTop) {
+        /// 判断开始点是否在选区内
+        if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:tempPoint KnownPoints:self.points]) return;
+        [self kj_darwQuadrangleTopWithPoint:tempPoint];
+    }
 }
 /// 触摸结束
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     NSLog(@"touchesEnded");
     [super touchesEnded:touches withEvent:event];
-    self.drawTop = YES;
+    if (self.sureDarw) {
+        self.openDrawMural = false;
+        self.drawTop = YES; /// 正确选区内
+    }
 }
 
 #pragma mark - 内部处理方法
@@ -127,44 +160,76 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     CGPoint O = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:A Point2:B Point3:C Point4:D];
     CGPoint M = [_KJIFinishTools kj_parallelLineDotsWithPoint1:B Point2:C Point3:self.PointG];
     self.PointF = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:self.PointE Point2:O Point3:M Point4:self.PointG];
-    
+
     CGPoint N = [_KJIFinishTools kj_parallelLineDotsWithPoint1:A Point2:D Point3:self.PointE];
     self.PointH = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:self.PointG Point2:O Point3:N Point4:self.PointE];
-
+    /// 滑动方向
+    self.directionType = [_KJIFinishTools kj_slideDirectionWithPoint:self.PointE Point2:tempPoint];
+    CGPoint E = CGPointZero;
+    CGPoint F = CGPointZero;
+    CGPoint G = CGPointZero;
+    CGPoint H = CGPointZero;
+    if (self.directionType == KJSlideDirectionTypeLeftBottom) {
+        
+    }else if (self.directionType == KJSlideDirectionTypeLeftTop) {
+        E = self.PointH;
+        F = self.PointG;
+        H = self.PointE;
+        G = self.PointF;
+        self.PointE = E;
+        self.PointF = F;
+        self.PointG = G;
+        self.PointH = H;
+    }else if (self.directionType == KJSlideDirectionTypeRightBottom) {
+       
+    }else if (self.directionType == KJSlideDirectionTypeRightTop) {
+       
+    }
     self.topLayer.path = [self kj_topPath].CGPath;
+    self.topPoints = (KJKnownPoints){self.PointE,self.PointF,self.PointG,self.PointH};
+    self.imageRect = [_KJIFinishTools kj_rectWithPoints:self.topPoints];
 }
 - (UIBezierPath*)kj_topPath{
     UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:self.PointE];
-    [path addLineToPoint:self.PointH];
-    [path addLineToPoint:self.PointG];
-    [path addLineToPoint:self.PointF];
+    switch (self.directionType) {
+        case KJSlideDirectionTypeLeftTop:
+        case KJSlideDirectionTypeRightTop:
+            [path moveToPoint:self.PointF];
+            [path addLineToPoint:self.PointG];
+            [path addLineToPoint:self.PointH];
+            [path addLineToPoint:self.PointE];
+            break;
+        case KJSlideDirectionTypeLeftBottom:
+        case KJSlideDirectionTypeRightBottom:
+            [path moveToPoint:self.PointE];
+            [path addLineToPoint:self.PointF];
+            [path addLineToPoint:self.PointG];
+            [path addLineToPoint:self.PointH];
+            break;
+        default:
+            break;
+    }
     [path closePath];
     return path;
 }
-//#pragma mark - 绘图
-//- (void)drawRect:(CGRect)rect{
-//    CGContextRef ctx = UIGraphicsGetCurrentContext(); //获取当前绘制环境
-//    CGContextSaveGState(ctx);
-//    if (self.clearDarw) {
-//        CGContextClearRect(ctx, self.bounds);//清除指定矩形区域上绘制的图形
-//        self.clearDarw = NO;
-//        return;
-//    }
-//    CGContextAddPath(ctx, [self kj_topPath].CGPath);
-//    CGContextClip(ctx); // 裁剪路径以外部分
-////    if (self.kChartletBlcok) {
-////        KJSuspendedModel *model = [[KJSuspendedModel alloc]init];
-////        model = self.kChartletBlcok(model);
-////    }
-//    CGContextSetLineWidth(ctx, 1); //设置线条宽度
-//    CGContextSetLineJoin(ctx, kCGLineJoinRound);// 连接节点样式
-//    CGContextSetLineCap(ctx, kCGLineCapRound);// 线头样式
-//    CGContextSetStrokeColorWithColor(ctx, UIColor.clearColor.CGColor);//设置线条颜色
-//    CGContextSetFillColorWithColor(ctx, color.CGColor);//填充颜色
-//    CGContextAddPath(ctx, [self kj_topPath].CGPath);
-//    CGContextDrawPath(ctx, kCGPathFillStroke); //绘制路径
-//    CGContextRestoreGState(ctx);
-//}
+#pragma mark - 绘图
+- (void)drawRect:(CGRect)rect{
+    CGContextRef ctx = UIGraphicsGetCurrentContext(); //获取当前绘制环境
+    CGContextSaveGState(ctx);
+    if (self.clearDarw) {
+        CGContextClearRect(ctx, self.bounds);//清除指定矩形区域上绘制的图形
+        self.clearDarw = NO;
+        return;
+    }
+    CGContextAddPath(ctx, [self kj_topPath].CGPath);
+    CGContextClip(ctx); // 裁剪路径以外部分
+    // 使用CGContextDrawImage绘制图片上下颠倒 用这个方法解决
+    UIGraphicsPushContext(ctx);
+    CGRect tempRect = self.imageRect;
+    tempRect.size.height += 1;/// 解决所绘之图有点往上移位的问题
+    [self.perspectiveImage drawInRect:tempRect];
+    UIGraphicsPopContext();
+    CGContextRestoreGState(ctx);
+}
 
 @end

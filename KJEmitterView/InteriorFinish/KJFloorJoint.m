@@ -270,8 +270,7 @@ static int AcrossAndVertical(bool a,bool v){
     return temps;
 }
 /// 根据拼接效果判断需要几行几列
-struct KJImageRowAndCol {int row; int col;};
-typedef struct KJImageRowAndCol KJImageRowAndCol;
+typedef struct KJImageRowAndCol {int row; int col;}KJImageRowAndCol;
 + (KJImageRowAndCol)kj_rowAndColWithTargetImageSize:(CGSize)size FloorJointType:(KJImageFloorJointType)type SmallImage:(UIImage*)img FloorWidth:(CGFloat)w{
     KJImageRowAndCol rc;
     rc.row = 1; rc.col = 1;

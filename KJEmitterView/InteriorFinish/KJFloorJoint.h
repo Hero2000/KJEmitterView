@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, KJImageFloorJointType) {
 @property (nonatomic,strong,class) UIColor *lineColor;
 /// 线条宽度，默认为FloorWidth的40分之1
 @property (nonatomic,assign,class) CGFloat lineWidth;
-/** 地板拼接效果 */
+/// 地板拼接效果
 + (UIImage*)kj_floorJointWithMaterialImage:(UIImage*)xImage Type:(KJImageFloorJointType)type TargetImageSize:(CGSize)size FloorWidth:(CGFloat)w OpenAcross:(BOOL)openAcross OpenVertical:(BOOL)openVertical;
 
 @end

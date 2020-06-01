@@ -73,6 +73,9 @@ static NSString * const _Nonnull KJCoreImagePhotoshopTypeStringMap[] = {
 /// 透视变换，透视滤镜倾斜图像
 - (UIImage*)kj_coreImagePerspectiveTransformWithTopLeft:(CGPoint)TopLeft TopRight:(CGPoint)TopRight BottomRight:(CGPoint)BottomRight BottomLeft:(CGPoint)BottomLeft;
 
+/// 软装专属透视 - 内部有相对应的坐标转换
+- (UIImage*)kj_softFitmentFluoroscopyWithTopLeft:(CGPoint)TopLeft TopRight:(CGPoint)TopRight BottomRight:(CGPoint)BottomRight BottomLeft:(CGPoint)BottomLeft;
+
 /**
  将定向聚光灯效果应用于图像（射灯）
  LightPosition：光源位置（三维坐标）

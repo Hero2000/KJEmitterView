@@ -1,5 +1,8 @@
 # KJEmitterView
-![coverImage](https://upload-images.jianshu.io/upload_images/1933747-b7e843a01999b9a9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+<!--![coverImage]()-->
+<p align="left">
+<img src="https://img.zcool.cn/community/0161da5541af81000001a64bc753a4.jpg@1280w_1l_2o_100sh.jpg" width="666" hspace="1px">
+</p>
 
 * 这个工程提供开发中用到的类目，方便开发
 * 这里有我经常用到的扩展，方便好用开发
@@ -32,7 +35,6 @@
 <p align="left">
 <img src="https://upload-images.jianshu.io/upload_images/1933747-b06d24effbdb86ab.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="1px">
 <img src="https://upload-images.jianshu.io/upload_images/1933747-8e01116d67e820ad.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="200" hspace="30px">
-<img src="" width="200" hspace="30px">
 </p>
 
 ----------------------------------------
@@ -103,11 +105,17 @@ pod 'KJEmitterView'
 pod 'KJEmitterView/InteriorFinish' # 装修控件
 pod 'KJEmitterView/Function'#
 pod 'KJEmitterView/Control' # 自定义控件
+pod 'KJEmitterView/Classes' # 粒子效果相关
 ```
 
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
+#### Add 4.7.5
+1、KJInteriorSuperclassView 新增装修父类，主要处理手指区域问题
+2、KJSkirtingLineView 新增四边踢脚线
+3、KJMuralView 壁画完善处理
+
 #### Add 4.7.4
 1、KJMuralView 新增壁画
 2、KJFloorJoint 地板拼接
@@ -239,13 +247,13 @@ pod 'KJEmitterView/Control' # 自定义控件
 ```
 #### <a id="效果图"></a>效果图
 <p align="left">
-<img src="https://upload-images.jianshu.io/upload_images/1933747-2200e0b4cf71f88f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="300" hspace="1px">
+<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590984664032&di=f75bbfdf1c76e20749fd40be9c784738&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181208%2F2e9d5c7277094ace8e7385e018ccc2d4.jpeg" width="666" hspace="1px">
 </p>
 
 #### 温馨提示
 #####1、使用第三方库Xcode报错  
 Cannot synthesize weak property because the current deployment target does not support weak references  
-可在`Podfile`文件底下加入下面的代码，'8.0'是对应的部署目标（deployment target） 删除库重新Pod  
+可在`Podfile`文件底下加入下面的代码，'8.0'是对应的部署目标，删除库重新Pod  
 不支持用weak修饰属性，而weak在使用ARC管理引用计数项目中才可使用  
 遍历每个develop target，将target支持版本统一设成一个支持ARC的版本
 

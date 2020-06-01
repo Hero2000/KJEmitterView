@@ -16,6 +16,7 @@
 @property(nonatomic,strong) UIImage *jointImage; /// 拼接好的素材图
 @property(nonatomic,strong) UIImage *perspectiveImage; /// 透视好的素材图
 @property(nonatomic,assign) CGRect imageRect;
+@property(nonatomic,assign) KJKnownPoints topPoints;
 @end
 
 @implementation KJLegWireLayer
@@ -27,7 +28,6 @@
 /// 初始化
 - (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points Size:(CGSize)size LegWireHeight:(CGFloat)height{
     if (self == [super init]) {
-//        self.backgroundColor = UIColor.yellowColor.CGColor;
         self.drawsAsynchronously = YES;// 进行异步绘制
         self.contentsScale = [UIScreen mainScreen].scale;
         self.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
@@ -74,43 +74,17 @@
     [self kj_jointImage];
 }
 - (void)setKChartletBlcok:(UIImage * _Nonnull (^)(KJKnownPoints, UIImage * _Nonnull))kChartletBlcok{
-    KJKnownPoints points = {self.PointE,self.PointF,self.PointG,self.PointH};
-    self.perspectiveImage = kChartletBlcok(points,self.jointImage);
+    self.perspectiveImage = kChartletBlcok(_topPoints,self.jointImage);
     if (_topLayer) {
-//        _topLayer.lineWidth = 0.0;
-//        UIColor *color = [UIColor colorWithPatternImage:image]; /// 图片转颜色
-//        _topLayer.fillColor = color.CGColor;
         [self kj_clearLayers];
         [self setNeedsDisplay];
     }
 }
-#pragma mark - 绘制
-- (void)drawInContext:(CGContextRef)context {
-    CGContextAddPath(context, [self kj_topPath].CGPath);
-    CGContextClip(context); // 裁剪路径以外部分
-//    [self.perspectiveImage drawInRect:self.imageRect];//在坐标中画出图片
-//    [self.perspectiveImage drawAtPoint:self.imageRect.origin];//保持图片大小在point点开始画图片，可以把注释去掉看看
-//    CGContextDrawImage(context,self.imageRect,self.perspectiveImage.CGImage);//使用这个使图片上下颠倒
-//    CGContextDrawTiledImage(context, CGRectMake(0,0,20,20), self.perspectiveImage.CGImage);//平铺图
-    
-    // 使用CGContextDrawImage绘制图片上下颠倒 用这个方法解决
-    UIGraphicsPushContext(context);
-    [self.perspectiveImage drawInRect:self.imageRect];
-    UIGraphicsPopContext();
+- (void)setTopPoints:(KJKnownPoints)topPoints{
+    _topPoints = topPoints;
+    self.imageRect = [_KJIFinishTools kj_rectWithPoints:topPoints];
 }
-
 #pragma mark - 内部方法
-- (UIBezierPath*)kj_topPath{
-    return ({
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        [path moveToPoint:self.PointE];
-        [path addLineToPoint:self.PointH];
-        [path addLineToPoint:self.PointG];
-        [path addLineToPoint:self.PointF];
-        [path closePath];
-        path;
-    });
-}
 /// 拼接素材图
 - (void)kj_jointImage{
     CGFloat w = _materialImage.size.width * self.legWireHeight / _materialImage.size.height;
@@ -127,6 +101,17 @@
     UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     self.jointImage = resultingImage;
+}
+- (UIBezierPath*)kj_topPath{
+    return ({
+        UIBezierPath *path = [UIBezierPath bezierPath];
+        [path moveToPoint:self.PointE];
+        [path addLineToPoint:self.PointH];
+        [path addLineToPoint:self.PointG];
+        [path addLineToPoint:self.PointF];
+        [path closePath];
+        path;
+    });
 }
 /// 获取对应的4点
 - (void)kj_getFourPoints:(KJKnownPoints)points{
@@ -146,8 +131,30 @@
         self.PointF = B;self.PointG = C;
         self.PointH = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:O Point2:M Point3:C Point4:D];
     }
-    KJKnownPoints kp = {self.PointE,self.PointF,self.PointG,self.PointH};
-    self.imageRect = [_KJIFinishTools kj_rectWithPoints:kp];
+    self.topPoints = (KJKnownPoints){self.PointE,self.PointF,self.PointG,self.PointH};
+    
+    /// 最大矩形框
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    shapeLayer.fillColor = [UIColor.blackColor colorWithAlphaComponent:0.5].CGColor;
+    shapeLayer.strokeColor = UIColor.blackColor.CGColor;
+    shapeLayer.lineWidth = 2;
+    shapeLayer.lineJoin = kCALineJoinRound;// 连接节点样式
+    shapeLayer.lineCap = kCALineCapRound;// 线头样式
+    shapeLayer.path = [UIBezierPath bezierPathWithRect:self.imageRect].CGPath;
+    [self addSublayer:shapeLayer];
 }
-
+#pragma mark - 绘制
+- (void)drawInContext:(CGContextRef)context {
+    CGContextSetShouldAntialias(context,YES); // 为图形上下文设置抗锯齿功能
+//    CGContextAddPath(context, [self kj_topPath].CGPath);
+//    CGContextClip(context); // 裁剪路径以外部分
+    //    CGContextDrawImage(context,self.imageRect,self.perspectiveImage.CGImage);//使用这个使图片上下颠倒
+    //    CGContextDrawTiledImage(context, CGRectMake(0,0,20,20), self.perspectiveImage.CGImage);//平铺图
+    // 使用CGContextDrawImage绘制图片上下颠倒 用这个方法解决
+    UIGraphicsPushContext(context);
+    CGRect tempRect = self.imageRect;
+    tempRect.size.height += 1; /// 解决所绘之图有点往上移位的问题
+    [self.perspectiveImage drawInRect:tempRect];
+    UIGraphicsPopContext();
+}
 @end

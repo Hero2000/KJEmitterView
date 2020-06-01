@@ -46,6 +46,11 @@
  */
 /*
  ####版本更新日志:
+ #### Add 4.7.5
+ 1、KJInteriorSuperclassView 新增装修父类，主要处理手指区域问题
+ 2、KJSkirtingLineView 新增四边踢脚线
+ 3、KJMuralView 壁画完善处理
+ 
  #### Add 4.7.4
  1、KJMuralView 新增壁画
  2、KJFloorJoint 地板拼接

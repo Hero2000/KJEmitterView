@@ -47,18 +47,29 @@
         path.CGPath;
     });
     
-    __block KJSuspendedView *suspendedView = [[KJSuspendedView alloc]kj_initWithFrame:CGRectMake(0, 0, h, w) KnownPoints:points];
-    suspendedView.dashPatternColor = UIColor.whiteColor;
-    suspendedView.dashPatternWidth = 2;
-    suspendedView.center = self.view.center;
-    suspendedView.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0];
-    suspendedView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    [self.view addSubview:suspendedView];
-    suspendedView.kChartletBlcok = ^KJSuspendedModel * _Nonnull(KJSuspendedModel * _Nonnull model) {
+    __block KJSuspendedView *__view = [[KJSuspendedView alloc]kj_initWithFrame:CGRectMake(0, 0, h, w) KnownPoints:points];
+    __view.dashPatternColor = UIColor.whiteColor;
+    __view.dashPatternWidth = 2;
+    __view.center = self.view.center;
+    __view.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0];
+    __view.transform = CGAffineTransformMakeRotation(M_PI_2);
+    [self.view addSubview:__view];
+    __view.kChartletBlcok = ^KJSuspendedModel * _Nonnull(KJSuspendedModel * _Nonnull model) {
+//        if (model.concaveType == KJDarwShapeTypeQuadrangle) {
+        UIImage *image1 = [self scaleToSize:[UIImage imageNamed:@"xxxx"] size:model.bottomRect.size];
+        UIImage *image2 = [self scaleToSize:[UIImage imageNamed:@"timg-2"] size:model.frontRect.size];
+        UIImage *image3 = [self scaleToSize:[UIImage imageNamed:@"timg-2"] size:model.backRect.size];
+        UIImage *image4 = [self scaleToSize:[UIImage imageNamed:@"timg-2"] size:model.leftRect.size];
+        UIImage *image5 = [self scaleToSize:[UIImage imageNamed:@"timg-2"] size:model.rightRect.size];
+        model.bottomImage = [self kj_textImageWithImage:image1 Points:model.bottomPoints];
+        model.frontImage  = [self kj_textImageWithImage:image2 Points:model.frontPoints];
+        model.backImage   = [self kj_textImageWithImage:image3 Points:model.backPoints];
+        model.leftImage   = [self kj_textImageWithImage:image4 Points:model.leftPoints];
+        model.rightImage  = [self kj_textImageWithImage:image5 Points:model.rightPoints];
         return model;
     };
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(100, suspendedView.frame.size.height-50, 100, 50)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(100, __view.frame.size.height-50, 100, 50)];
     label.transform = CGAffineTransformMakeRotation(M_PI_2);
     label.center = CGPointMake(25, 64+50+25);
     label.backgroundColor = UIColor.redColor;
@@ -67,10 +78,10 @@
     label.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:label];
     [label kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
-        [suspendedView kj_clearLayers];
+        [__view kj_clearLayers];
     }];
-    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(250, suspendedView.frame.size.height-50, 100, 50)];
-    label2.backgroundColor = UIColor.greenColor;
+    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(250, __view.frame.size.height-50, 100, 50)];
+    label2.backgroundColor = UIColor.blueColor;
     label2.transform = CGAffineTransformMakeRotation(M_PI_2);
     label2.center = CGPointMake(25, 64+50+25+150);
     label2.text = @"四边形";
@@ -78,10 +89,10 @@
     label2.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:label2];
     [label2 kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
-        [suspendedView kj_clearLayers];
-        suspendedView.shapeType = KJDarwShapeTypeQuadrangle;
+        [__view kj_clearLayers];
+        __view.shapeType = KJDarwShapeTypeQuadrangle;
     }];
-    UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(400, suspendedView.frame.size.height-50, 100, 50)];
+    UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(400, __view.frame.size.height-50, 100, 50)];
     label3.backgroundColor = UIColor.blueColor;
     label3.transform = CGAffineTransformMakeRotation(M_PI_2);
     label3.center = CGPointMake(25, 64+50+25+150+150);
@@ -90,9 +101,30 @@
     label3.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:label3];
     [label3 kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
-        [suspendedView kj_clearLayers];
-        suspendedView.shapeType = KJDarwShapeTypeOval;
+        [__view kj_clearLayers];
+        __view.shapeType = KJDarwShapeTypeOval;
     }];
+    UILabel *label4 = [[UILabel alloc]initWithFrame:CGRectMake(400, __view.frame.size.height-50, 100, 50)];
+    label4.backgroundColor = UIColor.blueColor;
+    label4.transform = CGAffineTransformMakeRotation(M_PI_2);
+    label4.center = CGPointMake(25, 64+50+25+150+150+150);
+    label4.text = @"贴图";
+    label4.textColor = UIColor.whiteColor;
+    label4.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:label4];
+    [label4 kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
+        __view.chartlet = true;
+    }];
+}
+- (UIImage*)kj_textImageWithImage:(UIImage*)image Points:(KJKnownPoints)points{
+    return [image kj_softFitmentFluoroscopyWithTopLeft:points.PointA TopRight:points.PointD BottomRight:points.PointC BottomLeft:points.PointB];
+}
+- (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size {
+//    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
+//    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+//    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+    return img;
 }
 - (CAShapeLayer*)redLayer{
     if (!_redLayer) {

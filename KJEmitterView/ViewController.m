@@ -36,18 +36,15 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableViewCell"];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"tableViewCell"];
-    }
+    if (!cell) cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"tableViewCell"];
     NSDictionary *dic = self.temps[indexPath.section][indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%zi. %@",indexPath.row + 1,dic[@"VCName"]];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
-    cell.textLabel.textColor = UIColor.greenColor;
+    cell.textLabel.textColor = UIColor.blueColor;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.detailTextLabel.text = dic[@"describeName"];
     cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:13];
-    cell.detailTextLabel.textColor = UIColor.redColor;
-    
+    cell.detailTextLabel.textColor = [UIColor.blueColor colorWithAlphaComponent:0.5];
     return cell;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -55,9 +52,8 @@
 }
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    header.textLabel.textAlignment = NSTextAlignmentCenter;
-    header.textLabel.textColor = UIColor.yellowColor;
-    header.textLabel.font = [UIFont systemFontOfSize:14];
+    header.textLabel.textColor = UIColor.redColor;
+    header.textLabel.font = [UIFont boldSystemFontOfSize:14];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -73,6 +69,7 @@
     if (!_temps) {
         _temps = [NSMutableArray array];
         NSMutableArray *temp0 = [NSMutableArray array];
+        [temp0 addObject:@{@"VCName":@"KJSkirtingLineVC",@"describeName":@"四周边线和装饰效果"}];
         [temp0 addObject:@{@"VCName":@"KJMuralVC",@"describeName":@"墙壁壁画展示"}];
         [temp0 addObject:@{@"VCName":@"KJLegWireVC",@"describeName":@"脚线处理展示"}];
         [temp0 addObject:@{@"VCName":@"KJSuspendedVC",@"describeName":@"吊顶效果展示"}];

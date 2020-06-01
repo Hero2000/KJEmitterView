@@ -30,14 +30,14 @@
 #define kStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
 // block相关宏
 #define kBlockSafeRun(block, ...) block ? block(__VA_ARGS__) : nil
-/** 版本判定 大于等于某个版本 */
+// 版本判定 大于等于某个版本
 #define KJ_JUDGE_CURRENT_VERSION(version) ([[[UIDevice currentDevice] systemVersion] compare:@#version options:NSNumericSearch] != NSOrderedAscending)
 // 获取时间间隔宏
 #define KJTimeTick CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
 #define KJTimeTock NSLog(@"Time: %f", CFAbsoluteTimeGetCurrent() - start)
 
 
-#pragma mark ********** 3.弱引用   *********
+#pragma mark ********** 3.弱引用 *********
 #define WEAKSELF  __weak __typeof(&*self) weakSelf = self;
 #define _weakself __weak typeof(self) weakself = self
 /**推荐使用（摘自YYKit）
@@ -131,9 +131,9 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 #define UIColorFromHEXA(hex,a)    [UIColor colorWithRed:((hex&0xFF0000)>>16)/255.0f green:((hex&0xFF00)>>8)/255.0f blue:(hex&0xFF)/255.0f alpha:a]
 #define UIColorFromRGBA(r,g,b,a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
 #define UIColorHexFromRGB(hex)    UIColorFromHEXA(hex,1.0)
-/** 设置图片 */
+// 设置图片
 #define kGetImage(imageName) ([UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]])
-//通过图片获取图片颜色
+// 通过图片获取图片颜色
 #define kColorWithPatternImage(image) [UIColor colorWithPatternImage:image]
 
 #pragma mark ********** 7.方法  *********
@@ -149,7 +149,7 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 || ([_object respondsToSelector:@selector(length)] && [(NSData *)_object length] == 0) \
 || ([_object respondsToSelector:@selector(count)] && [(NSArray *)_object count] == 0))
 
-/// text size(文字尺寸)
+// text size(文字尺寸)
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
 #define kTEXTSIZE(text, font, maxSize, mode) [text length] > 0 ? [text \
 boundingRectWithSize:maxSize options:(NSStringDrawingUsesLineFragmentOrigin) \
@@ -162,11 +162,11 @@ sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 #define KJ_PROPERTY_STRING(name) @property(nonatomic,copy)NSString *name
 #define KJ_PROPERTY_ASSIGN(name) @property(nonatomic,assign)NSInteger name
 #define KJ_PROPERTY_STRONG(type,name) @property(nonatomic,strong)type *name
-/** runtime 为对象类型属性快速生成get/set方法 */
+// runtime 为对象类型属性快速生成get/set方法
 #define KJ_SYNTHESIZE_CATEGORY_OBJ_PROPERTY(propertyGetter, propertySetter)\
 - (id)propertyGetter{ return objc_getAssociatedObject(self, @selector(propertyGetter));}\
 - (void)propertySetter(id)obj{ objc_setAssociatedObject(self, @selector(propertyGetter), obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);}
-/** 为基本数据类型属性快速生成get/set方法 */
+// 为基本数据类型属性快速生成get/set方法
 #define KJ_SYNTHESIZE_CATEGORY_VALUE_PROPERTY(valueType, propertyGetter, propertySetter)\
 - (valueType)propertyGetter{\
 valueType ret = {0};\

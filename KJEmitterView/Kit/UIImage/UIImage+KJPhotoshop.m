@@ -99,6 +99,27 @@
 - (UIImage*)kj_coreImagePerspectiveTransformWithTopLeft:(CGPoint)TopLeft TopRight:(CGPoint)TopRight BottomRight:(CGPoint)BottomRight BottomLeft:(CGPoint)BottomLeft{
     return [self kj_PerspectiveTransformAndPerspectiveCorrection:@"CIPerspectiveTransform" TopLeft:TopLeft TopRight:TopRight BottomRight:BottomRight BottomLeft:BottomLeft];
 }
+/// 软装专属透视 - 内部有相对应的坐标转换
+- (UIImage*)kj_softFitmentFluoroscopyWithTopLeft:(CGPoint)TopLeft TopRight:(CGPoint)TopRight BottomRight:(CGPoint)BottomRight BottomLeft:(CGPoint)BottomLeft{
+    NSArray *temp = @[NSStringFromCGPoint(TopLeft),
+                      NSStringFromCGPoint(TopRight),
+                      NSStringFromCGPoint(BottomRight),
+                      NSStringFromCGPoint(BottomLeft)];
+    CGFloat minY = TopLeft.y,maxY = TopLeft.y;
+    CGPoint pt = CGPointZero;
+    for (NSString *string in temp) {
+        pt = CGPointFromString(string);
+        minY = pt.y < minY ? pt.y : minY;
+        maxY = pt.y > maxY ? pt.y : maxY;
+    }
+    CGFloat H = maxY - minY;
+    /// 水平方向上下镜像
+    TopLeft.y     = -(TopLeft.y + H);
+    BottomLeft.y  = -(BottomLeft.y + H);
+    BottomRight.y = -(BottomRight.y + H);
+    TopRight.y    = -(TopRight.y + H);
+    return [self kj_PerspectiveTransformAndPerspectiveCorrection:@"CIPerspectiveTransform" TopLeft:TopLeft TopRight:TopRight BottomRight:BottomRight BottomLeft:BottomLeft];
+}
 /// 透视相关方法
 - (UIImage*)kj_PerspectiveTransformAndPerspectiveCorrection:(NSString*)name TopLeft:(CGPoint)TopLeft TopRight:(CGPoint)TopRight BottomRight:(CGPoint)BottomRight BottomLeft:(CGPoint)BottomLeft{
     CIImage *ciImage = [CIImage imageWithCGImage:self.CGImage];
@@ -107,10 +128,10 @@
     CIVector *vector2 = [CIVector vectorWithX:TopRight.x Y:TopRight.y];
     CIVector *vector3 = [CIVector vectorWithX:BottomRight.x Y:BottomRight.y];
     CIVector *vector4 = [CIVector vectorWithX:BottomLeft.x Y:BottomLeft.y];
-    [filter setValue:vector4 forKey:@"inputTopLeft"];
-    [filter setValue:vector3 forKey:@"inputTopRight"];
-    [filter setValue:vector2 forKey:@"inputBottomRight"];
-    [filter setValue:vector1 forKey:@"inputBottomLeft"];
+    [filter setValue:vector1 forKey:@"inputTopLeft"];
+    [filter setValue:vector2 forKey:@"inputTopRight"];
+    [filter setValue:vector3 forKey:@"inputBottomRight"];
+    [filter setValue:vector4 forKey:@"inputBottomLeft"];
     /// 输出图片
     CIImage *outputImage = [filter outputImage];
     UIImage *newImage = [UIImage imageWithCIImage:outputImage];

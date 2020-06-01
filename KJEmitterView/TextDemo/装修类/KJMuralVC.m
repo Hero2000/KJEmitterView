@@ -35,20 +35,42 @@
         [path closePath]; /// 闭合路径
         path.CGPath;
     });
-    __block UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 50)];
-    imageView.image = [UIImage imageNamed:@"timg-2"];
+    
+    __block UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    imageView.image = [UIImage imageNamed:@"xxsf"];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0.5];
-    imageView.center = CGPointMake(w/2, h-50);
+    imageView.center = CGPointMake(w/2, h-100);
     [self.view addSubview:imageView];
     
-    __block KJMuralView *muralView = [[KJMuralView alloc] kj_initWithFrame:CGRectMake(0, 0, w, 500) KnownPoints:points];
-    [self.view addSubview:muralView];
+    __block KJMuralView *__view = [[KJMuralView alloc] kj_initWithFrame:CGRectMake(200, 0, w, h/2) KnownPoints:points];
+    [self.view addSubview:__view];
+    
+    [imageView kj_AddGestureRecognizer:(KJGestureTypeDouble) block:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
+        [__view kj_clearLayers];
+    }];
     
     [imageView kj_AddTapGestureRecognizerBlock:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
-        muralView.muralImage = imageView.image;
-        muralView.kChartletBlcok = ^UIImage * _Nonnull(KJKnownPoints points, UIImage * _Nonnull muralImage) {
-            return muralImage;
+        __view.muralImage = imageView.image;
+        __view.kChartletBlcok = ^UIImage * _Nonnull(KJKnownPoints points, UIImage * _Nonnull muralImage) {
+            UIImage *img = [muralImage kj_softFitmentFluoroscopyWithTopLeft:points.PointA TopRight:points.PointD BottomRight:points.PointC BottomLeft:points.PointB];
+//            CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+//            shapeLayer.fillColor = [UIColor.redColor colorWithAlphaComponent:0.2].CGColor;
+//            shapeLayer.strokeColor = UIColor.redColor.CGColor;
+//            shapeLayer.lineWidth = 2;
+//            shapeLayer.lineJoin = kCALineJoinRound;// 连接节点样式
+//            shapeLayer.lineCap = kCALineCapRound;// 线头样式
+//            shapeLayer.path = ({
+//                UIBezierPath *path = [UIBezierPath bezierPath];
+//                [path moveToPoint:points.PointA];
+//                [path addLineToPoint:points.PointB];
+//                [path addLineToPoint:points.PointC];
+//                [path addLineToPoint:points.PointD];
+//                [path closePath]; /// 闭合路径
+//                path.CGPath;
+//            });
+//            [self.view.layer addSublayer:shapeLayer];
+            return img;
         };
     }];
 }

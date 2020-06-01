@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, KJGestureType) {
     KJGestureTypePinch,     // 缩放
 };
 /// 枚举映射字符串
-static NSString  * const _Nonnull KJGestureTypeStringMap[] = {
+static NSString * const _Nonnull KJGestureTypeStringMap[] = {
     [KJGestureTypeTap]       = @"UITapGestureRecognizer",
     [KJGestureTypeDouble]    = @"UITapGestureRecognizer",
     [KJGestureTypeLongPress] = @"UILongPressGestureRecognizer",

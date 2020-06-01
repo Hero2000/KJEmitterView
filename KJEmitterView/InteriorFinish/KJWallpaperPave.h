@@ -25,7 +25,7 @@ static NSString * const _Nonnull KJImageTiledTypeStringMap[] = {
     [KJImageTiledTypeBackslash]  = @"反斜对花",
 };
 @interface KJWallpaperPave : NSObject
-/** 墙纸铺贴效果 */
+/// 墙纸铺贴效果
 + (UIImage*)kj_wallpaperPaveWithMaterialImage:(UIImage*)xImage TiledType:(KJImageTiledType)type TargetImageSize:(CGSize)size Width:(CGFloat)w;
 + (UIImage*)kj_wallpaperPaveWithMaterialImage:(UIImage*)xImage TiledType:(KJImageTiledType)type TargetImageSize:(CGSize)size Row:(NSInteger)row Col:(NSInteger)col;
 @end

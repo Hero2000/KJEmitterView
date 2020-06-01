@@ -131,10 +131,10 @@ static const int8_t kFinallyNodeOffset = -1;
  基于扫描线的泛洪算法，获取填充同颜色区域后的图片
  
  @param startPoint 相对于图片的起点
- @param newColor   填充的颜色
+ @param newColor    填充的颜色
  @param tolerance  判断相邻颜色相同的容差值
  @param antialias  是否抗锯齿化
- @return           填充后的图片
+ @return          填充后的图片
  */
 - (UIImage *)kj_FloodFillImageFromStartPoint:(CGPoint)startPoint NewColor:(UIColor*)newColor Tolerance: (CGFloat)tolerance UseAntialias:(BOOL)antialias {
     if (!self.CGImage || !newColor) return self;
@@ -166,11 +166,9 @@ static const int8_t kFinallyNodeOffset = -1;
     CGColorSpaceRelease(colorSpace);
     CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef); // 解码
     
-    
     //    CGDataProviderRef dataProvider = CGImageGetDataProvider(imageRef);
     //    CFDataRef data = CGDataProviderCopyData(dataProvider); // 解码
     //    unsigned char *imageData = (unsigned char *)CFDataGetBytePtr(data);
-    
     
     // 获取开始的点
     NSUInteger byteIndex = roundf(startPoint.x) * bytesPerPixel + roundf(startPoint.y) * bytesPerRow;
@@ -341,7 +339,7 @@ static void antiAliasOperation(NSUInteger byteIndex, unsigned char *imageData, N
     NSInteger red1   = ((0xff000000 & blendedColor) >> 24);
     NSInteger green1 = ((0x00ff0000 & blendedColor) >> 16);
     NSInteger blue1  = ((0x0000ff00 & blendedColor) >> 8);
-    NSInteger alpha1 =  (0x000000ff & blendedColor);
+    NSInteger alpha1 = (0x000000ff & blendedColor);
     
     NSInteger red2   = imageData[byteIndex];
     NSInteger green2 = imageData[byteIndex + 1];

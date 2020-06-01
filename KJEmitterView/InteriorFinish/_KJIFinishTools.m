@@ -10,12 +10,64 @@
 
 @implementation _KJIFinishTools
 
+#pragma mark - 逻辑处理
+/// 确定滑动方向
++ (KJSlideDirectionType)kj_slideDirectionWithPoint:(CGPoint)point Point2:(CGPoint)point2{
+    bool boo = (point.x - point2.x) < 0 ? true : false;
+    bool booo= (point.y - point2.y) < 0 ? true : false;
+    if (boo & booo) return KJSlideDirectionTypeLeftBottom;
+    if (!boo&!booo) return KJSlideDirectionTypeRightTop;
+    if (boo) return KJSlideDirectionTypeLeftTop;
+    return KJSlideDirectionTypeRightBottom;
+}
+/// 判断当前点是否在路径选区内
++ (bool)kj_confirmCurrentPointWithPoint:(CGPoint)point BezierPath:(UIBezierPath*)path{
+    return [path containsPoint:point];
+}
+/// 判断当前点是否在已知四点选区内
++ (bool)kj_confirmCurrentPointWithPoint:(CGPoint)point KnownPoints:(KJKnownPoints)points{
+    UIBezierPath *path = ({
+        UIBezierPath *path = [UIBezierPath bezierPath];
+        [path moveToPoint:points.PointA];
+        [path addLineToPoint:points.PointB];
+        [path addLineToPoint:points.PointC];
+        [path addLineToPoint:points.PointD];
+        [path closePath];
+        path;
+    });
+    return [self kj_confirmCurrentPointWithPoint:point BezierPath:path];
+}
+/// 判断当前点是否在Rect内
++ (bool)kj_confirmCurrentPointWithPoint:(CGPoint)point Rect:(CGRect)rect{
+    return CGRectContainsPoint(rect, point);
+}
+/// 获取对应的Rect
++ (CGRect)kj_rectWithPoints:(KJKnownPoints)points{
+    NSArray *temp = @[NSStringFromCGPoint(points.PointA),
+                      NSStringFromCGPoint(points.PointB),
+                      NSStringFromCGPoint(points.PointC),
+                      NSStringFromCGPoint(points.PointD)];
+    CGFloat minX = points.PointA.x;
+    CGFloat maxX = points.PointA.x;
+    CGFloat minY = points.PointA.y;
+    CGFloat maxY = points.PointA.y;
+    CGPoint pt = CGPointZero;
+    for (NSString *string in temp) {
+        pt = CGPointFromString(string);
+        minX = pt.x < minX ? pt.x : minX;
+        maxX = pt.x > maxX ? pt.x : maxX;
+        minY = pt.y < minY ? pt.y : minY;
+        maxY = pt.y > maxY ? pt.y : maxY;
+    }
+    return CGRectMake(minX, minY, maxX - minX, maxY - minY);
+}
+
 #pragma mark - 几何方程式
 /// 已知A、B两点和C点到B点的长度，求垂直AB的C点
 + (CGPoint)kj_perpendicularLineDotsWithPoint1:(CGPoint)A Point2:(CGPoint)B VerticalLenght:(CGFloat)len Positive:(BOOL)pos{
     return kj_perpendicularLineDots(A,B,len,pos);
 }
-static inline CGPoint kj_perpendicularLineDots(CGPoint A,CGPoint B, CGFloat len,BOOL positive){
+static inline CGPoint kj_perpendicularLineDots(CGPoint A,CGPoint B,CGFloat len,BOOL positive){
     CGFloat x1 = A.x,y1 = A.y;
     CGFloat x2 = B.x,y2 = B.y;
     CGFloat k1 = 0,k = 0;
@@ -68,17 +120,17 @@ static inline CGPoint kj_linellaeCrosspoint(CGPoint A,CGPoint B,CGPoint C,CGPoin
     }else if (x3==x4&&x1!=x2){
         return CGPointMake(x3, k1*x3+b1);
     }else if (x3==x4&&x1==x2){
-        return CGPointMake(0, 0);
+        return CGPointZero;
     }else{
         if (y1==y2&&y3!=y4) {
             return CGPointMake((y1-b2)/k2, y1);
         }else if (y3==y4&&y1!=y2){
             return CGPointMake((y4-b1)/k1, y4);
         }else if (y3==y4&&y1==y2){
-            return CGPointMake(0, 0);
+            return CGPointZero;
         }else{
             if (k1==k2){
-                return CGPointMake(0, 0);
+                return CGPointZero;
             }else{
                 CGFloat x = (b2-b1)/(k1-k2);
                 CGFloat y = k2*x+b2;
@@ -134,27 +186,6 @@ static inline CGPoint kj_parallelLineDots(CGPoint A,CGPoint B,CGPoint C){
     pt.x = lpRect.origin.x + a + ax;
     pt.y = lpRect.origin.y + b + ay;
     return pt;
-}
-/// 获取对应的Rect
-+ (CGRect)kj_rectWithPoints:(KJKnownPoints)points{
-    NSArray *temp = @[NSStringFromCGPoint(points.PointA),
-                      NSStringFromCGPoint(points.PointB),
-                      NSStringFromCGPoint(points.PointC),
-                      NSStringFromCGPoint(points.PointD)];
-    CGFloat minX = 0,minY = 0,maxX = 0,maxY = 0;
-    for (int i = 0; i<temp.count; i++) {
-        CGPoint currentPoint = CGPointFromString(temp[i]);
-        if (i == 0) {
-            minX = maxX = currentPoint.x;
-            minY = maxY = currentPoint.y;
-            continue;
-        }
-        minX = currentPoint.x < minX ? currentPoint.x:minX;
-        maxX = currentPoint.x > maxX ? currentPoint.x:maxX;
-        minY = currentPoint.y < minY ? currentPoint.y:minY;
-        maxY = currentPoint.y > maxY ? currentPoint.y:maxY;
-    }
-    return CGRectMake(minX, minY, maxX - minX, maxY - minY);
 }
 
 #pragma mark - 图片处理
@@ -214,7 +245,7 @@ static inline CGPoint kj_parallelLineDots(CGPoint A,CGPoint B,CGPoint C){
 /** 旋转图片和镜像处理 orientation 图片旋转方向 */
 + (UIImage*)kj_rotationImageWithImage:(UIImage*)image Orientation:(UIImageOrientation)orientation{
     CGRect rect = CGRectZero;
-    rect.size.width  = CGImageGetWidth(image.CGImage);
+    rect.size.width = CGImageGetWidth(image.CGImage);
     rect.size.height = CGImageGetHeight(image.CGImage);
     CGRect bounds = rect;
     CGAffineTransform transform = CGAffineTransformIdentity;
@@ -283,6 +314,63 @@ static inline CGRect kj_swapWidthAndHeight(CGRect rect){
     rect.size.width  = rect.size.height;
     rect.size.height = swap;
     return rect;
+}
+/// 矩形图扭曲变形成椭圆弧形图
++ (UIImage*)kj_orthogonImageBecomeOvalWithImage:(UIImage*)image Rect:(CGRect)rect Margin:(bool)margin{
+    CGImageRef imageRef = image.CGImage;
+    CGFloat width  = 180;//image.size.width;
+    CGFloat height = 180;//image.size.height;
+    CGColorSpaceRef space = CGImageGetColorSpace(imageRef);
+    CGImageAlphaInfo bitmapInfo = CGImageGetAlphaInfo(imageRef);
+    unsigned char * imageData = malloc(width * height * 4);/// 读取图片中的所有像素点数据
+    CGContextRef imageContext = CGBitmapContextCreate(imageData, width, height, 8, width * 4, space, bitmapInfo);
+    CGContextDrawImage(imageContext, CGRectMake(0, 0, width, height), imageRef);// 解码
+    CGContextRelease(imageContext);
+    CGFloat shapW = width;//rect.size.width;
+    CGFloat shapH = height * 3;//rect.size.height * 3;
+    // 读取某个点的内容 初始化新的图片需要的data
+    unsigned char * shapeData = malloc(shapW * shapH * 4);
+    /// 是否需要透明空白处
+    if (margin == false) {
+        for (int i = 0; i < shapH-1; i++) {
+            for (int j = 0; j < shapW-1; j++) {
+                int offset = (i * shapW + j) * 4;
+                shapeData[offset + 0] = 255; // r
+                shapeData[offset + 1] = 255; // g
+                shapeData[offset + 2] = 255; // b
+                shapeData[offset + 3] = 255; // a
+            }
+        }
+    }
+    // 扫描图片像素粒子
+    for (int i = 0; i < height-1; i++) {
+        for (int j = 0; j < width-1; j++) {
+            // 计算原图每个点在新图中的位置
+            CGFloat angle = j * 1.0f / shapW * 180.0f;
+//            CGPoint point = [self kj_ovalPointWithRect:CGRectMake(0, 0, 180, 100) Angle:180-angle];
+            CGFloat x = j;
+            CGFloat y = sqrt(90*90-x*x)+90; /// 画一条线
+            y += i; /// 画全部
+            if (y>shapH) continue; /// 超出画布处理
+            int newOffset = (y * shapW + x) * 4;
+            int offset = (i * width + j) * 4;
+            // 添加像素
+            shapeData[newOffset]     = imageData[offset];
+            shapeData[newOffset + 1] = imageData[offset + 1];
+            shapeData[newOffset + 2] = imageData[offset + 2];
+            shapeData[newOffset + 3] = imageData[offset + 3];
+        }
+    }
+    //创建新图片
+    CGContextRef newContext = CGBitmapContextCreate(shapeData, shapW, shapH, 8, shapW * 4, space, bitmapInfo);
+    CGImageRef cgImage = CGBitmapContextCreateImage(newContext);
+    UIImage *newImage = [UIImage imageWithCGImage:cgImage];
+    CGContextRelease(newContext);
+    CGColorSpaceRelease(space);
+    CGImageRelease(cgImage);
+    free(shapeData);
+    free(imageData);
+    return newImage;
 }
 
 @end

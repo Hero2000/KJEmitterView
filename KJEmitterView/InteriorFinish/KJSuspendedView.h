@@ -15,7 +15,14 @@ typedef NS_ENUM(NSInteger, KJDarwShapeType) {
     KJDarwShapeTypeQuadrangle, /// 四边形
     KJDarwShapeTypeOval, /// 椭圆
 };
+/// 凹凸方向
+typedef NS_ENUM(NSInteger, KJConcaveConvexType) {
+    KJConcaveConvexTypeConcave = 0,/// 向内凹
+    KJConcaveConvexTypeConvex, /// 向外凸
+};
 @interface KJSuspendedModel : NSObject
+/// 凹凸方向，内凹不需要管back面，外凸不需要管top面
+@property(nonatomic,assign) KJConcaveConvexType concaveType;
 /// 每个面对应的透视图
 @property(nonatomic,strong) UIImage *topImage;
 @property(nonatomic,strong) UIImage *bottomImage;
@@ -31,11 +38,21 @@ typedef NS_ENUM(NSInteger, KJDarwShapeType) {
 @property(nonatomic,assign) KJKnownPoints backPoints;
 @property(nonatomic,assign) KJKnownPoints leftPoints;
 @property(nonatomic,assign) KJKnownPoints rightPoints;
+
+/// 每张图片对应的尺寸
+@property(nonatomic,assign) CGRect topRect;
+@property(nonatomic,assign) CGRect bottomRect;
+@property(nonatomic,assign) CGRect frontRect;
+@property(nonatomic,assign) CGRect backRect;
+@property(nonatomic,assign) CGRect leftRect;
+@property(nonatomic,assign) CGRect rightRect;
 @end
 
 @interface KJSuspendedView : UIView
 /// 透视图形回调 - 贴图回调
 @property(nonatomic,readwrite,copy) KJSuspendedModel *(^kChartletBlcok)(KJSuspendedModel *model);
+/// 是否开始贴图，默认NO - 备注：设置这个之前必须先处理贴图回调
+@property(nonatomic,assign) bool chartlet;
 /// 所画物体形状，默认四边形
 @property(nonatomic,assign) KJDarwShapeType shapeType;
 /// 限制下拉最大距离，默认100px

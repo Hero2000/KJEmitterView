@@ -84,6 +84,10 @@
 		68AC7049244D4007000D5748 /* UIImage+KJCompressJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AC7048244D4007000D5748 /* UIImage+KJCompressJoint.m */; };
 		68AC704D244D4D6D000D5748 /* KJTiledVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AC704B244D4D6D000D5748 /* KJTiledVC.m */; };
 		68AC704E244D4D6D000D5748 /* KJTiledVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68AC704C244D4D6D000D5748 /* KJTiledVC.xib */; };
+		68AD8DF6247E00360014BC38 /* KJSkirtingLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AD8DF5247E00360014BC38 /* KJSkirtingLineView.m */; };
+		68AD8DFA247E03BB0014BC38 /* KJSkirtingLineVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AD8DF9247E03BB0014BC38 /* KJSkirtingLineVC.m */; };
+		68AD8DFD247F8B7A0014BC38 /* KJDecorateBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AD8DFC247F8B7A0014BC38 /* KJDecorateBoxView.m */; };
+		68AD8E00247FAE990014BC38 /* KJInteriorSuperclassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AD8DFF247FAE990014BC38 /* KJInteriorSuperclassView.m */; };
 		68AEE23F22A6169600167F83 /* UIView+KJGestureBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AEE23E22A6169600167F83 /* UIView+KJGestureBlock.m */; };
 		68B0301421B2FBC400349510 /* KJEmitter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 68B02FF321B2FBC400349510 /* KJEmitter.bundle */; };
 		68B0301521B2FBC400349510 /* KJEmitterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B02FF421B2FBC400349510 /* KJEmitterView.m */; };
@@ -239,7 +243,6 @@
 		68A08FD723BB2A8A005ECCD0 /* UIColor+KJExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+KJExtension.m"; sourceTree = "<group>"; };
 		68A08FD923BB3BBC005ECCD0 /* UIImage+KJRemoteSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+KJRemoteSize.h"; sourceTree = "<group>"; };
 		68A08FDA23BB3BBC005ECCD0 /* UIImage+KJRemoteSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KJRemoteSize.m"; sourceTree = "<group>"; };
-		68A358CD247379FE00A12B2D /* KJLegWireLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJLegWireLayer.h; sourceTree = "<group>"; };
 		68A358CE247379FE00A12B2D /* KJLegWireLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJLegWireLayer.m; sourceTree = "<group>"; };
 		68A5ECCD2305091700A3069D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		68A5ECCE2305091700A3069D /* KJEmitterView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KJEmitterView.podspec; sourceTree = SOURCE_ROOT; };
@@ -251,6 +254,15 @@
 		68AC704A244D4D6D000D5748 /* KJTiledVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJTiledVC.h; sourceTree = "<group>"; };
 		68AC704B244D4D6D000D5748 /* KJTiledVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJTiledVC.m; sourceTree = "<group>"; };
 		68AC704C244D4D6D000D5748 /* KJTiledVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KJTiledVC.xib; sourceTree = "<group>"; };
+		68AD8DF4247E00360014BC38 /* KJSkirtingLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJSkirtingLineView.h; sourceTree = "<group>"; };
+		68AD8DF5247E00360014BC38 /* KJSkirtingLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJSkirtingLineView.m; sourceTree = "<group>"; };
+		68AD8DF7247E00BF0014BC38 /* KJLegWireLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJLegWireLayer.h; sourceTree = "<group>"; };
+		68AD8DF8247E03BB0014BC38 /* KJSkirtingLineVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJSkirtingLineVC.h; sourceTree = "<group>"; };
+		68AD8DF9247E03BB0014BC38 /* KJSkirtingLineVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJSkirtingLineVC.m; sourceTree = "<group>"; };
+		68AD8DFB247F8B7A0014BC38 /* KJDecorateBoxView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJDecorateBoxView.h; sourceTree = "<group>"; };
+		68AD8DFC247F8B7A0014BC38 /* KJDecorateBoxView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJDecorateBoxView.m; sourceTree = "<group>"; };
+		68AD8DFE247FAE990014BC38 /* KJInteriorSuperclassView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJInteriorSuperclassView.h; sourceTree = "<group>"; };
+		68AD8DFF247FAE990014BC38 /* KJInteriorSuperclassView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJInteriorSuperclassView.m; sourceTree = "<group>"; };
 		68AEE23D22A6169600167F83 /* UIView+KJGestureBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+KJGestureBlock.h"; sourceTree = "<group>"; };
 		68AEE23E22A6169600167F83 /* UIView+KJGestureBlock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+KJGestureBlock.m"; sourceTree = "<group>"; };
 		68B02FF221B2FBC400349510 /* KJEmitterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KJEmitterView.h; sourceTree = "<group>"; };
@@ -596,16 +608,22 @@
 			children = (
 				688E43AA2474C123003B9A97 /* _KJIFinishTools.h */,
 				688E43AB2474C123003B9A97 /* _KJIFinishTools.m */,
-				689843C7246BC9EF0037C8DF /* KJSuspendedView.h */,
-				689843C8246BC9EF0037C8DF /* KJSuspendedView.m */,
-				68A358CD247379FE00A12B2D /* KJLegWireLayer.h */,
-				68A358CE247379FE00A12B2D /* KJLegWireLayer.m */,
+				68AD8DFE247FAE990014BC38 /* KJInteriorSuperclassView.h */,
+				68AD8DFF247FAE990014BC38 /* KJInteriorSuperclassView.m */,
 				688E43AD2474CC7E003B9A97 /* KJWallpaperPave.h */,
 				688E43AE2474CC7E003B9A97 /* KJWallpaperPave.m */,
 				688E43B02474CEF1003B9A97 /* KJFloorJoint.h */,
 				688E43B12474CEF1003B9A97 /* KJFloorJoint.m */,
+				689843C7246BC9EF0037C8DF /* KJSuspendedView.h */,
+				689843C8246BC9EF0037C8DF /* KJSuspendedView.m */,
+				68AD8DF7247E00BF0014BC38 /* KJLegWireLayer.h */,
+				68A358CE247379FE00A12B2D /* KJLegWireLayer.m */,
 				68B53828247502730041A344 /* KJMuralView.h */,
 				68B53829247502730041A344 /* KJMuralView.m */,
+				68AD8DF4247E00360014BC38 /* KJSkirtingLineView.h */,
+				68AD8DF5247E00360014BC38 /* KJSkirtingLineView.m */,
+				68AD8DFB247F8B7A0014BC38 /* KJDecorateBoxView.h */,
+				68AD8DFC247F8B7A0014BC38 /* KJDecorateBoxView.m */,
 			);
 			path = InteriorFinish;
 			sourceTree = "<group>";
@@ -625,6 +643,8 @@
 				6831CCE524738798000A0EDC /* KJLegWireVC.m */,
 				68B5382B247506370041A344 /* KJMuralVC.h */,
 				68B5382C247506370041A344 /* KJMuralVC.m */,
+				68AD8DF8247E03BB0014BC38 /* KJSkirtingLineVC.h */,
+				68AD8DF9247E03BB0014BC38 /* KJSkirtingLineVC.m */,
 			);
 			path = "装修类";
 			sourceTree = "<group>";
@@ -889,6 +909,7 @@
 				68959C0021B3998A004F794F /* KJAlertView.m in Sources */,
 				680C95D5236A72C000304BAE /* NSObject+KJMath.m in Sources */,
 				6866171823975BFC000F6F79 /* UITextView+KJHyperlink.m in Sources */,
+				68AD8DF6247E00360014BC38 /* KJSkirtingLineView.m in Sources */,
 				68AEE23F22A6169600167F83 /* UIView+KJGestureBlock.m in Sources */,
 				6813E4A022B8B12E00D4772D /* NSArray+KJOverstep.m in Sources */,
 				68AC704D244D4D6D000D5748 /* KJTiledVC.m in Sources */,
@@ -899,6 +920,7 @@
 				680A61A1230E308500BCE302 /* KJIMageVC.m in Sources */,
 				689914972355C4C1008EE9C7 /* UIButton+KJEmitter.m in Sources */,
 				6889C33A2354668E00D01F70 /* UISegmentedControl+KJCustom.m in Sources */,
+				68AD8E00247FAE990014BC38 /* KJInteriorSuperclassView.m in Sources */,
 				68BA6C3521B303D40013C4AD /* UINavigationBar+KJExtension.m in Sources */,
 				684BFEF021BA11020015641A /* NSArray+KJLog.m in Sources */,
 				6869043021B25BC700ED072F /* BaseViewController.m in Sources */,
@@ -943,6 +965,7 @@
 				687115D22263156B009EC3E0 /* KJSelectController.m in Sources */,
 				68B5382D247506370041A344 /* KJMuralVC.m in Sources */,
 				6869044A21B28E0300ED072F /* KJTextViewVC.m in Sources */,
+				68AD8DFD247F8B7A0014BC38 /* KJDecorateBoxView.m in Sources */,
 				688E43AC2474C123003B9A97 /* _KJIFinishTools.m in Sources */,
 				68BA6C2921B303D40013C4AD /* UIImage+KJProcessing.m in Sources */,
 				68A08FD123BAE319005ECCD0 /* UIButton+KJCountDown.m in Sources */,
@@ -961,6 +984,7 @@
 				687115DE22633BF0009EC3E0 /* KJSwitchVC.m in Sources */,
 				6813E4A322B8B29400D4772D /* NSDictionary+KJNilSafe.m in Sources */,
 				68A08FD823BB2A8A005ECCD0 /* UIColor+KJExtension.m in Sources */,
+				68AD8DFA247E03BB0014BC38 /* KJSkirtingLineVC.m in Sources */,
 				680D0A4A231505770029A5FC /* KJEmitterImagePixel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1105,6 +1129,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A48YQ26WG3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KJEmitterView/Libraries",
+					"$(PROJECT_DIR)/KJEmitterView/OpenCV",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/KJEmitterView/PrefixHeader.pch";
 				INFOPLIST_FILE = KJEmitterView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1124,6 +1153,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A48YQ26WG3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KJEmitterView/Libraries",
+					"$(PROJECT_DIR)/KJEmitterView/OpenCV",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/KJEmitterView/PrefixHeader.pch";
 				INFOPLIST_FILE = KJEmitterView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

@@ -8,5 +8,6 @@ target 'KJEmitterDemo' do
   # Pods for KJEmitterDemo
 
 pod 'KJEmitterView'
+pod 'KJEmitterView/InteriorFinish'
 
 end

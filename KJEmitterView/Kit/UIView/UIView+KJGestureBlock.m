@@ -21,8 +21,18 @@ static const char *KJGestureBlockKey;
     if (block) {
         NSString *string = KJGestureTypeStringMap[type];
         UIGestureRecognizer *gesture = [[NSClassFromString(string) alloc] initWithTarget:self action:@selector(kGestureAction:)];
+        [gesture setDelaysTouchesBegan:YES];// 解决点击当前view时候响应其他控件事件
         /// 单指双击
-        if (type == KJGestureTypeDouble) ((UITapGestureRecognizer*)gesture).numberOfTapsRequired = 2;
+        if (type == KJGestureTypeDouble) {
+            for (UIGestureRecognizer *recognizer in self.gestureRecognizers) {
+                if ([recognizer isKindOfClass:[UITapGestureRecognizer class]] &&
+                    ((UITapGestureRecognizer*)recognizer).numberOfTapsRequired == 1) {
+                    [recognizer requireGestureRecognizerToFail:gesture];//如果双击成立，则取消单击手势（双击的时候不回走单击事件）
+                }
+            }
+            ((UITapGestureRecognizer*)gesture).numberOfTouchesRequired = 1;//手指数
+            ((UITapGestureRecognizer*)gesture).numberOfTapsRequired = 2;
+        }
         [self addGestureRecognizer:gesture];
         NSMutableDictionary *dict = objc_getAssociatedObject(self, KJGestureBlockKey);
         if (dict == nil) {

@@ -98,7 +98,7 @@
 //        CGContextSetLineWidth(context, self.kj_shadowDiffuse);// 边框线条宽度
 //        CGContextSetAllowsAntialiasing(context,NO); //
 //        CGContextSetLineJoin(context, kCGLineJoinRound); /// 线条拐点处样式
-//        CGContextSetShouldAntialias(context, YES); // 不采用抗锯齿
+//        CGContextSetShouldAntialias(context, YES); // 为图形上下文设置抗锯齿功能
 //        //第二种填充方式
 //        CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
 //        CGFloat colors[] = {
