@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, KJDecorateDotType) {
     KJDecorateDotTypeRightTop,   /// 右上
     KJDecorateDotTypeLeftBottom, /// 左下
     KJDecorateDotTypeRightBottom,/// 右下
+    KJDecorateDotTypeOtherCenter,/// 中间其他部分
 };
 static CGFloat minLen = 1.0; /// 最小的滑动距离
 /// 装饰类
@@ -21,7 +22,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 @property(nonatomic,assign) CGPoint touchBeginPoint; /// 记录touch开始的点
 @property(nonatomic,strong) UIImage *perspectiveImage; /// 透视好的素材图
 @property(nonatomic,assign) KJDecorateDotType currentDecorateDotType; /// 当前拖动点位置
-@property(nonatomic,readwrite,copy) void (^kChartletMoveBlcok)(CGPoint currentPoint,KJDecorateDotType type); /// 贴图之后移动四个角落当中某一个回调处理
+@property(nonatomic,readwrite,copy) void (^kChartletMoveBlcok)(CGPoint currentPoint,KJDecorateView *decorateView); /// 贴图之后移动四个角落当中某一个回调处理
 @end
 @interface KJDecorateBoxView ()
 @property(nonatomic,assign) KJSlideDirectionType directionType; /// 选区滑动方向
@@ -71,8 +72,8 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
                 view.userInteractionEnabled = NO;
                 view.points = self.drawPoints;
                 view.perspectiveImage = block(self.drawPoints,materialImage);/// 获取到透视好的素材图
-                view.kChartletMoveBlcok = ^(CGPoint currentPoint, KJDecorateDotType type) {
-                    NSLog(@"----%.2f,%.2f  %ld",currentPoint.x,currentPoint.y,(long)type);
+                view.kChartletMoveBlcok = ^(CGPoint currentPoint, KJDecorateView *decorateView) {
+                    NSLog(@"----%.2f,%.2f  %ld",currentPoint.x,currentPoint.y,(long)decorateView.currentDecorateDotType);
                 };
 //                [self.temps addObject:view]; /// 存入容器
                 [self addSubview:view];
@@ -248,6 +249,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
         UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
         [self addGestureRecognizer:recognizer];
         self.currentCenter = self.center;
+        self.currentDecorateDotType = KJDecorateDotTypeOtherCenter;
     }
     return self;
 }
@@ -272,18 +274,23 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
         self.touchBeginPoint = point;
         self.currentDecorateDotType = KJDecorateDotTypeRightTop;
         return self;
+    }else if ([self pointInside:point withEvent:event]) {
+        self.currentDecorateDotType = KJDecorateDotTypeOtherCenter;
+        return self;
     }
     return nil;
 }
 /// 设置有效区域
 - (CGRect)kj_drawPrecinctRectWithPoint:(CGPoint)point{
+    /// 转化对应的像素坐标
     CGPoint childPoint = [self.superview convertPoint:point toView:self];
-    CGFloat w = 5;/// 上下5px
-    CGRect rect = CGRectMake(childPoint.x-w, childPoint.y-w, w*2, w*2);
+    CGFloat w = 20;/// 20像素选区
+    CGRect rect = CGRectMake(childPoint.x - w*.5, childPoint.y - w*.5, w, w);
     return rect;
 }
 /// 滑动当中
 - (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event{
+    if (self.currentDecorateDotType == KJDecorateDotTypeOtherCenter) return;
     UITouch *touch = (UITouch *)touches.anyObject;
     if (touches.count > 1 || [touch tapCount] > 1 || event.allTouches.count > 1) {
         return;
@@ -293,7 +300,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     if (fabs(tempPoint.x - self.touchBeginPoint.x) < minLen && fabs(tempPoint.y - self.touchBeginPoint.y) < minLen) {
         return;
     }
-    !self.kChartletMoveBlcok?:self.kChartletMoveBlcok(tempPoint,self.currentDecorateDotType);
+    !self.kChartletMoveBlcok?:self.kChartletMoveBlcok(tempPoint,self);
 }
 
 #pragma mark - 绘制
@@ -315,11 +322,12 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     if (pan.state == UIGestureRecognizerStateBegan) {
         
     }else if (pan.state == UIGestureRecognizerStateChanged) {
-        CGPoint translation = [pan translationInView:self];
-        [self kj_commitTranslation:translation];
-        self.center = CGPointMake(self.currentCenter.x + translation.x, self.currentCenter.y + translation.y);
-//        self.points = [self kj_changePointsWithTranslation:translation];
-//        NSLog(@"----%f,%f",self.frame.origin.x,self.frame.origin.y);
+        if (self.currentDecorateDotType == KJDecorateDotTypeOtherCenter) {
+            CGPoint translation = [pan translationInView:self];
+            [self kj_commitTranslation:translation];
+            self.center = CGPointMake(self.currentCenter.x + translation.x, self.currentCenter.y + translation.y);
+//            self.points = [self kj_changePointsWithTranslation:translation];
+        }
     }else if (pan.state == UIGestureRecognizerStateCancelled || pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateFailed) {
         self.currentCenter = self.center;
     }
