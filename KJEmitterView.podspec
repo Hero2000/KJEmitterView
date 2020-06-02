@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "KJEmitterView"
   s.version      = "4.7.5"
-  s.summary      = "KJTools."
+  s.summary      = "77。的工具库"
   s.homepage     = "https://github.com/yangKJ/KJEmitterView"
   s.license      = "MIT"
   s.license      = { :type => "MIT", :file => "LICENSE" }

@@ -1,7 +1,7 @@
 # KJEmitterView
 <!--![coverImage]()-->
 <p align="left">
-<img src="https://img.zcool.cn/community/0161da5541af81000001a64bc753a4.jpg@1280w_1l_2o_100sh.jpg" width="666" hspace="1px">
+<img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2297328281,3234889154&fm=26&gp=0.jpg" width="666" hspace="1px">
 </p>
 
 * 这个工程提供开发中用到的类目，方便开发

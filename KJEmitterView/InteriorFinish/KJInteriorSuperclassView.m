@@ -14,20 +14,20 @@
     if (self.userInteractionEnabled == NO || self.hidden == YES || self.alpha < 0.01) return nil;
     /// 如果触摸点不在自己上面，直接返回nil
     if (![self pointInside:point withEvent:event]) return nil;
-    /// 特殊子类处理
-    NSString *classString = NSStringFromClass([self class]);
-    if ([classString isEqualToString:@"KJMuralView"] ||
-        [classString isEqualToString:@"KJSkirtingLineView"] ||
-        [classString isEqualToString:@"KJDecorateBoxView"]) {
-        if (![self kj_callChildDelGestureMethodWithPoint:point]) return nil;
-    }
-    ///
+    /// 判断是否触发的是自己内部的view
     NSInteger count = self.subviews.count;
     for (NSInteger i=count-1; i>=0; i--) {
         UIView *childView = self.subviews[i];
         CGPoint childPoint = [self convertPoint:point toView:childView];
         UIView *view = [childView hitTest:childPoint withEvent:event];
         if (view) return view;
+    }
+    /// 特殊子类处理
+    NSString *classString = NSStringFromClass([self class]);
+    if ([classString isEqualToString:@"KJMuralView"] ||
+        [classString isEqualToString:@"KJSkirtingLineView"] ||
+        [classString isEqualToString:@"KJDecorateBoxView"]) {
+        if (![self kj_callChildDelGestureMethodWithPoint:point]) return nil;
     }
     return self;
 }

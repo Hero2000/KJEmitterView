@@ -128,33 +128,33 @@ end
 
 ###### 3、source: The version should be included in the Git tag.
 - 原因：podspec里的version要跟git上的tag相匹配
-- 解决方案：
-- 查看当前tag：`git tag `
-- 推到远端：`git push --tags`
+- 解决方案：查看当前tag：`git tag`   推到远端：`git push --tags`
 
 ###### 4、Unable to accept duplicate entry for: KJEmitterDemo (1.0.0)
 - 原因：重复
 - 解决方案：
-- 4.1．重新给git库添加tag     `git tag -a 1.0.1 -m'release 1.0.1'`
-- 4.2．上传到远端             `git push origin --tags`
-- 4.3．重新修改podspec文件   `s.version  = "1.0.1"`
-- 4.4．再次校验             `pod spec lint KJEmitterDemo.podspec --allow-warnings`
-- 4.5．最后上传到trunk        `pod trunk push KJEmitterDemo.podspec`
 
+```
+- 4.1．重新给git库添加tag   git tag -a 1.0.1 -m'release 1.0.1'
+- 4.2．上传到远端 git push origin --tags
+- 4.3．重新修改podspec文件 s.version  = "1.0.1"
+- 4.4．再次校验 pod spec lint KJEmitterDemo.podspec --allow-warnings`
+- 4.5．最后上传 pod trunk push KJEmitterDemo.podspec
+```
 ###### 5、Unable to find a pod with name, author, summary, or description matching KJEmitterDemo
 原因：审核过程是要两三天  
 解决方案：
 
-- 执行```pod setup```命令进行本地依赖库更新，然后再搜索
-- 如果还是不行删除~/Library/Caches/CocoaPods目录下的search_index.json文件
-- 执行```rm ~/Library/Caches/CocoaPods/search_index.json``` 
-- 然后再执行搜索```pod search KJEmitterDemo```
+```
+- 执行 pod setup 命令进行本地依赖库更新，然后再搜索
 
+- 如果还是不行删除~/Library/Caches/CocoaPods目录下的search_index.json文件
+- 执行 rm ~/Library/Caches/CocoaPods/search_index.json，然后再执行搜索
+```
 成功如下：
 ![WX20181126-131802@2x.png](https://upload-images.jianshu.io/upload_images/1933747-bfc239f54b544d92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ###### 6、校验不通过
----
 ![Pasted Graphic 2.png](https://upload-images.jianshu.io/upload_images/1933747-85e4d416150a49df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 可能原因：github上面的tag文件格式已经确定,下图位置下载下来看一下，是否和本地的文件格式保持一致。如果不一致按照下列方式解决bug  
 解决方案：
@@ -174,30 +174,29 @@ end
 ###### 8、public_header_files: The pattern includes header files that are not listed in source_files 
 
 - 原因：文件夹层次结构过浅，导致无法找到对应的文件
-- 解决方案：默认的头文件目录设置为：
-- `s.public_header_files = 'KJEmitterView/Classes/** / *.h'`
-- 但是如果Classes目录中，你的代码文件夹层次结构超过两级，就会出现该错误。修改文件层级
+- 解决方案：默认的头文件目录设置为：`s.public_header_files = 'KJEmitterView/Classes/**/*.h'`
+但是如果Classes目录中，你的代码文件夹层次结构超过两级，就会出现该错误。修改文件层级
 
 ###### 9、搜索不到最新版本pod库
 
 - 原因：没有更新pod库
-- 解决方案：更新pod库
-- pod update 要更新库的名字
-- 查看Podfile文件中的依赖库的最新版本：pod outdated
+- 解决方案：
+
+```
+更新pod库 pod update xxx
+查看Podfile文件中的依赖库的最新版本 pod outdated
+```
 
 ###### 10、代码中有`__weak typeof(self) weakSelf = self;`
-
 - 原因：有__weak就一直验证不通过
 - 解决方案：s.frameworks当中加入可以用__weak的库
 
 ###### 11、代码中有`dispatch_source_t`库相关
-
 - 原因：有`dispatch_source_t`相关的库函数，也一直验证不通过
 - 解决方案：s.frameworks当中加入可以用`dispatch_source_t`的库
 
 ###### 12、[KJEmitterView/Classes] xcodebuild:  KJEmitterView/KJEmitterView/Classes/AlertView/KJAlertView.m:163:116: error: property 'height' not found on object of type 'UILabel *'
----
-![2.png](https://upload-images.jianshu.io/upload_images/1933747-7de6a4b6abcac480.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![2.png](https://upload-images.jianshu.io/upload_images/1933747-7de6a4b6abcac480.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
 
 - 原因：未引入头文件`UIView+KJFrame`在KJAlertView当中
 - 解决方案：引入头文件
@@ -221,7 +220,7 @@ com.apple.coresimulator.simruntime.tvos-12-2,
 com.apple.coresimulator.simruntime.watchos-5-2). 
 Ensure that Xcode -> Window -> Devices has at least one `ios` simulator listed or otherwise add one.) during validation.
 ```
-- 解决方案：升级CocoaPods，终端执行 `sudo gem install cocoapods` 代码即可
+- 解决方案：升级CocoaPods，终端执行`sudo gem install cocoapods`
 
 ###### 16、[KJEmitterView/Control] xcodebuild:  KJEmitterView/KJEmitterView/Control/MarqueeLabel/KJMarqueeLabel.m:23:14: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
 
@@ -255,15 +254,10 @@ git config http.postBuffer 524288000
 git config https.postBuffer 524288000
 ```
 
-###### 19、国内CDN源用不了
+###### 19、pod trunk push上传时出错，国内CDN源用不了
 ```
-Yang:KJEmitterView yangkejun$ pod trunk push KJEmitterView.podspec --allow-warnings
 Updating spec repo `trunk`
 [!] CDN: trunk Repo update failed - 6 error(s):
-no block given
-no block given
-no block given
-no block given
 no block given
 no block given
 ```
@@ -271,46 +265,18 @@ no block given
 1、移除trunk源`pod repo remove trunk`  
 2、升级你的cocoapods`sudo gem install cocoapods -n /usr/local/bin`
 
-###### 20、
+###### 20、pod install 或者 pod upadate xx 时更新错误
 ```
-――― TEMPLATE END ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-
-[!] Oh no, an error occurred.
-
-Search for existing GitHub issues similar to yours:
-https://github.com/CocoaPods/CocoaPods/search?q=no+block+given&type=Issues
-
-If none exists, create a ticket, with the template displayed above, on:
-https://github.com/CocoaPods/CocoaPods/issues/new
-
-Be sure to first read the contributing guide for details on how to properly submit a ticket:
-https://github.com/CocoaPods/CocoaPods/blob/master/CONTRIBUTING.md
-
-Don't forget to anonymize any private data!
-
-Looking for related issues on cocoapods/cocoapods...
- -     - ERROR | [iOS] unknown: Encountered an unknown error (no block given) during validation.
-   https://github.com/CocoaPods/CocoaPods/issues/9460 [closed] [4 comments]
-   07 Jan 2020
-
- - Trying to install cocoapod 'MaterialComponents/Dialogs', Error 416
-   https://github.com/CocoaPods/CocoaPods/issues/9611 [closed] [13 comments]
-   22 hours ago
-
- - Pods Template end - oh no, an error occurred
-   https://github.com/CocoaPods/CocoaPods/issues/9367 [closed] [2 comments]
-   26 Nov 2019
-
-and 71 more at:
-https://github.com/cocoapods/cocoapods/search?q=no%20block%20given&type=Issues&utf8=✓
+Analyzing dependencies
+[!] CDN: trunk Repo update failed - 34 error(s):
+no block given
 ```
-原因：  
 解决方案：  
+
 
 ###### 21、error: duplicate interface definition for class '_KJIFinishTools'
 ```
 - ERROR | [KJEmitterView/InteriorFinish] xcodebuild:  /Users/yangkejun/Library/Developer/Xcode/DerivedData/App-gpmktkjjgkmqxbewzsgsipmxwyrx/Build/Products/Release-iphonesimulator/KJEmitterView/KJEmitterView.framework/Headers/_KJInteriorFinishTools.h:22:1: error: duplicate interface definition for class '_KJIFinishTools'
 ```
-原因：文件冲突  
+原因：`_KJInteriorFinishTools.h`和`_KJIFinishTools`文件冲突，之前修改过名字导致多出一个文件  
 解决方案：找到该文件，删除即可
-

@@ -26,7 +26,7 @@
     KJKnownPoints points = {
         CGPointMake(50, 64+20),
         CGPointMake(20, h/2),
-        CGPointMake(w-80, h/2),
+        CGPointMake(w-80, h/2-40),
         CGPointMake(w-20, 64+20),
     };
     [self.view.layer addSublayer:self.redLayer];
