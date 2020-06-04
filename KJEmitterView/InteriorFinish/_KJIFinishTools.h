@@ -14,8 +14,8 @@
 NS_ASSUME_NONNULL_BEGIN
 /// 图片扭曲之后的参数
 typedef struct KJImageWarpResult {
-    UIImage *newImage; /// 扭曲后图片
-    CGRect newRect; /// 扭曲后尺寸
+    UIImage*newImage;/// 扭曲后图片
+    CGRect  newRect; /// 扭曲后尺寸
 }KJImageWarpResult;
 /// 透视选区四点
 typedef struct KJKnownPoints {
@@ -30,6 +30,14 @@ typedef NS_ENUM(NSInteger, KJSlideDirectionType) {
     KJSlideDirectionTypeRightBottom,/// 右下
     KJSlideDirectionTypeRightTop,   /// 右上
     KJSlideDirectionTypeLeftTop,    /// 左上
+};
+/// 手势移动方向
+typedef NS_ENUM(NSInteger, KJPanMoveDirectionType) {
+    KJPanMoveDirectionTypeNoMove = 0,/// 没有移动
+    KJPanMoveDirectionTypeTop,   /// 向上
+    KJPanMoveDirectionTypeBottom,/// 向下
+    KJPanMoveDirectionTypeLeft,  /// 向左
+    KJPanMoveDirectionTypeRight, /// 向右
 };
 /// 图片指定区域
 typedef NS_ENUM(NSInteger, KJImageAppointType) {
@@ -50,8 +58,14 @@ typedef NS_ENUM(NSInteger, KJImageAppointType) {
 @interface _KJIFinishTools : NSObject
 
 #pragma mark - 逻辑处理
+/// 判断手势方向
++ (KJPanMoveDirectionType)kj_moveDirectionWithTranslation:(CGPoint)translation;
 /// 确定滑动方向
 + (KJSlideDirectionType)kj_slideDirectionWithPoint:(CGPoint)point Point2:(CGPoint)point2;
+/// 不同滑动方向转换为正确透视区域四点
++ (KJKnownPoints)kj_pointsWithKnownPoints:(KJKnownPoints)knownPoints BeginPoint:(CGPoint)beginPoint EndPoint:(CGPoint)endPoint DirectionType:(KJSlideDirectionType)directionType;
+/// 平移之后透视点相对处理
++ (KJKnownPoints)kj_changePointsWithKnownPoints:(KJKnownPoints)points Translation:(CGPoint)translation;
 /// 判断当前点是否在路径选区内
 + (bool)kj_confirmCurrentPointWithPoint:(CGPoint)point BezierPath:(UIBezierPath*)path;
 /// 判断当前点是否在已知四点选区内
@@ -76,6 +90,10 @@ typedef NS_ENUM(NSInteger, KJImageAppointType) {
 + (UIImage*)kj_getImageAppointAreaWithImage:(UIImage*)image ImageAppointType:(KJImageAppointType)type CustomFrame:(CGRect)rect;
 /// 旋转图片和镜像处理 orientation 图片旋转方向
 + (UIImage*)kj_rotationImageWithImage:(UIImage*)image Orientation:(UIImageOrientation)orientation;
+/** 任意角度图片旋转 */
++ (UIImage*)kj_rotateImage:(UIImage*)image Radians:(CGFloat)radians;
+/// 图片围绕任意点旋转任意角度
++ (UIImage*)kj_rotateImage:(UIImage*)image Rotation:(CGFloat)rotation Point:(CGPoint)point;
 /// 矩形图扭曲变形成椭圆弧形图
 + (UIImage*)kj_orthogonImageBecomeOvalWithImage:(UIImage*)image Rect:(CGRect)rect Margin:(bool)margin;
 //+ (KJImageWarpResult)changeImageByPoints:(NSArray*)pointArray Image:(UIImage*)image;

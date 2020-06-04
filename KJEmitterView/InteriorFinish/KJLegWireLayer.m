@@ -132,29 +132,17 @@
         self.PointH = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:O Point2:M Point3:C Point4:D];
     }
     self.topPoints = (KJKnownPoints){self.PointE,self.PointF,self.PointG,self.PointH};
-    
-    /// 最大矩形框
-    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-    shapeLayer.fillColor = [UIColor.blackColor colorWithAlphaComponent:0.5].CGColor;
-    shapeLayer.strokeColor = UIColor.blackColor.CGColor;
-    shapeLayer.lineWidth = 2;
-    shapeLayer.lineJoin = kCALineJoinRound;// 连接节点样式
-    shapeLayer.lineCap = kCALineCapRound;// 线头样式
-    shapeLayer.path = [UIBezierPath bezierPathWithRect:self.imageRect].CGPath;
-    [self addSublayer:shapeLayer];
 }
 #pragma mark - 绘制
 - (void)drawInContext:(CGContextRef)context {
-    CGContextSetShouldAntialias(context,YES); // 为图形上下文设置抗锯齿功能
+    CGContextSetShouldAntialias(context,YES); 
 //    CGContextAddPath(context, [self kj_topPath].CGPath);
 //    CGContextClip(context); // 裁剪路径以外部分
     //    CGContextDrawImage(context,self.imageRect,self.perspectiveImage.CGImage);//使用这个使图片上下颠倒
     //    CGContextDrawTiledImage(context, CGRectMake(0,0,20,20), self.perspectiveImage.CGImage);//平铺图
     // 使用CGContextDrawImage绘制图片上下颠倒 用这个方法解决
     UIGraphicsPushContext(context);
-    CGRect tempRect = self.imageRect;
-    tempRect.size.height += 1; /// 解决所绘之图有点往上移位的问题
-    [self.perspectiveImage drawInRect:tempRect];
+    [self.perspectiveImage drawInRect:self.imageRect];
     UIGraphicsPopContext();
 }
 @end

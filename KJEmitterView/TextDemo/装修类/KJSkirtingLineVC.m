@@ -41,22 +41,22 @@
     });
     CGFloat xw = 75;
     __block UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, xw, xw)];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
+//    imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.image = [UIImage imageNamed:@"xxsf"];
     imageView.center = CGPointMake(xw*.5, h-100);
     [self.view addSubview:imageView];
     __block UIImageView *imageView2 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, xw, xw)];
-    imageView2.contentMode = UIViewContentModeScaleAspectFit;
+//    imageView2.contentMode = UIViewContentModeScaleAspectFit;
     imageView2.image = [UIImage imageNamed:@"IMG_4931"];
     imageView2.center = CGPointMake(w/4+xw*.5, h-100);
     [self.view addSubview:imageView2];
     __block UIImageView *imageView3 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, xw, xw)];
-    imageView3.contentMode = UIViewContentModeScaleAspectFit;
+//    imageView3.contentMode = UIViewContentModeScaleAspectFit;
     imageView3.image = [UIImage imageNamed:@"timg-2"];
     imageView3.center = CGPointMake(w/2+xw*.5, h-100);
     [self.view addSubview:imageView3];
     __block UIImageView *imageView4 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, xw, xw)];
-    imageView4.contentMode = UIViewContentModeScaleAspectFit;
+//    imageView4.contentMode = UIViewContentModeScaleAspectFit;
     imageView4.image = [UIImage imageNamed:@"fff"];
     imageView4.center = CGPointMake(w/4*3+xw*.5, h-100);
     [self.view addSubview:imageView4];
@@ -76,7 +76,7 @@
     __block CGPoint pt = imageView.center;
     [imageView kj_AddGestureRecognizer:(KJGestureTypePan) block:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {
         CGPoint translation = [((UIPanGestureRecognizer*)gesture) translationInView:view];
-        NSLog(@"---:%.2f,%.2f",translation.x,translation.y);
+//        NSLog(@"---:%.2f,%.2f",translation.x,translation.y);
         view.center = CGPointMake(pt.x + translation.x, pt.y + translation.y);
         bool boo = [self->decorateBoxView kj_chartletAndFixationWithMaterialImage:((UIImageView*)view).image Point:view.center PerspectiveBlock:^UIImage * _Nonnull(KJKnownPoints points, UIImage * _Nonnull jointImage) {
             UIImage *img = [jointImage kj_softFitmentFluoroscopyWithTopLeft:points.PointA TopRight:points.PointD BottomRight:points.PointC BottomLeft:points.PointB];

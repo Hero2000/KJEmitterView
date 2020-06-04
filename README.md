@@ -1,7 +1,7 @@
 # KJEmitterView
 <!--![coverImage]()-->
 <p align="left">
-<img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2297328281,3234889154&fm=26&gp=0.jpg" width="666" hspace="1px">
+<img src="https://img.zcool.cn/community/0161da5541af81000001a64bc753a4.jpg@1280w_1l_2o_100sh.jpg" width="666" hspace="1px">
 </p>
 
 * 这个工程提供开发中用到的类目，方便开发
@@ -66,7 +66,7 @@
 - 粒子效果、Button图文混排、点击事件封装、扩大点击域、点赞粒子效果，
 - 手势封装、圆角渐变、倒影、投影、内阴影、内外发光处理、Xib属性，
 - 图片加工处理、滤镜渲染、泛洪算法、识别网址超链接等等
-- 脚线处理、地板拼接处理、墙纸铺贴处理、吊顶处理
+- 脚线处理、地板拼接处理、墙纸铺贴处理、吊顶处理、壁画装饰处理
 pod 'KJEmitterView'
 pod 'KJEmitterView/InteriorFinish' # 装修控件
 pod 'KJEmitterView/Function'#
@@ -103,7 +103,7 @@ pod 'KJWorkbox/CommonBox'
 ```
 pod 'KJEmitterView'
 pod 'KJEmitterView/InteriorFinish' # 装修控件
-pod 'KJEmitterView/Function'#
+pod 'KJEmitterView/Function'# 
 pod 'KJEmitterView/Control' # 自定义控件
 pod 'KJEmitterView/Classes' # 粒子效果相关
 ```
@@ -111,6 +111,10 @@ pod 'KJEmitterView/Classes' # 粒子效果相关
 #### <a id="更新日志"></a>更新日志
 ```
 ####版本更新日志:
+#### Add 4.7.6
+1、KJLamplightLayer 新增灯具处理
+2、KJDecorateBoxView 新增墙壁装饰盒子 - 壁画、电箱、挂饰处理
+
 #### Add 4.7.5
 1、KJInteriorSuperclassView 新增装修父类，主要处理手指区域问题
 2、KJSkirtingLineView 新增四边踢脚线

@@ -7,22 +7,16 @@
 //
 
 #import "KJDecorateBoxView.h"
-typedef NS_ENUM(NSInteger, KJDecorateDotType) {
-    KJDecorateDotTypeLeftTop,    /// 左上
-    KJDecorateDotTypeRightTop,   /// 右上
-    KJDecorateDotTypeLeftBottom, /// 左下
-    KJDecorateDotTypeRightBottom,/// 右下
-    KJDecorateDotTypeOtherCenter,/// 中间其他部分
-};
 static CGFloat minLen = 1.0; /// 最小的滑动距离
 /// 装饰类
-@interface KJDecorateView : UIView
-@property(nonatomic,assign) CGPoint currentCenter;/// 视图中心点
+@interface KJDecorateView : UIView<UIGestureRecognizerDelegate>
 @property(nonatomic,assign) KJKnownPoints points;
-@property(nonatomic,assign) CGPoint touchBeginPoint; /// 记录touch开始的点
+@property(nonatomic,strong) UIImage *materialImage; /// 原始素材图
 @property(nonatomic,strong) UIImage *perspectiveImage; /// 透视好的素材图
-@property(nonatomic,assign) KJDecorateDotType currentDecorateDotType; /// 当前拖动点位置
-@property(nonatomic,readwrite,copy) void (^kChartletMoveBlcok)(CGPoint currentPoint,KJDecorateView *decorateView); /// 贴图之后移动四个角落当中某一个回调处理
+@property(nonatomic,readwrite,copy) void (^kBlockageMoveBlcok)(CGPoint translation,KJDecorateView *decorateView,UIView *blockageView); /// 小方块移动处理
+@property(nonatomic,readwrite,copy) void (^kDecorateMoveBlcok)(CGPoint translation,KJDecorateView *decorateView); /// KJDecorateView移动处理
+@property(nonatomic,readwrite,copy) void (^kMoveEndBlcok)(KJDecorateView *decorateView); /// 移动结束
+- (instancetype)initWithKnownPoints:(KJKnownPoints)points SuperView:(UIView*)superView;
 @end
 @interface KJDecorateBoxView ()
 @property(nonatomic,assign) KJSlideDirectionType directionType; /// 选区滑动方向
@@ -61,22 +55,56 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 }
 /// 贴图并且固定装饰品
 - (bool)kj_chartletAndFixationWithMaterialImage:(UIImage*)materialImage Point:(CGPoint)point PerspectiveBlock:(UIImage *(^)(KJKnownPoints points,UIImage *materialImage))block{
+    __weak typeof(self) weakself = self;
     /// 判断当前是否有虚线区域，优先满足是否拖动到正确虚线区域
     if (_topLayer) {
         if ([_KJIFinishTools kj_confirmCurrentPointWithPoint:point KnownPoints:self.drawPoints]) {
             if (block) {
-                CGRect rect = [_KJIFinishTools kj_rectWithPoints:self.drawPoints];
-                KJDecorateView *view = [[KJDecorateView alloc]initWithFrame:rect];
-                view.backgroundColor = [UIColor.yellowColor colorWithAlphaComponent:0.3];
-                view.tag = self.subviews.count + 500; /// 编号
-                view.userInteractionEnabled = NO;
-                view.points = self.drawPoints;
-                view.perspectiveImage = block(self.drawPoints,materialImage);/// 获取到透视好的素材图
-                view.kChartletMoveBlcok = ^(CGPoint currentPoint, KJDecorateView *decorateView) {
-                    NSLog(@"----%.2f,%.2f  %ld",currentPoint.x,currentPoint.y,(long)decorateView.currentDecorateDotType);
+                KJDecorateView *_decorateView = [[KJDecorateView alloc]initWithKnownPoints:self.drawPoints SuperView:self];
+//                [self.temps addObject:decorateView]; /// 存入容器
+                _decorateView.tag = self.subviews.count + 500; /// 编号
+                _decorateView.materialImage = materialImage;
+                _decorateView.perspectiveImage = block(self.drawPoints,materialImage);/// 获取到透视好的素材图
+                _decorateView.kDecorateMoveBlcok = ^(CGPoint translation,KJDecorateView *decorateView) {
+                    weakself.drawPoints = [weakself kj_changePointsWithKnownPoints:decorateView.points Translation:translation];
+                    SEL selector = NSSelectorFromString(@"kj_changeBlockagePoints:");
+                    IMP imp = [decorateView methodForSelector:selector];
+                    void (*func)(id, SEL, KJKnownPoints) = (void *)imp;
+                    func(decorateView, selector, weakself.drawPoints);
                 };
-//                [self.temps addObject:view]; /// 存入容器
-                [self addSubview:view];
+                _decorateView.kBlockageMoveBlcok = ^(CGPoint translation,KJDecorateView *decorateView,UIView *blockageView) {
+                    CGPoint tempPoint = CGPointZero;
+                    KJSlideDirectionType directionType = KJSlideDirectionTypeLeftBottom;
+                    if (blockageView.tag == 100) {/// 左上角
+                        weakself.touchBeginPoint = decorateView.points.PointC;
+                        tempPoint = decorateView.points.PointA;
+                        directionType = KJSlideDirectionTypeRightTop;
+                    }else if (blockageView.tag == 101) {/// 左下角
+                        weakself.touchBeginPoint = decorateView.points.PointD;
+                        tempPoint = decorateView.points.PointB;
+                        directionType = KJSlideDirectionTypeRightBottom;
+                    }else if (blockageView.tag == 102) {/// 右下角
+                        weakself.touchBeginPoint = decorateView.points.PointA;
+                        tempPoint = decorateView.points.PointC;
+                        directionType = KJSlideDirectionTypeLeftBottom;
+                    }else if (blockageView.tag == 103) {/// 右上角
+                        weakself.touchBeginPoint = decorateView.points.PointB;
+                        tempPoint = decorateView.points.PointD;
+                        directionType = KJSlideDirectionTypeLeftTop;
+                    }
+                    tempPoint.x += translation.x;tempPoint.y += translation.y;
+                    weakself.drawPoints = [weakself kj_pointsWithTempPoint:tempPoint DirectionType:directionType];
+                    if (weakself.kMovePerspectiveBlock) {
+                        decorateView.perspectiveImage = weakself.kMovePerspectiveBlock(weakself.drawPoints,decorateView.materialImage);
+                    }
+                    SEL selector = NSSelectorFromString(@"kj_changeBlockagePoints:");
+                    IMP imp = [decorateView methodForSelector:selector];
+                    void (*func)(id, SEL, KJKnownPoints) = (void *)imp;
+                    func(decorateView, selector, weakself.drawPoints);
+                };
+                _decorateView.kMoveEndBlcok = ^(KJDecorateView *decorateView){
+                    decorateView.points = weakself.drawPoints;
+                };
                 [self kj_setNull]; /// 置空处理
             }
             return true;
@@ -86,11 +114,11 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     }
     /// 判断是否在已存在的装饰区域
     __block bool boo = false;
-    __weak typeof(self) weakself = self;
     [self.subviews enumerateObjectsUsingBlock:^(KJDecorateView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         CGPoint childPoint = [weakself convertPoint:point toView:obj];
         BOOL result = [obj.layer containsPoint:childPoint];
         if (result) {
+            obj.materialImage = materialImage;
             obj.perspectiveImage = block(obj.points,materialImage);/// 获取到透视好的素材图
             [obj setNeedsDisplay];
             boo = true;
@@ -104,6 +132,22 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     self.drawPoints = (KJKnownPoints){CGPointZero,CGPointZero,CGPointZero,CGPointZero};
     [self.topLayer removeFromSuperlayer];
     _topLayer = nil;
+}
+/// 平移之后透视点相对处理
+- (KJKnownPoints)kj_changePointsWithKnownPoints:(KJKnownPoints)points Translation:(CGPoint)translation{
+    CGPoint A = points.PointA;
+    CGPoint B = points.PointB;
+    CGPoint C = points.PointC;
+    CGPoint D = points.PointD;
+    A.x += translation.x;
+    A.y += translation.y;
+    B.x += translation.x;
+    B.y += translation.y;
+    C.x += translation.x;
+    C.y += translation.y;
+    D.x += translation.x;
+    D.y += translation.y;
+    return (KJKnownPoints){A,B,C,D};
 }
 #pragma mark - geter/seter
 - (CAShapeLayer*)topLayer{
@@ -193,7 +237,9 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 }
 /// 处理滑动形成的四边形区域
 - (void)kj_delSlideAreaWithTempPoint:(CGPoint)tempPoint{
-    self.drawPoints = [self kj_pointsWithKnownPoints:self.knownPoints TempPoint:tempPoint];
+    /// 确定滑动方向
+    KJSlideDirectionType directionType = [_KJIFinishTools kj_slideDirectionWithPoint:self.touchBeginPoint Point2:tempPoint];
+    self.drawPoints = [self kj_pointsWithTempPoint:tempPoint DirectionType:directionType];
     self.topLayer.path = ({
         UIBezierPath *path = [UIBezierPath bezierPath];
         [path moveToPoint:self.drawPoints.PointA];
@@ -204,11 +250,11 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
         path.CGPath;
     });
 }
-- (KJKnownPoints)kj_pointsWithKnownPoints:(KJKnownPoints)knownPoints TempPoint:(CGPoint)tempPoint{
-    CGPoint A = knownPoints.PointA;
-    CGPoint B = knownPoints.PointB;
-    CGPoint C = knownPoints.PointC;
-    CGPoint D = knownPoints.PointD;
+- (KJKnownPoints)kj_pointsWithTempPoint:(CGPoint)tempPoint DirectionType:(KJSlideDirectionType)directionType{
+    CGPoint A = _knownPoints.PointA;
+    CGPoint B = _knownPoints.PointB;
+    CGPoint C = _knownPoints.PointC;
+    CGPoint D = _knownPoints.PointD;
     CGPoint E = self.touchBeginPoint;
     CGPoint F = CGPointZero;
     CGPoint G = tempPoint;
@@ -237,135 +283,123 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
         F = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:E Point2:O1 Point3:O2 Point4:G];
         H = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:G Point2:O1 Point3:O2 Point4:E];
     }
-    return (KJKnownPoints){E,F,G,H};
+    KJKnownPoints points = (KJKnownPoints){E,F,G,H}; /// 左下滑动
+    if (directionType == KJSlideDirectionTypeRightBottom) { /// 右下滑动
+        points = (KJKnownPoints){H,G,F,E};
+    }else if (directionType == KJSlideDirectionTypeLeftTop) { /// 左上滑动
+        points = (KJKnownPoints){F,E,H,G};
+    }else if (directionType == KJSlideDirectionTypeRightTop) { /// 右上滑动
+        points = (KJKnownPoints){G,H,E,F};
+    }
+    return points;
 }
 
 @end
 
 @implementation KJDecorateView
-- (instancetype)initWithFrame:(CGRect)frame{
-    if (self==[super initWithFrame:frame]) {
+- (instancetype)initWithKnownPoints:(KJKnownPoints)points SuperView:(UIView*)superView{
+    if (self==[super init]) {
+        [superView addSubview:self];
+        self.points = points;
+        self.backgroundColor = [UIColor.yellowColor colorWithAlphaComponent:0.3];
+        self.userInteractionEnabled = NO;
         /// 添加移动手势
-        UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
-        [self addGestureRecognizer:recognizer];
-        self.currentCenter = self.center;
-        self.currentDecorateDotType = KJDecorateDotTypeOtherCenter;
+        [self addGestureRecognizer:({
+            UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(kj_panMove:)];
+            gesture.delegate = self;
+            gesture;
+        })];
+        /// 添加4个小正方形
+        for (NSInteger i=0; i<4; i++) {
+            UIView *view = [UIView new];
+            view.tag = 100 + i;
+            view.userInteractionEnabled = YES;
+            view.backgroundColor = UIColor.blueColor;
+            [self addSubview:view];
+            /// 添加移动手势
+            [view addGestureRecognizer:({
+                UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(kj_blockageMove:)];
+                gesture;
+            })];
+        }
+        [self kj_changeBlockagePoints:points];
     }
     return self;
+}
+/// 改变小方块位置和KJDecorateView尺寸
+- (void)kj_changeBlockagePoints:(KJKnownPoints)points{
+    self.frame = [_KJIFinishTools kj_rectWithPoints:points];
+    __weak typeof(self) weakself = self;
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.tag == 100) {/// 左上角
+            obj.frame = [weakself kj_drawPrecinctRectWithPoint:points.PointA SuperView:weakself.superview];
+        }else if (obj.tag == 101) {/// 左下角
+            obj.frame = [weakself kj_drawPrecinctRectWithPoint:points.PointB SuperView:weakself.superview];
+        }else if (obj.tag == 102) {/// 右下角
+            obj.frame = [weakself kj_drawPrecinctRectWithPoint:points.PointC SuperView:weakself.superview];
+        }else if (obj.tag == 103) {/// 右上角
+            obj.frame = [weakself kj_drawPrecinctRectWithPoint:points.PointD SuperView:weakself.superview];
+        }
+    }];
+}
+/// 设置小方块对应的坐标
+- (CGRect)kj_drawPrecinctRectWithPoint:(CGPoint)point SuperView:(UIView*)superView{
+    /// 转化对应在父视图上的坐标
+    CGPoint superPoint = [superView convertPoint:point toView:self];
+    /// 20像素选区
+    return CGRectMake(superPoint.x - 10, superPoint.y - 10, 20, 20);
 }
 #pragma mark - 点击域处理
 - (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent*)event{
     /// 如果不能接收触摸事件，直接返回nil
     if (self.userInteractionEnabled == NO || self.hidden == YES || self.alpha < 0.01) return nil;
-    /// 四个角落区域
-    if (CGRectContainsPoint([self kj_drawPrecinctRectWithPoint:self.points.PointA], point)) {
-        self.touchBeginPoint = point;
-        self.currentDecorateDotType = KJDecorateDotTypeLeftTop;
-        return self;
-    }else if (CGRectContainsPoint([self kj_drawPrecinctRectWithPoint:self.points.PointB], point)) {
-        self.touchBeginPoint = point;
-        self.currentDecorateDotType = KJDecorateDotTypeLeftBottom;
-        return self;
-    }else if (CGRectContainsPoint([self kj_drawPrecinctRectWithPoint:self.points.PointC], point)) {
-        self.touchBeginPoint = point;
-        self.currentDecorateDotType = KJDecorateDotTypeRightBottom;
-        return self;
-    }else if (CGRectContainsPoint([self kj_drawPrecinctRectWithPoint:self.points.PointD], point)) {
-        self.touchBeginPoint = point;
-        self.currentDecorateDotType = KJDecorateDotTypeRightTop;
-        return self;
-    }else if ([self pointInside:point withEvent:event]) {
-        self.currentDecorateDotType = KJDecorateDotTypeOtherCenter;
-        return self;
+    /// 判断是否触发的是自己内部的view
+    NSInteger count = self.subviews.count;
+    for (NSInteger i=count-1; i>=0; i--) {
+        UIView *childView = self.subviews[i];
+        CGPoint childPoint = [self convertPoint:point toView:childView];
+        UIView *view = [childView hitTest:childPoint withEvent:event];
+        if (view) return view;
     }
-    return nil;
+    /// 扩大触发范围
+    CGRect rect = self.bounds;//CGRectMake(self.bounds.origin.x-10, self.bounds.origin.y-10, self.bounds.size.width+20, self.bounds.size.height+20);
+    return CGRectContainsPoint(rect, point) ? self : nil;
 }
-/// 设置有效区域
-- (CGRect)kj_drawPrecinctRectWithPoint:(CGPoint)point{
-    /// 转化对应的像素坐标
-    CGPoint childPoint = [self.superview convertPoint:point toView:self];
-    CGFloat w = 20;/// 20像素选区
-    CGRect rect = CGRectMake(childPoint.x - w*.5, childPoint.y - w*.5, w, w);
-    return rect;
-}
-/// 滑动当中
-- (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event{
-    if (self.currentDecorateDotType == KJDecorateDotTypeOtherCenter) return;
-    UITouch *touch = (UITouch *)touches.anyObject;
-    if (touches.count > 1 || [touch tapCount] > 1 || event.allTouches.count > 1) {
-        return;
-    }
-    [super touchesMoved:touches withEvent:event];
-    CGPoint tempPoint = [touches.anyObject locationInView:self];
-    if (fabs(tempPoint.x - self.touchBeginPoint.x) < minLen && fabs(tempPoint.y - self.touchBeginPoint.y) < minLen) {
-        return;
-    }
-    !self.kChartletMoveBlcok?:self.kChartletMoveBlcok(tempPoint,self);
-}
-
 #pragma mark - 绘制
 - (void)drawRect:(CGRect)rect{
     CGContextRef ctx = UIGraphicsGetCurrentContext(); //获取当前绘制环境
     CGContextSaveGState(ctx);
-    CGContextSetShouldAntialias(ctx,YES); // 为图形上下文设置抗锯齿功能
+    CGContextSetShouldAntialias(ctx,YES); 
     UIGraphicsPushContext(ctx);// 解决绘制图片上下颠倒
-    CGRect tempRect = self.bounds;
-//    tempRect.origin.y += 1;
-//    tempRect.origin.x += 1;
-//    tempRect.size.height += 1;
-//    tempRect.size.width += 1;
-    [self.perspectiveImage drawInRect:tempRect];
+    [self.perspectiveImage drawInRect:self.bounds];
     UIGraphicsPopContext();
 }
 #pragma mark - 手势处理
-- (void)handleSwipe:(UIPanGestureRecognizer*)pan{
-    if (pan.state == UIGestureRecognizerStateBegan) {
+- (void)kj_panMove:(UIPanGestureRecognizer*)panGesture{
+    if (panGesture.state == UIGestureRecognizerStateBegan) {
         
-    }else if (pan.state == UIGestureRecognizerStateChanged) {
-        if (self.currentDecorateDotType == KJDecorateDotTypeOtherCenter) {
-            CGPoint translation = [pan translationInView:self];
-            [self kj_commitTranslation:translation];
-            self.center = CGPointMake(self.currentCenter.x + translation.x, self.currentCenter.y + translation.y);
-//            self.points = [self kj_changePointsWithTranslation:translation];
-        }
-    }else if (pan.state == UIGestureRecognizerStateCancelled || pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateFailed) {
-        self.currentCenter = self.center;
+    }else if (panGesture.state == UIGestureRecognizerStateChanged) {
+        !self.kDecorateMoveBlcok?:self.kDecorateMoveBlcok([panGesture translationInView:self],self);
+    }else if (panGesture.state == UIGestureRecognizerStateCancelled || panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateFailed) {
+        !self.kMoveEndBlcok?:self.kMoveEndBlcok(self);
     }
 }
-- (KJKnownPoints)kj_changePointsWithTranslation:(CGPoint)translation{
-    CGPoint A = self.points.PointA;
-    CGPoint B = self.points.PointB;
-    CGPoint C = self.points.PointC;
-    CGPoint D = self.points.PointD;
-    A.x += translation.x;
-    A.y += translation.y;
-    B.x += translation.x;
-    B.y += translation.y;
-    C.x += translation.x;
-    C.y += translation.y;
-    D.x += translation.x;
-    D.y += translation.y;
-    return (KJKnownPoints){A,B,C,D};
-}
-/// 判断手势方向 0：没有移动 1：向左滑动 2：向右滑动 3：向上滑动 4：向下滑动
-- (NSInteger)kj_commitTranslation:(CGPoint)translation{
-    CGFloat absX = fabs(translation.x);
-    CGFloat absY = fabs(translation.y);
-    // 设置滑动有效距离
-    if (MAX(absX, absY) < minLen) return 0;
-    if (absX > absY) {
-        if (translation.x<0) {
-            return 1;//向左滑动
-        }else{
-            return 2;//向右滑动
-        }
-    }else if (absY > absX) {
-        if (translation.y<0) {
-            return 3;//向上滑动
-        }else{
-            return 4;//向下滑动
-        }
+/// 小方块移动处理
+- (void)kj_blockageMove:(UIPanGestureRecognizer*)panGesture{
+    if (panGesture.state == UIGestureRecognizerStateBegan) {
+        
+    }else if (panGesture.state == UIGestureRecognizerStateChanged) {
+        !self.kBlockageMoveBlcok?:self.kBlockageMoveBlcok([panGesture translationInView:panGesture.view],self,panGesture.view);
+    }else if (panGesture.state == UIGestureRecognizerStateCancelled || panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateFailed) {
+        !self.kMoveEndBlcok?:self.kMoveEndBlcok(self);
     }
-    return 0;
+}
+#pragma mark - UIGestureRecognizerDelegate
+/// 设置手势范围
+- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+//    if ([gestureRecognizer locationInView:self].y>CGRectGetMaxY(self.topMenuView.bounds)&&[gestureRecognizer locationInView:self].y<self.functionalView.y) {
+//        return YES;
+//    }
+    return YES;
 }
 @end

@@ -9,17 +9,15 @@
 #import "KJMuralView.h"
 static CGFloat minLen = 1.0; /// 最小的滑动距离
 @interface KJMuralView ()
-@property(nonatomic,assign) KJKnownPoints points;
+@property(nonatomic,assign) KJKnownPoints knownPoints;
 @property(nonatomic,strong) CAShapeLayer *topLayer; /// 虚线选区
 @property(nonatomic,assign) CGPoint touchBeginPoint; /// 记录touch开始的点
-@property(nonatomic,assign) CGPoint PointE,PointF,PointG,PointH;
 @property(nonatomic,assign) BOOL drawTop; /// 是否绘制顶部选区
 @property(nonatomic,assign) BOOL clearDarw; /// 清除画布内容开关
 @property(nonatomic,assign) BOOL sureDarw; /// 是否点在正确的选区内
 @property(nonatomic,strong) UIImage *perspectiveImage; /// 透视好的素材图
 @property(nonatomic,assign) CGRect imageRect;
 @property(nonatomic,assign) KJKnownPoints topPoints;
-@property(nonatomic,assign) KJSlideDirectionType directionType; /// 选区滑动方向
 @end
 
 @implementation KJMuralView
@@ -27,7 +25,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 - (bool)kj_delGestureWithPoint:(CGPoint)point{
     if (self.openDrawMural) {
         /// 不在透视选区内不做手势处理
-        return [_KJIFinishTools kj_confirmCurrentPointWithPoint:point KnownPoints:self.points];
+        return [_KJIFinishTools kj_confirmCurrentPointWithPoint:point KnownPoints:self.knownPoints];
     }
     return false;
 }
@@ -43,7 +41,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 - (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points{
     if (self == [super init]) {
         self.backgroundColor = UIColor.clearColor;
-        self.points = points;
+        self.knownPoints = points;
         self.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         self.dashPatternColor = UIColor.blackColor;
         self.dashPatternWidth = 1.;
@@ -107,14 +105,14 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     }
     [super touchesBegan:touches withEvent:event];
     // 设置起始位置
-    self.touchBeginPoint = [touches.anyObject locationInView:self];
+    CGPoint point = [touches.anyObject locationInView:self];
     /// 判断开始点是否在选区内
-    if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:self.touchBeginPoint KnownPoints:self.points]) {
+    if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:point KnownPoints:self.knownPoints]) {
         return;
     }else{
         self.sureDarw = YES;
     }
-    if (!_drawTop) self.PointE = self.touchBeginPoint;
+    if (!_drawTop) self.touchBeginPoint = point;
 }
 /// 滑动当中
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -135,7 +133,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     }
     if (!_drawTop) {
         /// 判断开始点是否在选区内
-        if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:tempPoint KnownPoints:self.points]) return;
+        if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:tempPoint KnownPoints:self.knownPoints]) return;
         [self kj_darwQuadrangleTopWithPoint:tempPoint];
     }
 }
@@ -152,63 +150,18 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 #pragma mark - 内部处理方法
 /// 操作画四边形顶部选区
 - (void)kj_darwQuadrangleTopWithPoint:(CGPoint)tempPoint {
-    self.PointG = tempPoint;
-    CGPoint A = self.points.PointA;
-    CGPoint B = self.points.PointB;
-    CGPoint C = self.points.PointC;
-    CGPoint D = self.points.PointD;
-    CGPoint O = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:A Point2:B Point3:C Point4:D];
-    CGPoint M = [_KJIFinishTools kj_parallelLineDotsWithPoint1:B Point2:C Point3:self.PointG];
-    self.PointF = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:self.PointE Point2:O Point3:M Point4:self.PointG];
-
-    CGPoint N = [_KJIFinishTools kj_parallelLineDotsWithPoint1:A Point2:D Point3:self.PointE];
-    self.PointH = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:self.PointG Point2:O Point3:N Point4:self.PointE];
     /// 滑动方向
-    self.directionType = [_KJIFinishTools kj_slideDirectionWithPoint:self.PointE Point2:tempPoint];
-    CGPoint E = CGPointZero;
-    CGPoint F = CGPointZero;
-    CGPoint G = CGPointZero;
-    CGPoint H = CGPointZero;
-    if (self.directionType == KJSlideDirectionTypeLeftBottom) {
-        
-    }else if (self.directionType == KJSlideDirectionTypeLeftTop) {
-        E = self.PointH;
-        F = self.PointG;
-        H = self.PointE;
-        G = self.PointF;
-        self.PointE = E;
-        self.PointF = F;
-        self.PointG = G;
-        self.PointH = H;
-    }else if (self.directionType == KJSlideDirectionTypeRightBottom) {
-       
-    }else if (self.directionType == KJSlideDirectionTypeRightTop) {
-       
-    }
+    KJSlideDirectionType directionType = [_KJIFinishTools kj_slideDirectionWithPoint:self.touchBeginPoint Point2:tempPoint];
+    self.topPoints = [_KJIFinishTools kj_pointsWithKnownPoints:self.knownPoints BeginPoint:self.touchBeginPoint EndPoint:tempPoint DirectionType:directionType];
     self.topLayer.path = [self kj_topPath].CGPath;
-    self.topPoints = (KJKnownPoints){self.PointE,self.PointF,self.PointG,self.PointH};
     self.imageRect = [_KJIFinishTools kj_rectWithPoints:self.topPoints];
 }
 - (UIBezierPath*)kj_topPath{
     UIBezierPath *path = [UIBezierPath bezierPath];
-    switch (self.directionType) {
-        case KJSlideDirectionTypeLeftTop:
-        case KJSlideDirectionTypeRightTop:
-            [path moveToPoint:self.PointF];
-            [path addLineToPoint:self.PointG];
-            [path addLineToPoint:self.PointH];
-            [path addLineToPoint:self.PointE];
-            break;
-        case KJSlideDirectionTypeLeftBottom:
-        case KJSlideDirectionTypeRightBottom:
-            [path moveToPoint:self.PointE];
-            [path addLineToPoint:self.PointF];
-            [path addLineToPoint:self.PointG];
-            [path addLineToPoint:self.PointH];
-            break;
-        default:
-            break;
-    }
+    [path moveToPoint:self.topPoints.PointA];
+    [path addLineToPoint:self.topPoints.PointB];
+    [path addLineToPoint:self.topPoints.PointC];
+    [path addLineToPoint:self.topPoints.PointD];
     [path closePath];
     return path;
 }
@@ -225,9 +178,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     CGContextClip(ctx); // 裁剪路径以外部分
     // 使用CGContextDrawImage绘制图片上下颠倒 用这个方法解决
     UIGraphicsPushContext(ctx);
-    CGRect tempRect = self.imageRect;
-    tempRect.size.height += 1;/// 解决所绘之图有点往上移位的问题
-    [self.perspectiveImage drawInRect:tempRect];
+    [self.perspectiveImage drawInRect:self.imageRect];
     UIGraphicsPopContext();
     CGContextRestoreGState(ctx);
 }

@@ -11,6 +11,27 @@
 @implementation _KJIFinishTools
 
 #pragma mark - 逻辑处理
+/// 判断手势方向
++ (KJPanMoveDirectionType)kj_moveDirectionWithTranslation:(CGPoint)translation{
+    CGFloat absX = fabs(translation.x);
+    CGFloat absY = fabs(translation.y);
+    // 设置滑动有效距离
+    if (MAX(absX, absY) < 1.0) return 0;
+    if (absY > absX) {
+        if (translation.y<0) {
+            return 1;//向上滑动
+        }else{
+            return 2;//向下滑动
+        }
+    }else if (absX > absY) {
+        if (translation.x<0) {
+            return 3;//向左滑动
+        }else{
+            return 4;//向右滑动
+        }
+    }
+    return KJPanMoveDirectionTypeNoMove;
+}
 /// 确定滑动方向
 + (KJSlideDirectionType)kj_slideDirectionWithPoint:(CGPoint)point Point2:(CGPoint)point2{
     bool boo = (point.x - point2.x) < 0 ? true : false;
@@ -19,6 +40,66 @@
     if (!boo&!booo) return KJSlideDirectionTypeRightTop;
     if (boo) return KJSlideDirectionTypeLeftTop;
     return KJSlideDirectionTypeRightBottom;
+}
+/// 不同滑动方向转换为正确透视区域四点
++ (KJKnownPoints)kj_pointsWithKnownPoints:(KJKnownPoints)knownPoints BeginPoint:(CGPoint)beginPoint EndPoint:(CGPoint)endPoint DirectionType:(KJSlideDirectionType)directionType{
+    CGPoint A = knownPoints.PointA;
+    CGPoint B = knownPoints.PointB;
+    CGPoint C = knownPoints.PointC;
+    CGPoint D = knownPoints.PointD;
+    CGPoint E = beginPoint;
+    CGPoint F = CGPointZero;
+    CGPoint G = endPoint;
+    CGPoint H = CGPointZero;
+    CGPoint O1 = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:A Point2:B Point3:C Point4:D];/// AB和CD交点
+    CGPoint O2 = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:A Point2:D Point3:C Point4:B];/// AD和CB交点
+    /// 重合或者平行
+    if (CGPointEqualToPoint(CGPointZero,O1) && CGPointEqualToPoint(CGPointZero,O2)) {
+        CGPoint M = [_KJIFinishTools kj_parallelLineDotsWithPoint1:A Point2:B Point3:E];
+        CGPoint N = [_KJIFinishTools kj_parallelLineDotsWithPoint1:C Point2:D Point3:G];
+        CGPoint J = [_KJIFinishTools kj_parallelLineDotsWithPoint1:B Point2:C Point3:G];
+        CGPoint K = [_KJIFinishTools kj_parallelLineDotsWithPoint1:A Point2:D Point3:E];
+        F = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:E Point2:M Point3:J Point4:G];
+        H = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:G Point2:N Point3:K Point4:E];
+    }else if (CGPointEqualToPoint(CGPointZero,O1)) {
+        CGPoint M = [_KJIFinishTools kj_parallelLineDotsWithPoint1:A Point2:B Point3:E];
+        CGPoint N = [_KJIFinishTools kj_parallelLineDotsWithPoint1:C Point2:D Point3:G];
+        F = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:E Point2:M Point3:O2 Point4:G];
+        H = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:G Point2:N Point3:O2 Point4:E];
+    }else if (CGPointEqualToPoint(CGPointZero,O2)) {
+        CGPoint M = [_KJIFinishTools kj_parallelLineDotsWithPoint1:B Point2:C Point3:G];
+        CGPoint N = [_KJIFinishTools kj_parallelLineDotsWithPoint1:A Point2:D Point3:E];
+        F = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:E Point2:O1 Point3:M Point4:G];
+        H = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:G Point2:O1 Point3:N Point4:E];
+    }else{
+        F = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:E Point2:O1 Point3:O2 Point4:G];
+        H = [_KJIFinishTools kj_linellaeCrosspointWithPoint1:G Point2:O1 Point3:O2 Point4:E];
+    }
+    KJKnownPoints points = (KJKnownPoints){E,F,G,H}; /// 左下滑动
+    if (directionType == KJSlideDirectionTypeRightBottom) { /// 右下滑动
+        points = (KJKnownPoints){H,G,F,E};
+    }else if (directionType == KJSlideDirectionTypeLeftTop) { /// 左上滑动
+        points = (KJKnownPoints){F,E,H,G};
+    }else if (directionType == KJSlideDirectionTypeRightTop) { /// 右上滑动
+        points = (KJKnownPoints){G,H,E,F};
+    }
+    return points;
+}
+/// 平移之后透视点相对处理
++ (KJKnownPoints)kj_changePointsWithKnownPoints:(KJKnownPoints)points Translation:(CGPoint)translation{
+    CGPoint A = points.PointA;
+    CGPoint B = points.PointB;
+    CGPoint C = points.PointC;
+    CGPoint D = points.PointD;
+    A.x += translation.x;
+    A.y += translation.y;
+    B.x += translation.x;
+    B.y += translation.y;
+    C.x += translation.x;
+    C.y += translation.y;
+    D.x += translation.x;
+    D.y += translation.y;
+    return (KJKnownPoints){A,B,C,D};
 }
 /// 判断当前点是否在路径选区内
 + (bool)kj_confirmCurrentPointWithPoint:(CGPoint)point BezierPath:(UIBezierPath*)path{
@@ -59,7 +140,7 @@
         minY = pt.y < minY ? pt.y : minY;
         maxY = pt.y > maxY ? pt.y : maxY;
     }
-    return CGRectMake(minX, minY, maxX - minX, maxY - minY);
+    return CGRectMake(minX-1, minY-1, maxX - minX+2, maxY - minY+2);
 }
 
 #pragma mark - 几何方程式
@@ -315,6 +396,48 @@ static inline CGRect kj_swapWidthAndHeight(CGRect rect){
     rect.size.height = swap;
     return rect;
 }
+/** 任意角度图片旋转 */
++ (UIImage*)kj_rotateImage:(UIImage*)image Radians:(CGFloat)radians{
+    if (!(&vImageRotate_ARGB8888)) return nil;
+    const size_t width  = image.size.width;
+    const size_t height = image.size.height;
+    const size_t bytesPerRow = width * 4;
+    CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+    CGContextRef bmContext = CGBitmapContextCreate(NULL, width, height, 8, bytesPerRow, space, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
+    CGColorSpaceRelease(space);
+    if (!bmContext) return nil;
+    CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = width, .size.height = height}, image.CGImage);
+    UInt8 *data = (UInt8*)CGBitmapContextGetData(bmContext);
+    if (!data){
+        CGContextRelease(bmContext);
+        return nil;
+    }
+    vImage_Buffer src  = {data, height, width, bytesPerRow};
+    vImage_Buffer dest = {data, height, width, bytesPerRow};
+    Pixel_8888 bgColor = {0, 0, 0, 0};
+    vImageRotate_ARGB8888(&src, &dest, NULL, radians, bgColor, kvImageBackgroundColorFill);
+    CGImageRef rotatedImageRef = CGBitmapContextCreateImage(bmContext);
+    UIImage *newImg = [UIImage imageWithCGImage:rotatedImageRef];
+    CGImageRelease(rotatedImageRef);
+    CGContextRelease(bmContext);
+    return newImg;
+}
+/// 图片围绕任意点旋转任意角度
++ (UIImage*)kj_rotateImage:(UIImage*)image Rotation:(CGFloat)rotation Point:(CGPoint)point{
+    NSInteger num = (NSInteger)(floor(rotation));
+    if (num == rotation && num % 360 == 0) return image;
+    double radius = rotation * M_PI / 180;
+    CGSize rotatedSize = image.size;
+    UIGraphicsBeginImageContext(rotatedSize);
+    CGContextRef bitmap = UIGraphicsGetCurrentContext();
+    CGContextScaleCTM(bitmap, 1.0, -1.0);
+    CGContextTranslateCTM(bitmap, point.x, -point.y);
+    CGContextRotateCTM(bitmap, radius);
+    CGContextDrawImage(bitmap, CGRectMake(-point.x, -image.size.height+point.y, image.size.width, image.size.height), image.CGImage);
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 /// 矩形图扭曲变形成椭圆弧形图
 + (UIImage*)kj_orthogonImageBecomeOvalWithImage:(UIImage*)image Rect:(CGRect)rect Margin:(bool)margin{
     CGImageRef imageRef = image.CGImage;
@@ -331,7 +454,7 @@ static inline CGRect kj_swapWidthAndHeight(CGRect rect){
     // 读取某个点的内容 初始化新的图片需要的data
     unsigned char * shapeData = malloc(shapW * shapH * 4);
     /// 是否需要透明空白处
-    if (margin == false) {
+    if (!margin) {
         for (int i = 0; i < shapH-1; i++) {
             for (int j = 0; j < shapW-1; j++) {
                 int offset = (i * shapW + j) * 4;
@@ -349,7 +472,7 @@ static inline CGRect kj_swapWidthAndHeight(CGRect rect){
             CGFloat angle = j * 1.0f / shapW * 180.0f;
 //            CGPoint point = [self kj_ovalPointWithRect:CGRectMake(0, 0, 180, 100) Angle:180-angle];
             CGFloat x = j;
-            CGFloat y = sqrt(90*90-x*x)+90; /// 画一条线
+            CGFloat y = x; /// 画一条线
             y += i; /// 画全部
             if (y>shapH) continue; /// 超出画布处理
             int newOffset = (y * shapW + x) * 4;
@@ -362,7 +485,7 @@ static inline CGRect kj_swapWidthAndHeight(CGRect rect){
         }
     }
     //创建新图片
-    CGContextRef newContext = CGBitmapContextCreate(shapeData, shapW, shapH, 8, shapW * 4, space, bitmapInfo);
+    CGContextRef newContext = CGBitmapContextCreate(shapeData, shapW, shapH, 8, shapW*4, space, bitmapInfo);
     CGImageRef cgImage = CGBitmapContextCreateImage(newContext);
     UIImage *newImage = [UIImage imageWithCGImage:cgImage];
     CGContextRelease(newContext);

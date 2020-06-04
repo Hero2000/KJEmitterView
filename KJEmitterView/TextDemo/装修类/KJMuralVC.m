@@ -37,13 +37,14 @@
     });
     
     __block UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    imageView.image = [UIImage imageNamed:@"xxsf"];
+    imageView.image = [UIImage imageNamed:@"IMG_4931"];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0.5];
     imageView.center = CGPointMake(w/2, h-100);
     [self.view addSubview:imageView];
     
     __block KJMuralView *__view = [[KJMuralView alloc] kj_initWithFrame:CGRectMake(200, 0, w, h/2) KnownPoints:points];
+    __view.openDrawMural = true;
     [self.view addSubview:__view];
     
     [imageView kj_AddGestureRecognizer:(KJGestureTypeDouble) block:^(UIView * _Nonnull view, UIGestureRecognizer * _Nonnull gesture) {

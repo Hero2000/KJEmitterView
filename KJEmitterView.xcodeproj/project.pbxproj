@@ -59,6 +59,9 @@
 		68776CF221AC34A0000A1435 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68776CF121AC34A0000A1435 /* Assets.xcassets */; };
 		68776CF521AC34A0000A1435 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68776CF321AC34A0000A1435 /* LaunchScreen.storyboard */; };
 		68776CF821AC34A0000A1435 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68776CF721AC34A0000A1435 /* main.m */; };
+		687F0DB6248789210030053B /* KJLamplightLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 687F0DB5248789210030053B /* KJLamplightLayer.m */; };
+		687F0DBA248798B60030053B /* KJLamplightVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 687F0DB8248798B60030053B /* KJLamplightVC.m */; };
+		687F0DBB248798B60030053B /* KJLamplightVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 687F0DB9248798B60030053B /* KJLamplightVC.xib */; };
 		6880171D22A89B86000CC362 /* UIView+KJAppointView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6880171C22A89B86000CC362 /* UIView+KJAppointView.m */; };
 		6887C13823039F4E00CD063D /* NSArray+ElementDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 6887C13723039F4E00CD063D /* NSArray+ElementDeal.m */; };
 		6889503222A74ED60060C21E /* UIButton+KJEnlargeTouchArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 6889503122A74ED60060C21E /* UIButton+KJEnlargeTouchArea.m */; };
@@ -208,6 +211,11 @@
 		68776CF421AC34A0000A1435 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		68776CF621AC34A0000A1435 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68776CF721AC34A0000A1435 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		687F0DB4248789210030053B /* KJLamplightLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJLamplightLayer.h; sourceTree = "<group>"; };
+		687F0DB5248789210030053B /* KJLamplightLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJLamplightLayer.m; sourceTree = "<group>"; };
+		687F0DB7248798B60030053B /* KJLamplightVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJLamplightVC.h; sourceTree = "<group>"; };
+		687F0DB8248798B60030053B /* KJLamplightVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJLamplightVC.m; sourceTree = "<group>"; };
+		687F0DB9248798B60030053B /* KJLamplightVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KJLamplightVC.xib; sourceTree = "<group>"; };
 		6880171B22A89B86000CC362 /* UIView+KJAppointView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+KJAppointView.h"; sourceTree = "<group>"; };
 		6880171C22A89B86000CC362 /* UIView+KJAppointView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+KJAppointView.m"; sourceTree = "<group>"; };
 		6887C13623039F4E00CD063D /* NSArray+ElementDeal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+ElementDeal.h"; sourceTree = "<group>"; };
@@ -624,6 +632,8 @@
 				68AD8DF5247E00360014BC38 /* KJSkirtingLineView.m */,
 				68AD8DFB247F8B7A0014BC38 /* KJDecorateBoxView.h */,
 				68AD8DFC247F8B7A0014BC38 /* KJDecorateBoxView.m */,
+				687F0DB4248789210030053B /* KJLamplightLayer.h */,
+				687F0DB5248789210030053B /* KJLamplightLayer.m */,
 			);
 			path = InteriorFinish;
 			sourceTree = "<group>";
@@ -645,6 +655,9 @@
 				68B5382C247506370041A344 /* KJMuralVC.m */,
 				68AD8DF8247E03BB0014BC38 /* KJSkirtingLineVC.h */,
 				68AD8DF9247E03BB0014BC38 /* KJSkirtingLineVC.m */,
+				687F0DB7248798B60030053B /* KJLamplightVC.h */,
+				687F0DB8248798B60030053B /* KJLamplightVC.m */,
+				687F0DB9248798B60030053B /* KJLamplightVC.xib */,
 			);
 			path = "装修类";
 			sourceTree = "<group>";
@@ -881,6 +894,7 @@
 				68B0301421B2FBC400349510 /* KJEmitter.bundle in Resources */,
 				68776CF221AC34A0000A1435 /* Assets.xcassets in Resources */,
 				689AF60E244EA15300DF19F3 /* KJReflectionVC.xib in Resources */,
+				687F0DBB248798B60030053B /* KJLamplightVC.xib in Resources */,
 				68CFFD14245040EC00EA3590 /* KJFloorVC.xib in Resources */,
 				680C95D2236A700100304BAE /* KJEmitterLayer.bundle in Resources */,
 				68776CF021AC34A0000A1435 /* Main.storyboard in Resources */,
@@ -917,6 +931,7 @@
 				68BA6C3321B303D40013C4AD /* UITextView+KJPlaceHolder.m in Sources */,
 				68E166D0234F4D5B008E8A80 /* UIViewController+KJFullScreen.m in Sources */,
 				68BA6C3021B303D40013C4AD /* UIView+KJRectCorner.m in Sources */,
+				687F0DB6248789210030053B /* KJLamplightLayer.m in Sources */,
 				680A61A1230E308500BCE302 /* KJIMageVC.m in Sources */,
 				689914972355C4C1008EE9C7 /* UIButton+KJEmitter.m in Sources */,
 				6889C33A2354668E00D01F70 /* UISegmentedControl+KJCustom.m in Sources */,
@@ -933,6 +948,7 @@
 				685CE15D22562085004E3AF4 /* UILabel+KJAttributedString.m in Sources */,
 				68BA6C2D21B303D40013C4AD /* UIButton+KJButtonContentLayout.m in Sources */,
 				68740FA1244409DA00E60223 /* KJShineVC.m in Sources */,
+				687F0DBA248798B60030053B /* KJLamplightVC.m in Sources */,
 				685CE15922560193004E3AF4 /* UIButton+KJBlock.m in Sources */,
 				686F0FC522B8C5F800D263CC /* NSObject+KJSwizzling.m in Sources */,
 				686FC7452457DA8E00668666 /* KJShadowLayer.m in Sources */,

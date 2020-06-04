@@ -193,7 +193,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 - (void)drawRect:(CGRect)rect{
     CGContextRef ctx = UIGraphicsGetCurrentContext(); //获取当前绘制环境
     CGContextSaveGState(ctx);
-    CGContextSetShouldAntialias(ctx,YES); // 为图形上下文设置抗锯齿功能
+    CGContextSetShouldAntialias(ctx,YES); 
     if (self.rightModel.chartletComplete) [self kj_chartletWithCtx:ctx SkirtingLineModel:self.rightModel];
     if (self.leftModel.chartletComplete)  [self kj_chartletWithCtx:ctx SkirtingLineModel:self.leftModel];
     if (self.topModel.chartletComplete)   [self kj_chartletWithCtx:ctx SkirtingLineModel:self.topModel];
@@ -377,7 +377,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
         self.points = [self kj_rightPointsWithKnownPoints:points];
     }
     /// 获取贴图尺寸
-    self.imageRect = [_KJIFinishTools kj_rectWithPoints:self.points];
+    self.imageRect = [self kj_skirtingLineViewRectWithPoints:self.points];
     self.bezierPath = ({
         UIBezierPath *path = [UIBezierPath bezierPath];
         [path moveToPoint:self.points.PointA];
@@ -390,6 +390,26 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     /// 已经贴好图需单独处理
     if (self.chartletComplete) !self.kChartletMoveBlcok?:self.kChartletMoveBlcok(self);
     self.dashPatternLayer.path = self.bezierPath.CGPath;
+}
+/// 获取对应的Rect
+- (CGRect)kj_skirtingLineViewRectWithPoints:(KJKnownPoints)points{
+    NSArray *temp = @[NSStringFromCGPoint(points.PointA),
+                      NSStringFromCGPoint(points.PointB),
+                      NSStringFromCGPoint(points.PointC),
+                      NSStringFromCGPoint(points.PointD)];
+    CGFloat minX = points.PointA.x;
+    CGFloat maxX = points.PointA.x;
+    CGFloat minY = points.PointA.y;
+    CGFloat maxY = points.PointA.y;
+    CGPoint pt = CGPointZero;
+    for (NSString *string in temp) {
+        pt = CGPointFromString(string);
+        minX = pt.x < minX ? pt.x : minX;
+        maxX = pt.x > maxX ? pt.x : maxX;
+        minY = pt.y < minY ? pt.y : minY;
+        maxY = pt.y > maxY ? pt.y : maxY;
+    }
+    return CGRectMake(minX, minY, maxX - minX, maxY - minY);
 }
 - (KJKnownPoints)kj_topPointsWithKnownPoints:(KJKnownPoints)knownPoints{
     CGPoint A = knownPoints.PointA;

@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, KJPointsType) {
 };
 static CGFloat minLen = 1.0; /// 最小的滑动距离
 @interface KJSuspendedView ()
-@property(nonatomic,assign) KJKnownPoints points;
+@property(nonatomic,assign) KJKnownPoints knownPoints;
 @property(nonatomic,strong) CAShapeLayer *topLayer; /// 虚线选区
 @property(nonatomic,assign) CGPoint touchBeginPoint; /// 记录touch开始的点
 @property(nonatomic,assign) CGPoint PointE,PointF,PointG,PointH;
@@ -49,7 +49,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
 - (instancetype)kj_initWithFrame:(CGRect)frame KnownPoints:(KJKnownPoints)points{
     if (self == [super init]) {
         self.backgroundColor = UIColor.clearColor;
-        self.points = points;
+        self.knownPoints = points;
         self.frame = frame;
         self.maxLen = 100.;
         self.dashPatternColor = UIColor.blackColor;
@@ -106,7 +106,7 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     self.touchBeginPoint = [touches.anyObject locationInView:self];
     
     /// 判断开始点是否在选区内
-    if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:self.touchBeginPoint KnownPoints:self.points]) {
+    if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:self.touchBeginPoint KnownPoints:self.knownPoints]) {
         return;
     }else{
         self.sureDarw = YES;
@@ -137,14 +137,14 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     if (self.shapeType == KJDarwShapeTypeOval) {
         if (!_drawTop) {
             /// 判断开始点是否在选区内
-            if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:tempPoint KnownPoints:self.points]) return;
+            if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:tempPoint KnownPoints:self.knownPoints]) return;
             [self kj_darwOvalTopWithPoint:tempPoint];
         }
         if (_drawTop == YES && _drawLine == NO) [self kj_drawOvalConcaveAndConvexWithPoint:tempPoint];
     }else {
         if (!_drawTop) {
             /// 判断开始点是否在选区内
-            if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:tempPoint KnownPoints:self.points]) return;
+            if (![_KJIFinishTools kj_confirmCurrentPointWithPoint:tempPoint KnownPoints:self.knownPoints]) return;
             [self kj_darwQuadrangleTopWithPoint:tempPoint];
         }
         if (_drawTop == YES && _drawLine == NO) [self kj_drawQuadrangleConcaveAndConvexWithPoint:tempPoint];
@@ -227,22 +227,22 @@ static CGFloat minLen = 1.0; /// 最小的滑动距离
     CGPoint point = CGPointZero;
     switch (type) {
         case KJPointsTypeF:
-            point = kj_FPoint(self.points.PointA, self.points.PointB, self.points.PointC, self.points.PointD, self.PointE, self.PointG);
+            point = kj_FPoint(self.knownPoints.PointA, self.knownPoints.PointB, self.knownPoints.PointC, self.knownPoints.PointD, self.PointE, self.PointG);
             break;
         case KJPointsTypeH:
-            point = kj_HPoint(self.points.PointA, self.points.PointB, self.points.PointC, self.points.PointD, self.PointE, self.PointG);
+            point = kj_HPoint(self.knownPoints.PointA, self.knownPoints.PointB, self.knownPoints.PointC, self.knownPoints.PointD, self.PointE, self.PointG);
             break;
         case KJPointsTypeE1:
-            point = kj_E1Point(self.points.PointA, self.points.PointB, self.points.PointC, self.points.PointD, self.PointE, self.PointG,self.lineLenght,self.concaveType);
+            point = kj_E1Point(self.knownPoints.PointA, self.knownPoints.PointB, self.knownPoints.PointC, self.knownPoints.PointD, self.PointE, self.PointG,self.lineLenght,self.concaveType);
             break;
         case KJPointsTypeF1:
-            point = kj_F1Point(self.points.PointA, self.points.PointB, self.points.PointC, self.points.PointD, self.PointE, self.PointG,self.lineLenght,self.concaveType);
+            point = kj_F1Point(self.knownPoints.PointA, self.knownPoints.PointB, self.knownPoints.PointC, self.knownPoints.PointD, self.PointE, self.PointG,self.lineLenght,self.concaveType);
             break;
         case KJPointsTypeG1:
-            point = kj_G1Point(self.points.PointA, self.points.PointB, self.points.PointC, self.points.PointD, self.PointE, self.PointG,self.lineLenght,self.concaveType);
+            point = kj_G1Point(self.knownPoints.PointA, self.knownPoints.PointB, self.knownPoints.PointC, self.knownPoints.PointD, self.PointE, self.PointG,self.lineLenght,self.concaveType);
             break;
         case KJPointsTypeH1:
-            point = kj_H1Point(self.points.PointA, self.points.PointB, self.points.PointC, self.points.PointD, self.PointE, self.PointG,self.lineLenght,self.concaveType);
+            point = kj_H1Point(self.knownPoints.PointA, self.knownPoints.PointB, self.knownPoints.PointC, self.knownPoints.PointD, self.PointE, self.PointG,self.lineLenght,self.concaveType);
             break;
         default:
             break;
@@ -422,11 +422,11 @@ static inline KJDrawParameter kj_drawParameter(KJSuspendedModel *model,NSInteger
 - (UIBezierPath*)kj_hollowOutPath{
     UIBezierPath *path = [UIBezierPath bezierPath];
     path.usesEvenOddFillRule = YES;//设置填充规则为奇偶填充
-    [path moveToPoint:self.points.PointA];
-    [path addLineToPoint:self.points.PointB];
-    [path addLineToPoint:self.points.PointC];
-    [path addLineToPoint:self.points.PointD];
-    [path addLineToPoint:self.points.PointA];
+    [path moveToPoint:self.knownPoints.PointA];
+    [path addLineToPoint:self.knownPoints.PointB];
+    [path addLineToPoint:self.knownPoints.PointC];
+    [path addLineToPoint:self.knownPoints.PointD];
+    [path addLineToPoint:self.knownPoints.PointA];
     
     UIBezierPath *bPath = [UIBezierPath bezierPath];
     [bPath moveToPoint:self.PointE];
@@ -441,10 +441,10 @@ static inline KJDrawParameter kj_drawParameter(KJSuspendedModel *model,NSInteger
 - (UIBezierPath*)kj_outsidePath{
     return ({
         UIBezierPath *path = [UIBezierPath bezierPath];
-        [path moveToPoint:self.points.PointA];
-        [path addLineToPoint:self.points.PointB];
-        [path addLineToPoint:self.points.PointC];
-        [path addLineToPoint:self.points.PointD];
+        [path moveToPoint:self.knownPoints.PointA];
+        [path addLineToPoint:self.knownPoints.PointB];
+        [path addLineToPoint:self.knownPoints.PointC];
+        [path addLineToPoint:self.knownPoints.PointD];
         [path closePath];
         path;
     });

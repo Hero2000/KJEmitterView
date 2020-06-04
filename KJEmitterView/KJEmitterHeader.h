@@ -46,6 +46,10 @@
  */
 /*
  ####版本更新日志:
+ #### Add 4.7.6
+ 1、KJLamplightLayer 新增灯具处理
+ 2、KJDecorateBoxView 新增墙壁装饰盒子 - 壁画、电箱、挂饰处理
+ 
  #### Add 4.7.5
  1、KJInteriorSuperclassView 新增装修父类，主要处理手指区域问题
  2、KJSkirtingLineView 新增四边踢脚线

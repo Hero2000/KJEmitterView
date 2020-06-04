@@ -70,6 +70,7 @@
         _temps = [NSMutableArray array];
         NSMutableArray *temp0 = [NSMutableArray array];
         [temp0 addObject:@{@"VCName":@"KJSkirtingLineVC",@"describeName":@"四周边线和装饰效果"}];
+        [temp0 addObject:@{@"VCName":@"KJLamplightVC",@"describeName":@"灯具效果展示"}];
         [temp0 addObject:@{@"VCName":@"KJMuralVC",@"describeName":@"墙壁壁画展示"}];
         [temp0 addObject:@{@"VCName":@"KJLegWireVC",@"describeName":@"脚线处理展示"}];
         [temp0 addObject:@{@"VCName":@"KJSuspendedVC",@"describeName":@"吊顶效果展示"}];
