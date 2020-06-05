@@ -25,6 +25,12 @@
         CGPointMake(w-30, h/2-50),
         CGPointMake(w-20, 64+100),
     };
+    KJKnownPoints points2 = {
+        CGPointMake(50, 64+20),
+        CGPointMake(20, h/2),
+        CGPointMake(w-80, h/2-40),
+        CGPointMake(w-20, 64+20),
+    };
     [self.view.layer addSublayer:self.redLayer];
     self.redLayer.path = ({
         UIBezierPath *path = [UIBezierPath bezierPath];

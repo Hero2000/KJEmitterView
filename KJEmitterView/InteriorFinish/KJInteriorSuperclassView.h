@@ -15,6 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) UIColor *dashPatternColor;
 /// 所绘虚线宽度，默认1px
 @property(nonatomic,assign) CGFloat dashPatternWidth;
+
+/// 保存至数据库
+- (bool)kj_saveDatasWithTag:(NSInteger)tag;
+/// 删除数据
+- (bool)kj_delDatasWithTag:(NSInteger)tag;
+
 @end
 
 NS_ASSUME_NONNULL_END

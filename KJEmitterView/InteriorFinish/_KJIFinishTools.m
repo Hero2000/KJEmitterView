@@ -427,13 +427,16 @@ static inline CGRect kj_swapWidthAndHeight(CGRect rect){
     NSInteger num = (NSInteger)(floor(rotation));
     if (num == rotation && num % 360 == 0) return image;
     double radius = rotation * M_PI / 180;
-    CGSize rotatedSize = image.size;
-    UIGraphicsBeginImageContext(rotatedSize);
+    CGFloat w = image.size.width;
+    CGFloat h = image.size.height;
+    UIGraphicsBeginImageContext(CGSizeMake(w, h));
     CGContextRef bitmap = UIGraphicsGetCurrentContext();
     CGContextScaleCTM(bitmap, 1.0, -1.0);
     CGContextTranslateCTM(bitmap, point.x, -point.y);
     CGContextRotateCTM(bitmap, radius);
-    CGContextDrawImage(bitmap, CGRectMake(-point.x, -image.size.height+point.y, image.size.width, image.size.height), image.CGImage);
+    CGFloat x = -point.x;
+    CGFloat y = -h + point.y;
+    CGContextDrawImage(bitmap, CGRectMake(x, y, w, h), image.CGImage);
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;
@@ -469,7 +472,7 @@ static inline CGRect kj_swapWidthAndHeight(CGRect rect){
     for (int i = 0; i < height-1; i++) {
         for (int j = 0; j < width-1; j++) {
             // 计算原图每个点在新图中的位置
-            CGFloat angle = j * 1.0f / shapW * 180.0f;
+//            CGFloat angle = j * 1.0f / shapW * 180.0f;
 //            CGPoint point = [self kj_ovalPointWithRect:CGRectMake(0, 0, 180, 100) Angle:180-angle];
             CGFloat x = j;
             CGFloat y = x; /// 画一条线

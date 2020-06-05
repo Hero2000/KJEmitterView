@@ -42,6 +42,20 @@
 - (bool)kj_delGestureWithPoint:(CGPoint)point{
     return false;
 }
+
+/// 保存至数据库
+- (bool)kj_saveDatasWithTag:(NSInteger)tag{
+    return false;
+}
+/// 删除数据
+- (bool)kj_delDatasWithTag:(NSInteger)tag{
+    return false;
+}
+
+
+
+
+
 //#pragma mark - 绘制壁画相关
 //- (bool)kj_getMuralViewAreaWithPoint:(CGPoint)point{
 //    SEL selector = NSSelectorFromString(@"kj_getKnownPoints");
